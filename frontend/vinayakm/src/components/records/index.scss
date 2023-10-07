@@ -1,0 +1,60 @@
+.medicine-component {
+    display: flex;
+    gap: 20px;
+  
+    .column-one {
+      .med-list {
+        border: 2px dashed #aaa;
+        padding: 20px;
+        border-radius: 8px;
+  
+        .list-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 15px;
+  
+          .med-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+          }
+  
+          .delete-icon {
+            margin-left: 10px;
+          }
+        }
+      }
+  
+      .action-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+    }
+  
+    .column-two {
+      .user-avatar {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 10px;
+      }
+  
+      .past-records {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+  
+      .divider {
+        margin: 15px 0;
+      }
+  
+      .symptoms-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+    }
+  }
+  

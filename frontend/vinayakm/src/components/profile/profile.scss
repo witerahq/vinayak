@@ -1,0 +1,34 @@
+.Profile{
+    margin-top: 80px;
+    margin-bottom: 80px;
+    .container{
+        display: flex;
+        .profile-details{
+            flex: 70%;
+            margin-right: 24px;
+            input{
+                width: 100%;
+                display: block;
+            }
+        }
+        .profile-image{
+            flex:30%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .image{
+            width: 200px;
+            height: 200px;
+            margin-bottom: 16px;
+            img{
+                margin: 0 auto;
+                border-radius: 50%;
+                width: 100%; /* image box size as % of container, see step 1 */
+                height: 100%; /* image box size as % of container, see step 1 */
+                object-fit: cover; /* matching of image pixels to image box, see step 2 */
+            }
+        }
+        
+    }
+}

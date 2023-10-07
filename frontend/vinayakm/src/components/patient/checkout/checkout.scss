@@ -1,0 +1,250 @@
+.Checkout {
+    margin: 80px 0;
+
+    .container {
+        display: flex;
+
+        .summary {
+            flex: 70%;
+
+            .head {
+                font-size: 19px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 24px;
+                margin-bottom: 16px;
+            }
+
+            margin-right: 16px;
+
+            .appointment {
+
+                background: #F4F6F6;
+                border-radius: 16px;
+                padding: 16px;
+            }
+
+            .appointment-card {
+                margin-top: 24px;
+
+                img {
+                    max-height: 150px;
+                }
+
+                .booking-doc-details {
+                    display: flex;
+                }
+
+
+
+                .doc-detail {
+                    padding: 12px;
+
+                    .profile {
+                        margin-bottom: 8px;
+
+                        P {
+                            color: #081B2B;
+
+                            &:first-child {
+                                font-size: 16px;
+                                font-style: normal;
+                                font-weight: 600;
+                                line-height: 24px;
+                                margin-bottom: 8px;
+                            }
+
+                            font-size: 13px;
+                            font-style: normal;
+                            font-weight: 400;
+                            line-height: 16px;
+                        }
+
+                    }
+
+                    .info {
+                        p {
+                            color: #081B2B;
+                            font-size: 13px;
+                            font-style: normal;
+                            font-weight: 400;
+                            line-height: 16px;
+                        }
+
+                        .tags {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-top: 8px;
+                            margin-bottom: 20px;
+
+                            p {
+                                color: #0D1F26;
+                                font-size: 11px;
+                                font-style: normal;
+                                font-weight: 400;
+                                line-height: 16px;
+                            }
+
+                            .langs {
+                                display: flex;
+
+                                .lang {
+                                    display: flex;
+                                    padding: 4px 8px;
+                                    justify-content: center;
+                                    align-items: center;
+                                    border-radius: 4px;
+                                    background: #D9EBF2;
+                                    margin-right: 8px;
+                                }
+                            }
+
+
+
+                        }
+                    }
+                }
+
+                .booking-doc-details {
+                    flex: 70%;
+                    align-items: center;
+                }
+
+                display: flex;
+                align-items: center;
+                flex: 100%;
+                max-width: 100%;
+
+                .doc-detail {
+                    border-right: 1px solid #C8CED0;
+                    flex: 50%;
+                }
+
+
+
+                .booking-detail {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 0 16px;
+                    flex: 50%;
+
+                    .heading {
+
+                        p {
+                            color: #171A1C;
+                            font-size: 13px;
+                            font-style: normal;
+                            font-weight: 400;
+                            line-height: 16px;
+                        }
+
+                        margin-bottom: 8px;
+
+                    }
+
+                    .dates {
+                        p {
+                            color: #171A1C;
+                            font-size: 13px;
+                            font-style: normal;
+                            font-weight: 500;
+                            line-height: 16px;
+                            margin-bottom: 8px;
+
+                            &:first-child {
+                                font-weight: 600;
+                            }
+                        }
+
+                        .edit {
+                            display: flex;
+                            align-items: center;
+
+                            svg {
+                                margin-right: 4px;
+                                fill: #206BAC;
+                            }
+
+                            p {
+                                color: var(--primary-primary, #206BAC);
+                                font-size: 11px;
+                                font-style: normal;
+                                font-weight: 400;
+                                line-height: 16px;
+                                text-decoration-line: underline;
+                                margin-bottom: 0;
+                            }
+                        }
+
+                    }
+
+
+
+
+                }
+            }
+
+        }
+
+        .payment-card {
+            flex: 30%;
+
+            .head {
+                font-size: 19px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 24px;
+                margin-bottom: 16px;
+            }
+
+            .checkout-card {
+                border-radius: 16px;
+                background: #EEF1F1;
+                padding: 16px;
+
+                p {
+                    color: var(--on-surface-on-surface, #171A1C);
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 24px;
+                    padding-top: 8px;
+                    padding-bottom: 8px;
+
+                    span {
+                        float: right;
+                    }
+
+                    &.tax {
+                        span {
+                            font-weight: 400;
+
+                        }
+
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.50);
+                    }
+
+                }
+
+                button {
+                    margin-top: 16px;
+                    width: 100%;
+                    border-radius: 100px;
+                    background: #206BAC;
+                    color: #F0F3F5;
+                    text-align: center;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 24px;
+                    border: none;
+                    outline: none;
+                    padding: 10px 24px;
+
+                }
+            }
+
+        }
+    }
+
+}

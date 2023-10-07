@@ -1,0 +1,100 @@
+.Footer {
+    margin-top: 80px;
+
+    .sub-footer {
+        background: #E3E8E8;
+        padding-top:  80px;
+
+        .content {
+            display: flex;
+
+            .text {
+                max-width: 50%;
+
+                p {
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 24px;
+                    margin: 16px 0;
+
+                    &:first-child {
+                        font-size: 40px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 48px;
+                    }
+                }
+
+                .downloads {
+                    display: flex;
+
+                    .android {
+                        margin-right: 9px;
+                    }
+                }
+            }
+        }
+        .image{
+            img{
+                height: 100%;
+            }
+        }
+    }
+
+    .footer-content {
+        padding-top: 80px;
+        padding-bottom: 80px;
+        background: #2E3438;
+
+        .heading {
+            margin-bottom: 32px;
+
+        }
+
+        .grid-links {
+            display: flex;
+
+            .links {
+                flex: 0 1 calc((100% - 48px) / 4);
+                margin-right: 16px;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+
+                .link {
+                    margin-bottom: 16px;
+                    color: #fff;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 24px;
+
+                    &.head {
+                        font-size: 23px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 32px;
+                    }
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    .copyright {
+        padding: 30px 0;
+        background:#090D10 ;
+        p {
+            color: #F0F3F5;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 24px;
+        }
+    }
+}

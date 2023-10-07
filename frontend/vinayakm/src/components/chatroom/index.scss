@@ -1,0 +1,15 @@
+.ChatRoom{
+    .chatroom-content{
+        display: flex;
+        flex-wrap: nowrap;
+    }
+    .Chat{
+        flex: 27%;
+        max-width: 27%;
+    }
+    .Chatlist{
+        flex: 73%;
+        max-width: 73%;
+
+    }
+}
