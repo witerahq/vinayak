@@ -45,3 +45,20 @@
         }
     }
 }
+
+@media screen and (max-width:992px) {
+    .prescription-form{
+        max-height: 70vh;
+        overflow-y: auto;
+        flex-wrap: wrap;
+    }
+    .Prescription{
+        .prescription-cards{
+            flex-wrap: wrap;
+            .prescription-card{
+                flex: 100%;
+                margin-right: 0;
+            }
+        }
+    }
+}

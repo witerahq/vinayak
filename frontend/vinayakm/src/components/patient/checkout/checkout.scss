@@ -246,5 +246,45 @@
 
         }
     }
+}
 
+@media screen and (max-width:992px) {
+    .Checkout{
+        margin: 20px 0;
+        .container{
+            flex-wrap: wrap;
+            .summary{
+                flex: 100%;
+                margin-right: 0;
+                label{
+                    display: block;
+                    width: 100%;
+                }
+                .appointment-card .booking-doc-details{
+                    padding-left: 16px;
+                    flex-direction: column;
+                    align-items: start;
+                    justify-content: start;
+                    .doc-detail{
+                        border-right: 0;
+                        padding-left: 0;
+                    }
+                    .booking-detail{
+                        padding-left: 0;
+                        display: flex;
+                        flex-direction: row;
+                        .heading{
+                            margin-right: 8px;
+                        }
+                    }
+                }
+            }
+    
+            .payment-card{
+                flex: 100%;
+                margin-top: 40px;
+            }
+        }
+
+    }
 }

@@ -18,3 +18,21 @@
         justify-content: space-between;
     }
 }
+
+@media screen and (max-width:992px) {
+    .Dashboard{
+        .toolbar-header{
+            .user{
+                display: none;
+            }
+        }
+        .dashboard-components{
+            padding-left: 0;
+            padding-right: 0;
+            box-sizing: border-box;
+            max-width: 100%;
+            overflow-x: hidden;
+            min-height: calc(100vh - 80px);
+        }
+    }
+}

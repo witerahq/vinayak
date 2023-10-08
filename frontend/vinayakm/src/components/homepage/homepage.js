@@ -26,11 +26,12 @@ function Homepage() {
     return (
         <>
             {
+                window.innerWidth>=992?
                 searchParams.get('auth')==='register'?
                 <Register></Register>:
                 searchParams.get('auth')==='login'?
                 <Login></Login>:searchParams.get('verify')?.length?
-                <Verify></Verify>:null
+                <Verify></Verify>:null:null
             }
         <div className="Homepage">
 
@@ -38,6 +39,8 @@ function Homepage() {
                 <div className="container">
                     <p>Book Your Appointment <br /> in few easy steps</p>
 
+                    {
+                        window.innerWidth>992?
                     <div className="appointment-form">
                         <div className="container">
                             <div className="appointment">
@@ -68,7 +71,13 @@ function Homepage() {
                                 <button>Search</button>
                             </div>
                         </div>
+                    </div>:
+                    <div className="appointment-button">
+                        <p></p>
+                        <p></p>
                     </div>
+                    
+                    }
                 </div>
             </div>
 

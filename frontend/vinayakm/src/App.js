@@ -13,6 +13,9 @@ import Dashboard from "./components/doctor/dashboard/dashboard";
 import { useSelector } from "react-redux";
 import jwt_decode from 'jwt-decode';
 import Records from "./components/records";
+import Verify from "./components/auth/verify/verify";
+import Login from "./components/auth/login/login";
+import Register from "./components/auth/register/register";
 
 function App() {
   const user = useSelector((state) => {
@@ -27,6 +30,7 @@ function App() {
     redirectPath = '/',
     children,
   }) => {
+    return children
     if (!user) {
       return <Navigate to={redirectPath} replace />;
     }
@@ -40,13 +44,26 @@ function App() {
         
         {
         !(user?.role === 'doctor' && window.location.pathname.includes('dashboard'))?
-        <Header></Header>:null
+       
+        <Header></Header>
+        :null
 
       }
         <Routes>
+
+          
+
           <Route path="/" element={<Homepage />} />
           <Route path="/search" element={<Search />} />
           <Route path="/record" element={<Records />} />
+          {
+            window.innerWidth<992?
+            <> 
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/verify" element={<Verify />} />
+            </>:null
+          }
 
 
           <Route path="/appointments" element={<ProtectedRoute user={user?.role === 'patient'}><Appointments /></ProtectedRoute>} />

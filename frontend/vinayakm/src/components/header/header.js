@@ -6,6 +6,10 @@ import { useState } from 'react';
 import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import jwt_decode from 'jwt-decode';
+import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
+import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 
 function Header() {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -41,7 +45,7 @@ function Header() {
                     <img src={Logo} alt="logo" />
                 </div>
                 {
-                    !auth.isAuthenticated && decodeUser?.role!='patient' ?
+                    auth.isAuthenticated && decodeUser?.role!='patient' ?
                         <div className="buttons">
                             <button className="register" onClick={register}>Register</button>
                             <button className="login"  onClick={login}>Login</button>
@@ -58,6 +62,14 @@ function Header() {
                         </NavLink>
                         <NavLink to="/profile" className="user" activeClassName="active-link"></NavLink>
                       </div>
+                } 
+                {
+                    <div className="mobile-tabs">
+                         <div className="tab" onClick={e=>{navigate('/')}}><HomeIcon fontSize="large"/></div>
+                         <div className="tab" onClick={e=>{navigate('/bookings')}}><InsertInvitationIcon fontSize="large"/></div>
+                         <div className="tab" onClick={e=>{navigate('/appointments')}}><AssignmentIcon fontSize="large"/></div>
+                         <div className="tab" onClick={e=>{navigate('/profile')}}><PersonIcon fontSize="large"/></div>
+                    </div>
                 }
             </div>
         </div>

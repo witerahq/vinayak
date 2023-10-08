@@ -37,3 +37,10 @@ body {
     border: 3px solid #ffffff;
   }
 
+  @media screen and (max-width:992px) {
+    .Footer{
+      display: none;
+    }
+   
+  }
+

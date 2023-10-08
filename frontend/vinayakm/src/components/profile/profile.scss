@@ -32,3 +32,11 @@
         
     }
 }
+
+@media screen and (max-width:992px) {
+    .Profile{
+        .container{
+            flex-direction: column-reverse;
+        }
+    }
+}

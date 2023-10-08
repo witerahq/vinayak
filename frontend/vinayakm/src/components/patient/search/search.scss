@@ -459,3 +459,69 @@
         }
     }
 }
+
+@media screen and (max-width:992px) {
+    .Search{
+        .banner{
+            display: none;
+        }
+
+        #appointment{
+            margin-top: 90px;
+            .container{
+                flex-wrap: wrap;
+            }
+            #filters{
+                flex: 100%;
+                display: none;
+            }
+            #search-result{
+                flex: 100%;
+
+                .heading{
+                    p{
+                        font-size: 12px;
+                        max-width: 50%;
+                    }
+                }
+
+                .appointment-cards .appointment-card{
+                    flex: 100%;
+                    max-width: 100%;
+                    margin-right: 0;
+                    display: flex;
+                    flex-direction: row;
+                    .doc-image{
+                        flex: 35%;
+                    }
+                    .booking-doc-details{
+                        flex: 65%;
+                    }
+
+                    &.open{
+                        flex-direction: column;
+                        .doc-image{
+                            max-height: 130px;
+                        }
+                        .booking-doc-details{
+                            flex-direction: column;
+                        }
+                        .doc-detail .profile{
+                            margin-bottom: 0;
+                        }
+                        .more-details .hospital{
+                            margin-bottom: 16px;
+                        }
+                        .more-details .subhead{
+                            padding-top: 16px;
+                            border-top: 1px solid #C8CED0;
+                        }
+                        .booking-detail{
+                            padding-top: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

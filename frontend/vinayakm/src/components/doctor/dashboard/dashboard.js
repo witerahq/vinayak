@@ -43,7 +43,7 @@ const openedMixin = (theme) => ({
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
     }),
-    overflowX: 'hidden',
+    overflowX: 'hidden'
 });
 
 const closedMixin = (theme) => ({
@@ -52,7 +52,7 @@ const closedMixin = (theme) => ({
         duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: 'hidden',
-    width: `calc(${theme.spacing(7)} + 1px)`,
+    width: `0px`,
     [theme.breakpoints.up('sm')]: {
         width: `calc(${theme.spacing(8)} + 1px)`,
     },
@@ -86,8 +86,9 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+    
     ({ theme, open }) => ({
-        width: drawerWidth,
+        
         flexShrink: 0,
         whiteSpace: 'nowrap',
         boxSizing: 'border-box',
@@ -99,6 +100,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
             ...closedMixin(theme),
             '& .MuiDrawer-paper': closedMixin(theme),
         }),
+        width: '0px',
+        [theme.breakpoints.up('sm')]: {
+            width: drawerWidth,
+        },
     }),
 );
 
@@ -130,7 +135,7 @@ export default function Dashboard() {
 
     return (
         <div className="Dashboard">
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: 'flex',width:'100%' }}>
                 <CssBaseline />
                 <AppBar position="fixed" open={open}>
                     <Toolbar className='toolbar-header'>
@@ -155,7 +160,9 @@ export default function Dashboard() {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <Drawer variant="permanent" open={open}>
+                <Drawer variant="permanent" open={open}
+               
+                >
                     <DrawerHeader>
                         <IconButton onClick={handleDrawerClose}>
                             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -188,7 +195,7 @@ export default function Dashboard() {
                         ))}
                     </List>
                 </Drawer>
-                <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+                <Box component="main" className="dashboard-components" sx={{ flexGrow: 1, p: 3 }}>
                     <DrawerHeader />
                     <Routes>
                         <Route path="/" element={<Insights />} />

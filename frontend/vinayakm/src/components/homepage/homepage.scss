@@ -431,3 +431,137 @@
 
 
 }
+
+@media screen and (max-width:992px) {
+    .Homepage{
+        .banner{
+            p{
+                font-size: 28px;
+                line-height: 36px; 
+                max-width: 80%;
+                br{
+                    display: none;
+                }
+            }
+            .appointment-form{
+                display: none;
+            }
+            .appointment-button{
+                border-radius: 40px;
+        border: 1px solid var(--on-surface-on-surface, #171A1C);
+        background: #FFF;
+        box-shadow: 0px 1px 4px 3px rgba(0, 0, 0, 0.25);   
+            }
+        }
+
+        #why{
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            overflow: hidden;
+            margin-top: 0;
+            padding-top: 90px;
+            background-color: #FFF;
+            transform: translateY(-30px);
+            .heading{
+                font-size: 28px;
+font-style: normal;
+font-weight: 500;
+line-height: 36px;
+            }
+
+            .why-content{
+                flex-wrap: wrap;
+                .why-text{
+                    flex: 100%;
+                    ul{
+                        padding-right: 0;
+                    }
+                    li{
+                        font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px;
+                    }
+                }
+
+                .why-image{
+                    flex: 100%;
+                    img{
+                        max-width: 100%;
+                    }
+                }
+            }
+            margin-bottom: 0;
+        }
+
+        #consult{
+            .heading{
+                flex-wrap: wrap;
+                p{
+                    font-size: 24px;
+font-style: normal;
+font-weight: 500;
+line-height: 28px;
+                }
+                button{
+                    display: none;
+                }
+            }
+            .consult-types .consult-type{
+                flex: calc((100% - 16px) / 2);
+                margin-bottom: 16px;
+                &:nth-child(2n){
+                    margin-right: 0;
+                }
+            }
+        }
+
+        #clinic{
+            margin-top: 20px;
+            .heading{
+                flex-wrap: wrap;
+                p{
+                    font-size: 24px;
+font-style: normal;
+font-weight: 500;
+line-height: 28px;
+                }
+                button{
+                    display: none;
+                }
+            }
+
+            .clinic-types .clinic-type{
+                flex: 100%;
+                margin-right: 0;
+            }
+            
+        }
+
+        #testimonial{
+            margin-top: 20px;
+            margin-bottom: 20px;
+            .testimonial-users{ 
+                flex-wrap: wrap;
+                .testimonial-user{
+                flex: 0 1 calc(100%);
+                margin-right: 0;
+                margin-bottom: 20px;
+                }
+            }
+        }
+
+        #know .heading p{
+            font-size: 24px;
+            line-height: 28px;
+        }
+
+
+
+
+    }
+
+    
+
+    
+}

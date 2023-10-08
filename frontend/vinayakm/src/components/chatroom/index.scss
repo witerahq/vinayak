@@ -13,3 +13,16 @@
 
     }
 }
+
+@media screen and (max-width:992px) {
+    .ChatRoom{
+        height: 100%;
+        .container{
+            height: 100%;
+        }
+        .Chat{
+            flex: 100%;
+            max-width: 100%;
+        }
+    }
+}

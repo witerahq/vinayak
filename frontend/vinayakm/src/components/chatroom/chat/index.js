@@ -2,6 +2,7 @@
 import React from 'react';
 import { Card, CardContent, Typography, Avatar, Divider, Badge } from '@mui/material';
 import './index.scss';
+import { useSearchParams } from 'react-router-dom';
 
 const Chat = () => {
     const messages = [
@@ -20,6 +21,8 @@ const Chat = () => {
             lastMessage: 'I received the files, thanks!'
         }
     ];
+    const [searchParams, setSearchParams] = useSearchParams()
+
     return (
         <div className="Chat">
                 <Card style={{ width: '100%' }} className='message-list'>
@@ -29,7 +32,7 @@ const Chat = () => {
                         </Typography>
                         <Divider style={{ marginBottom: '0.5em'}}></Divider>
                         {messages.map((message, index) => (
-                            <div key={message.id}>
+                            <div key={message.id} onClick={e=>{setSearchParams(`?${new URLSearchParams({ user: message.id })}`)}}>
                                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5em' }} className='chat-user'>
                                     {/* Avatar */}
                                     <div style={{ flex: '0 10%', marginRight: '1rem' }}  >

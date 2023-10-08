@@ -53,12 +53,12 @@ export default function Calendar() {
             interactionPlugin,
             listPlugin,
           ]}
-          editable={true}
-          selectable={true}
-          selectMirror={true}
+          // editable={true}
+          // selectable={true}
+          // selectMirror={true}
           dayMaxEvents={true}
-          select={handleDateClick}
-          eventClick={handleEventClick}
+          // select={handleDateClick}
+          // eventClick={handleEventClick}
           initialEvents={[
             {
               id: '12315',
@@ -71,7 +71,7 @@ export default function Calendar() {
               date: '2022-09-28',
             },
           ]}
-          eventsSet={(events) => setCurrentEvents(events)}
+          // eventsSet={(events) => setCurrentEvents(events)}
       />
     </div>
   );

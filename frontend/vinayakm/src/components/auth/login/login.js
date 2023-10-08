@@ -121,7 +121,7 @@ function Login() {
                             >
                                 <FormControlLabel value="patient" control={<Radio />} label="Patient" />
                                 <FormControlLabel value="doctor" sele control={<Radio />} label="Doctor" />
-                                <FormControlLabel value="admin" sele control={<Radio />} label="Admin" />
+                                {/* <FormControlLabel value="admin" sele control={<Radio />} label="Admin" /> */}
 
 
                             </RadioGroup>

@@ -11,7 +11,10 @@
             font-size: 19px;
             font-style: normal;
             font-weight: 500;
-            line-height: 24px;
+            line-height: 19px;
+        }
+        button{
+            padding: 0;
         }
         margin-bottom: 24px;
     }
@@ -28,3 +31,14 @@
         }
     }
 }
+
+@media screen and (max-width:992px) {
+    .weektabs-modal .tabs-container .time-sections{
+        max-height: 50vh;
+        overflow-y: auto;
+        flex-wrap: wrap;
+    }
+    .Appointments{
+    }
+}
+

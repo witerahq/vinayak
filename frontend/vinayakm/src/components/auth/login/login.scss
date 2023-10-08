@@ -88,3 +88,47 @@
         }
     }
 }
+
+@media screen and (max-width:992px) {
+    .Login{
+        position: unset;
+        background: transparent;
+        .close{
+            display: none;
+        }
+        .container{
+            width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .auth-content{
+            background: #fff;
+            border-radius: 0px;
+            flex-direction: column;
+            .image{
+                min-height: 240px;
+                display: block;
+                background: url('../../../assets/authImage.svg');
+                background-position-y: bottom;
+                img{
+                    display: none;
+                }
+            }
+
+            .auth-form{
+                padding-left: 12px;
+                padding-right: 12px;
+                p{
+                    color: #000;
+                }
+                .form{
+                    padding-left: 0;
+                    padding-right: 0;
+                    label span{
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+}

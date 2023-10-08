@@ -8,7 +8,7 @@ function Insights() {
             <div className="container">
                 <div className="doctor-detail">
                     <p>Good morning, <span>Yash!</span></p>
-                    <button><AddCircleIcon></AddCircleIcon> New Prescription</button>
+                    {/* <button><AddCircleIcon></AddCircleIcon> New Prescription</button> */}
                 </div>
                 <div className="insight-boxs">
                     <div className="stats">
