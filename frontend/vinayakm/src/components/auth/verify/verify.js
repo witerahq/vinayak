@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import './verify.scss';
+import '../../../service/apiService';
 import authImage from '../../../assets/authImage.svg'
 import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -64,7 +65,7 @@ function Verify() {
   useEffect(() => {
 
     if (searchParams.get('verify')?.length) {
-      axios.post('http://localhost:3000/api/email/send', { userId: searchParams.get('verify') })
+      axios.post('/api/email/send', { userId: searchParams.get('verify') })
         .then(response => {
           if (response.data) {
             setIsButtonDisabled(false);
