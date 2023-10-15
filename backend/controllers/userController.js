@@ -29,7 +29,12 @@ async function getCurrentUser(req, res) {
             longitude:user.longitude,
             licenseNumber:user.licenseNumber,
             fullName:user.fullName,
-            image:user.image
+            image:user.image,
+            age:user.age,
+            experience:user.experience,
+            address:user.address,
+            gender:user.gender,
+            language:user.language
             // Include other user properties as needed
         };
 

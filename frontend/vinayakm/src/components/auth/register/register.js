@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { register, setError, setSuccess } from "../../../actions/authActions";
 import { SnackbarProvider, useSnackbar } from 'notistack';
 import { useSelector, shallowEqual } from 'react-redux';
-import { useSearchParams } from "react-router-dom";
+import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
 
 function Register() {
 
@@ -33,8 +33,21 @@ function Register() {
 
   const [searchParams, setSearchParams] = useSearchParams()
   const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate()
   const dispatch = useDispatch();
-  const login = () => setSearchParams(`?${new URLSearchParams({ auth: 'login' })}`)
+  const login = () => {
+    if (window.innerWidth > 992) {
+      navigate({
+        pathname: '/',
+        search: createSearchParams({
+          auth: 'login',
+        }).toString()
+      })
+    }
+    // setSearchParams(`?${new URLSearchParams({ auth: 'login' })}`)
+    else
+      navigate('/login')
+  }
   const close = () => setSearchParams(``)
   const [registerClicked, setregisterClicked] = useState(false);
 
@@ -66,7 +79,11 @@ function Register() {
       enqueueSnackbar(successMessage, { variant: 'success' });
 
       if (registeredUser?._id) {
-        setSearchParams(`?${new URLSearchParams({ verify: registeredUser?._id })}`)
+        if (window.innerWidth > 992)
+          setSearchParams(`?${new URLSearchParams({ verify: registeredUser?._id })}`)
+        else
+          navigate('/verify?verify=' + registeredUser?._id)
+
       }
     }
 

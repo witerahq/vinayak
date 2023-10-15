@@ -1,37 +1,71 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Card, CardHeader, CardContent, IconButton, TextField, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import './prescription.scss';
+import { useDispatch } from 'react-redux';
+import { createPrescription, editPrescription } from '../../../../actions/prescriptionActions';
 
-const PrescriptionModal = ({ isOpen, onClose }) => {
+const PrescriptionModal = ({ isOpen, onClose, prescriptionData }) => {
     const [formData, setFormData] = useState({
         name: '',
-        medicines: [''],
+        medicines: [
+            {
+                name: '',
+                frequency: '1',
+                duration: '1',
+            }
+        ],
         tests: [''],
-        frequency: '1',
-        duration: '1',
     });
 
     const handleAddField = (fieldType) => {
-        setFormData(prev => ({
+        setFormData((prev) => ({
             ...prev,
-            [fieldType]: [...prev[fieldType], '']
+            [fieldType]: [...prev[fieldType],fieldType=='tests'? '':{
+                name: '',
+                frequency: '1',
+                duration: '1',
+            }]
         }));
     };
 
     const handleRemoveField = (fieldType, index) => {
         const updatedFields = [...formData[fieldType]];
         updatedFields.splice(index, 1);
-        setFormData(prev => ({ ...prev, [fieldType]: updatedFields }));
+        setFormData((prev) => ({ ...prev, [fieldType]: updatedFields }));
     };
 
-    const handleInputChange = (e, fieldType, index) => {
+    const handleInputChange = (e, fieldType, index, subfield) => {
         const updatedFields = [...formData[fieldType]];
+        console.log(updatedFields)
+        if(subfield)
+        updatedFields[index][subfield] = e.target.value;
+        else
         updatedFields[index] = e.target.value;
-        setFormData(prev => ({ ...prev, [fieldType]: updatedFields }));
+        setFormData((prev) => ({ ...prev, [fieldType]: updatedFields }));
     };
+
+    const dispatch = useDispatch()
+
+    const updatePrescription = ()=>{
+        if(prescriptionData&&Object.keys(prescriptionData)?.length){
+            console.log('edit')
+            console.log(formData)
+            dispatch(editPrescription(formData._id,formData))
+        } else {
+            console.log('add')
+            console.log(formData)
+            dispatch(createPrescription(formData))
+        }
+    }
+
+    useEffect(()=>{
+        if(prescriptionData){
+            setFormData(prescriptionData)
+        }
+    },[prescriptionData])
 
     return (
         <Modal open={isOpen} onClose={onClose}>
@@ -51,18 +85,54 @@ const PrescriptionModal = ({ isOpen, onClose }) => {
                             label="Name"
                             className="input-group"
                             value={formData.name}
-                            onChange={(e) => handleInputChange(e, 'name')}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                             fullWidth
                         />
+
                         {/* Medicines */}
                         {formData.medicines.map((medicine, idx) => (
-                            <div className="input-group" key={idx}>
+                            <div key={idx}>
                                 <TextField
                                     label="Medicine Name"
-                                    value={medicine}
-                                    onChange={(e) => handleInputChange(e, 'medicines', idx)}
+                                    value={medicine.name}
+                                    onChange={(e) => handleInputChange(e, 'medicines', idx, 'name')}
                                     fullWidth
+                                    className='input-group'
                                 />
+                                <TextField
+                                    className='select'
+                                    select
+                                    label="Frequency (times/day)"
+                                    value={medicine.frequency}
+                                    onChange={(e) => handleInputChange(e, 'medicines', idx, 'frequency')}
+                                    SelectProps={{
+                                        native: true,
+                                    }}
+                                    fullWidth
+                                >
+                                    {[1, 2, 3, 4, 5, 6].map((option) => (
+                                        <option key={option} value={option}>
+                                            {option}
+                                        </option>
+                                    ))}
+                                </TextField>
+                                <TextField
+                                    select
+                                    className='select'
+                                    label="Duration (days)"
+                                    value={medicine.duration}
+                                    onChange={(e) => handleInputChange(e, 'medicines', idx, 'duration')}
+                                    SelectProps={{
+                                        native: true,
+                                    }}
+                                    fullWidth
+                                >
+                                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30].map((option) => (
+                                        <option key={option} value={option}>
+                                            {option}
+                                        </option>
+                                    ))}
+                                </TextField>
                                 <IconButton onClick={() => handleRemoveField('medicines', idx)}>
                                     <DeleteIcon />
                                 </IconButton>
@@ -73,7 +143,7 @@ const PrescriptionModal = ({ isOpen, onClose }) => {
                         </Button>
 
                         {/* Lab Tests */}
-                        {formData.tests.map((test, idx) => (
+                        { formData.tests.map((test, idx) => (
                             <div className="input-group" key={idx}>
                                 <TextField
                                     label="Lab Test"
@@ -90,46 +160,8 @@ const PrescriptionModal = ({ isOpen, onClose }) => {
                             Add More Test
                         </Button>
 
-                        {/* Frequency */}
-                        <TextField
-                            className='select'
-                            select
-                            label="Frequency (times/day)"
-                            value={formData.frequency}
-                            onChange={(e) => setFormData(prev => ({ ...prev, frequency: e.target.value }))}
-                            SelectProps={{
-                                native: true,
-                            }}
-                            fullWidth
-                        >
-                            {[1, 2, 3, 4, 5, 6].map((option) => (
-                                <option key={option} value={option}>
-                                    {option}
-                                </option>
-                            ))}
-                        </TextField>
-
-                        {/* Duration */}
-                        <TextField
-                            select
-                            className='select'
-                            label="Duration (days)"
-                            value={formData.duration}
-                            onChange={(e) => setFormData(prev => ({ ...prev, duration: e.target.value }))}
-                            SelectProps={{
-                                native: true,
-                            }}
-                            fullWidth
-                        >
-                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30].map((option) => (
-                                <option key={option} value={option}>
-                                    {option}
-                                </option>
-                            ))}
-                        </TextField>
-
-                        <Button variant="contained" color="primary">
-                            Add
+                        <Button variant="contained" color="primary" onClick={updatePrescription}>
+                            {prescriptionData?'Edit':'Add'}
                         </Button>
                     </form>
                 </CardContent>

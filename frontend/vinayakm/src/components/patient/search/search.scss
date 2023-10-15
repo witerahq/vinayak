@@ -208,7 +208,7 @@
 
                     order: 2;
 
-                   
+
 
                     img {
                         width: 100%;
@@ -224,7 +224,7 @@
                         }
                     }
 
-                    
+
 
                     .doc-detail {
                         padding: 12px;
@@ -315,35 +315,43 @@
                         display: none;
                     }
 
-                  
-                    img[alt='docIMage1']{
+
+                    img[alt='docIMage1'] {
                         display: none;
                     }
-                    img[alt='docIMage']{
+
+                    img[alt='docIMage'] {
                         display: block;
                     }
+
                     &.open {
-                        
-                        order:1;
-                        .expand{
+
+                        order: 1;
+
+                        .expand {
                             transform: rotate(-180deg);
-                            svg{
+
+                            svg {
                                 fill: #0D1F26;
                             }
                         }
+
                         margin-right: 0;
+
                         .booking-doc-details {
                             flex: 70%;
                         }
 
-                        .doc-image{
-                            img[alt='docIMage']{
+                        .doc-image {
+                            img[alt='docIMage'] {
                                 display: none;
                             }
-                            img[alt='docIMage1']{
+
+                            img[alt='docIMage1'] {
                                 display: block;
                             }
-                            img{
+
+                            img {
                                 height: 100%;
                             }
                         }
@@ -396,6 +404,7 @@
                                     font-weight: 400;
                                     line-height: 16px;
                                 }
+
                                 margin-bottom: 12px;
                             }
 
@@ -408,8 +417,6 @@
                                 border-bottom: 1px solid #C8CED0;
                                 margin-bottom: 12px;
 
-
-
                                 .timing {
                                     flex: 0 1 calc((100% - 16px) / 2);
                                     border-radius: 6px;
@@ -417,30 +424,43 @@
                                     padding: 4px 8px;
                                     margin-right: 16px;
                                     margin-bottom: 16px;
+                                    cursor: pointer;
 
                                     &:nth-child(2n) {
                                         margin-right: 0;
                                     }
 
-                                    p {
+                                    span {
                                         color: #171A1C;
-                                        font-size: 11px;
+                                        font-size: 11px !important;
                                         font-style: normal;
                                         font-weight: 400;
                                         line-height: 16px;
                                     }
+
+                                    &.blocked,
+                                    &.booked {
+                                        background: rgb(216, 216, 216);
+                                        pointer-events: none;
+                                    }
+
+                                    &.selected {
+                                        background: #84dafc;
+                                    }
                                 }
                             }
 
-                            .book-button{
+                            .book-button {
                                 flex: auto;
-                                display: flex;justify-content: end;
+                                display: flex;
+                                justify-content: end;
                                 align-items: end;
+
                                 button {
                                     padding: 10px 24px;
                                     border-radius: 100px;
-                                    background:  #206BAC;
-                                    color:  #FFF;
+                                    background: #206BAC;
+                                    color: #FFF;
                                     text-align: center;
                                     font-size: 16px;
                                     font-style: normal;
@@ -458,65 +478,175 @@
             }
         }
     }
+    p.no-result{
+        text-align: center;
+    }
+    .appointment-button{
+        display: none;
+    }
 }
 
 @media screen and (max-width:992px) {
-    .Search{
-        .banner{
-            display: none;
+    .Search {
+        padding-bottom: 70px;
+
+        .banner {
+            .appointment-form {
+                position: absolute;
+                bottom: -28px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 100%;
+
+                .container {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .search {
+                    margin-left: 16px;
+
+                    button {
+                        border-radius: 100px;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 24px;
+                        cursor: pointer;
+                        padding: 10px 24px;
+                        background: #206BAC;
+                        border: 1px solid #206BAC;
+                        color: #FFF;
+                    }
+                }
+            }
         }
 
-        #appointment{
-            margin-top: 90px;
-            .container{
+        .banner {
+            p {
+                font-size: 28px;
+                line-height: 36px;
+                max-width: 80%;
+
+                br {
+                    display: none;
+                }
+            }
+
+            .appointment-form {
+                display: none;
+            }
+
+            .appointment-button {
+                border-radius: 40px;
+                border: 1px solid var(--on-surface-on-surface, #171A1C);
+                background: #FFF;
+                box-shadow: 0px 1px 4px 3px rgba(0, 0, 0, 0.25);
+            }
+            .appointment-button {
+                display: flex;
+                align-items: center;
+                position: relative;
+                z-index: 100;
+                padding: 12px 0;
+        
+                .icon{
+                    flex: 0 1 20%;
+                    display: flex;
+                    justify-content: center;align-items: center;
+                }
+        
+                .text {
+                    flex: 0 1 80%;
+                    p {
+                        color: #464F53;
+                        font-size: 11px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 16px;
+                        padding: 0;
+        
+                        &:first-child {
+                            color: #171A1C;
+                            font-size: 13px;
+                            font-style: normal;
+                            font-weight: 600;
+                            line-height: 16px;
+                        }
+                    }
+                }
+            }
+        }
+
+        
+        #appointment {
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            overflow: hidden;
+            margin-top: 0;
+            padding-top: 90px;
+            background-color: #FFF;
+            transform: translateY(-30px);
+
+            .container {
                 flex-wrap: wrap;
             }
-            #filters{
+
+            #filters {
                 flex: 100%;
                 display: none;
             }
-            #search-result{
+
+            #search-result {
                 flex: 100%;
 
-                .heading{
-                    p{
+                .heading {
+                    p {
                         font-size: 12px;
                         max-width: 50%;
                     }
                 }
 
-                .appointment-cards .appointment-card{
+                .appointment-cards .appointment-card {
                     flex: 100%;
                     max-width: 100%;
                     margin-right: 0;
                     display: flex;
                     flex-direction: row;
-                    .doc-image{
+
+                    .doc-image {
                         flex: 35%;
                     }
-                    .booking-doc-details{
+
+                    .booking-doc-details {
                         flex: 65%;
                     }
 
-                    &.open{
+                    &.open {
                         flex-direction: column;
-                        .doc-image{
+
+                        .doc-image {
                             max-height: 130px;
                         }
-                        .booking-doc-details{
+
+                        .booking-doc-details {
                             flex-direction: column;
                         }
-                        .doc-detail .profile{
+
+                        .doc-detail .profile {
                             margin-bottom: 0;
                         }
-                        .more-details .hospital{
+
+                        .more-details .hospital {
                             margin-bottom: 16px;
                         }
-                        .more-details .subhead{
+
+                        .more-details .subhead {
                             padding-top: 16px;
                             border-top: 1px solid #C8CED0;
                         }
-                        .booking-detail{
+
+                        .booking-detail {
                             padding-top: 0;
                         }
                     }

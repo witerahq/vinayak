@@ -37,6 +37,10 @@ body {
     border: 3px solid #ffffff;
   }
 
+  .fc .fc-timegrid .fc-daygrid-body{
+    display: none !important;
+  }
+
   @media screen and (max-width:992px) {
     .Footer{
       display: none;

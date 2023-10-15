@@ -1,33 +1,52 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Card, CardHeader, IconButton, Tabs, Tab, Box, Chip, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import './index.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchDoctorAvailability, updateAvailabilityStatus } from '../../../../actions/doctorAvailabilityActions';
+import moment from 'moment';
 
 const WeekTabsModal = ({ isOpen, onClose }) => {
   const [selectedTab, setSelectedTab] = useState(0);
-  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  const currentDate = new Date();
+  
 
-  const initialSlots = {
-    morning: Array(4).fill('available'),   // Representing 8, 9, 10, 11 AM slots
-    afternoon: Array(4).fill('available'), // Representing 12, 1, 2, 3 PM slots
-    evening: Array(4).fill('available'),   // Representing 4, 5, 6, 7 PM slots
-  };
+  const availabilityFromStore = useSelector((state)=>{
+    console.log('state',state.availability?.availability)
+    return state.availability.availability
+  })
+  const dispatch = useDispatch();
+  const [availability, setAvailability] = useState(availabilityFromStore || []); // Local state for prescriptions
 
-  const [slots, setSlots] = useState(initialSlots);
+  useEffect(()=>{
+    if(!availabilityFromStore){
+      dispatch(fetchDoctorAvailability())
+    }
+  },[availabilityFromStore])
+
+ 
+
+  const changeTab = (value)=>{
+    setSelectedTab(value)
+  }
 
   const handleChipClick = (timeOfDay, index) => {
-    setSlots(prevSlots => {
-      const newSlots = { ...prevSlots };
-      if (newSlots[timeOfDay][index] === 'available') {
-        newSlots[timeOfDay][index] = 'disabled';
-      } else if (newSlots[timeOfDay][index] === 'disabled') {
-        newSlots[timeOfDay][index] = 'available';
-      }
-      return newSlots;
-    });
+      let slot = availability[selectedTab].timeSlots[timeOfDay][index]
+      let slots = [...availability]
+      if(slot.status!='booked'){
+        slots[selectedTab].timeSlots[timeOfDay][index].status =  slot.status == 'open'? 'blocked':'open'
+      } 
+      console.log(slots,availability)
+
+      setAvailability(slots)
+
+
+      if(availability){}
   };
+
+  const updateAvailability = () =>{
+    dispatch(updateAvailabilityStatus(availability))
+  }
 
   return (
     <Modal open={isOpen} onClose={onClose}>
@@ -42,31 +61,31 @@ const WeekTabsModal = ({ isOpen, onClose }) => {
           }
         />
         <Box className="tabs-container">
-          <Tabs value={selectedTab} onChange={(e, newValue) => setSelectedTab(newValue)} variant="scrollable" scrollButtons>
-            {[...Array(7)].map((_, i) => {
-              const dateObj = new Date(currentDate);
-              dateObj.setDate(currentDate.getDate() + i);
-              return <Tab key={i} label={`${('0'+dateObj.getDate()).slice(-2)} ${days[dateObj.getDay()]} `} />
+          
+          <Tabs value={selectedTab} onChange={(e, newValue) => changeTab(newValue)} variant="scrollable" scrollButtons>
+            {availability&&availability?.map((item, i) => {
+              console.log('ava',item)
+              return <Tab key={i} label={moment(item.day).format("ddd, Do MMM")} />
             })}
             {/* <Tab icon={<CalendarTodayIcon />} /> */}
           </Tabs>
 
           <Box className="time-sections">
-            {['Morning', 'Afternoon', 'Evening'].map((time, idx) => (
+            {availability?.[selectedTab]&&Object.keys(availability?.[selectedTab]?.timeSlots).map((time, idx) => (
               <div key={idx} className="time-slot">
                 <h3>{time}</h3>
-                {slots[time.toLowerCase()].map((status, sIdx) => (
+                {availability[selectedTab].timeSlots[time.toLowerCase()].map((item, sIdx) => (
                   <Chip 
                     key={sIdx}
-                    label={`${time} Slot ${sIdx + 1}`} 
-                    className={status}
-                    onClick={() => status !== 'booked' && handleChipClick(time.toLowerCase(), sIdx)}
+                    label={item.startTime +' - '+item.endTime+':'+item.status} 
+                    className={item.status}
+                    onClick={() => handleChipClick(time, sIdx)}
                   />
                 ))}
               </div>
             ))}
           </Box>
-        <Button variant='outlined' size='small' style={{marginTop:'16px',marginBottom:'16px',float:'right'}}>Update</Button>
+        <Button variant='outlined' onClick={e=>{updateAvailability()}} size='small' style={{marginTop:'16px',marginBottom:'16px',float:'right'}}>Update</Button>
         </Box>
       </Card>
     </Modal>

@@ -6,10 +6,13 @@ import { SnackbarProvider } from 'notistack';
 import { Provider } from 'react-redux';
 import store from './store'; // Import your Redux store
 import { checkUserSession } from './actions/authActions';
+import { checkUserAppointment } from './actions/appointmentActions';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 store.dispatch(checkUserSession());
+store.dispatch(checkUserAppointment());
+
 
 root.render(
     <Provider store={store}>

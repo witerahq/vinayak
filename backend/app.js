@@ -51,6 +51,11 @@ app.use(passport.session());
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/email', require('./routes/verifyEmail'));
 app.use('/api/user', require('./routes/userRoutes'));
+app.use('/api/prescriptions', require('./routes/prescriptionRoutes'));
+app.use('/api/doctor', require('./routes/doctorAvailabilityRoutes'));
+app.use('/api', require('./routes/searchRoutes'));
+app.use('/api', require('./routes/paymentRoutes'));
+app.use('/api/appointments', require('./routes/appointmentRoutes'));
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

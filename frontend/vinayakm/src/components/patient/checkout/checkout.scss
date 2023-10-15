@@ -18,7 +18,6 @@
             margin-right: 16px;
 
             .appointment {
-
                 background: #F4F6F6;
                 border-radius: 16px;
                 padding: 16px;
@@ -251,6 +250,7 @@
 @media screen and (max-width:992px) {
     .Checkout{
         margin: 20px 0;
+        padding-bottom: 70px;
         .container{
             flex-wrap: wrap;
             .summary{

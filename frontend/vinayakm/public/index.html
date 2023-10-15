@@ -47,6 +47,10 @@
         $('.Search #appointment #search-result .appointment-cards .appointment-card .expand').removeClass('open')
          $($(this).parent()[0]).toggleClass('open')
       })
+      $(document).on('click','#root .Search .timings .timing',function(){
+        $('#root .Search .timings .timing').removeClass('selected')
+        $(this).addClass('selected')
+      })
     </script>
 </body>
 

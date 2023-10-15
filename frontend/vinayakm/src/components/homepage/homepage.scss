@@ -426,35 +426,43 @@
         }
     }
 
-    .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root.Mui-focused,.css-1jy569b-MuiFormLabel-root-MuiInputLabel-root[data-shrink='true'] {display: none !important;}
+    .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root.Mui-focused,
+    .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root[data-shrink='true'] {
+        display: none !important;
+    }
 
 
 
 }
 
 @media screen and (max-width:992px) {
-    .Homepage{
-        .banner{
-            p{
+    .Homepage {
+        padding-bottom: 70px;
+
+        .banner {
+            p {
                 font-size: 28px;
-                line-height: 36px; 
+                line-height: 36px;
                 max-width: 80%;
-                br{
+
+                br {
                     display: none;
                 }
             }
-            .appointment-form{
+
+            .appointment-form {
                 display: none;
             }
-            .appointment-button{
+
+            .appointment-button {
                 border-radius: 40px;
-        border: 1px solid var(--on-surface-on-surface, #171A1C);
-        background: #FFF;
-        box-shadow: 0px 1px 4px 3px rgba(0, 0, 0, 0.25);   
+                border: 1px solid var(--on-surface-on-surface, #171A1C);
+                background: #FFF;
+                box-shadow: 0px 1px 4px 3px rgba(0, 0, 0, 0.25);
             }
         }
 
-        #why{
+        #why {
             border-top-left-radius: 30px;
             border-top-right-radius: 30px;
             overflow: hidden;
@@ -462,96 +470,111 @@
             padding-top: 90px;
             background-color: #FFF;
             transform: translateY(-30px);
-            .heading{
+
+            .heading {
                 font-size: 28px;
-font-style: normal;
-font-weight: 500;
-line-height: 36px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 36px;
             }
 
-            .why-content{
+            .why-content {
                 flex-wrap: wrap;
-                .why-text{
+
+                .why-text {
                     flex: 100%;
-                    ul{
+
+                    ul {
                         padding-right: 0;
                     }
-                    li{
+
+                    li {
                         font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: 24px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 24px;
                     }
                 }
 
-                .why-image{
+                .why-image {
                     flex: 100%;
-                    img{
+
+                    img {
                         max-width: 100%;
                     }
                 }
             }
+
             margin-bottom: 0;
         }
 
-        #consult{
-            .heading{
+        #consult {
+            .heading {
                 flex-wrap: wrap;
-                p{
+
+                p {
                     font-size: 24px;
-font-style: normal;
-font-weight: 500;
-line-height: 28px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 28px;
                 }
-                button{
+
+                button {
                     display: none;
                 }
             }
-            .consult-types .consult-type{
+
+            .consult-types .consult-type {
                 flex: calc((100% - 16px) / 2);
                 margin-bottom: 16px;
-                &:nth-child(2n){
+
+                &:nth-child(2n) {
                     margin-right: 0;
                 }
             }
         }
 
-        #clinic{
+        #clinic {
             margin-top: 20px;
-            .heading{
+
+            .heading {
                 flex-wrap: wrap;
-                p{
+
+                p {
                     font-size: 24px;
-font-style: normal;
-font-weight: 500;
-line-height: 28px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 28px;
                 }
-                button{
+
+                button {
                     display: none;
                 }
             }
 
-            .clinic-types .clinic-type{
+            .clinic-types .clinic-type {
                 flex: 100%;
                 margin-right: 0;
             }
-            
+
         }
 
-        #testimonial{
+        #testimonial {
             margin-top: 20px;
             margin-bottom: 20px;
-            .testimonial-users{ 
+
+            .testimonial-users {
                 flex-wrap: wrap;
-                .testimonial-user{
-                flex: 0 1 calc(100%);
-                margin-right: 0;
-                margin-bottom: 20px;
+
+                .testimonial-user {
+                    flex: 0 1 calc(100%);
+                    margin-right: 0;
+                    margin-bottom: 20px;
                 }
             }
         }
 
-        #know .heading p{
+        #know .heading p {
             font-size: 24px;
             line-height: 28px;
         }
@@ -561,7 +584,43 @@ line-height: 28px;
 
     }
 
-    
+    .appointment-button {
+        display: flex;
+        align-items: center;
+        position: relative;
+        z-index: 100;
+        padding: 12px 0;
 
-    
+        .icon{
+            flex: 0 1 20%;
+            display: flex;
+            justify-content: center;align-items: center;
+        }
+
+        .text {
+            flex: 0 1 80%;
+            p {
+                color: #464F53;
+                font-size: 11px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 16px;
+                padding: 0;
+
+                &:first-child {
+                    color: #171A1C;
+                    font-size: 13px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 16px;
+                }
+            }
+        }
+    }
+
+
+    .Homepage #testimonial .testimonial-users .testimonial-user .text {
+        padding: 22px 12px;
+    }
+
 }

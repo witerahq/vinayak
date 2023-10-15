@@ -25,6 +25,9 @@ import { visuallyHidden } from '@mui/utils';
 import { Button, Chip } from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import EdgesensorHighIcon from '@mui/icons-material/EdgesensorHigh';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAppointmentsDoctor } from '../../../actions/bookingActions';
+import moment from 'moment';
 function createData(name, calories, fat, carbs, protein) {
     return {
         name,
@@ -80,6 +83,18 @@ const headCells = [
         label: 'Patients',
     },
     {
+        id: 'age',
+        numeric: false,
+        disablePadding: true,
+        label: 'Age',
+    },
+    {
+        id: 'gender',
+        numeric: false,
+        disablePadding: true,
+        label: 'Gender',
+    },
+    {
         id: 'mode',
         numeric: false,
         disablePadding: false,
@@ -97,12 +112,7 @@ const headCells = [
         disablePadding: false,
         label: 'Date & Time',
     },
-    {
-        id: 'Status',
-        numeric: false,
-        disablePadding: false,
-        label: 'Status',
-    },
+
     {
         id: 'medical_records',
         numeric: false,
@@ -169,7 +179,7 @@ EnhancedTableHead.propTypes = {
 
 export default function Patients() {
     const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('calories');
+    const [orderBy, setOrderBy] = React.useState('date');
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
@@ -226,17 +236,31 @@ export default function Patients() {
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
     // Avoid a layout jump when reaching the last page with empty rows.
+
+    const bookingFromStore = useSelector((state) => {
+        console.log(state)
+        return state.booking.appointments
+    })
+    const [booking, setBooking] = React.useState(bookingFromStore || [])
+    const dispatch = useDispatch()
+
+    React.useEffect(() => {
+        if (!bookingFromStore)
+            dispatch(fetchAppointmentsDoctor())
+    }, [bookingFromStore])
+
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
     const visibleRows = React.useMemo(
         () =>
-            stableSort(rows, getComparator(order, orderBy)).slice(
+            stableSort(booking, getComparator(order, orderBy)).slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage,
             ),
         [order, orderBy, page, rowsPerPage],
     );
+
 
     return (
         <div className="Patients">
@@ -285,24 +309,28 @@ export default function Patients() {
                                                     scope="row"
                                                     padding="none"
                                                 >
-                                                    {row.name}
+                                                    {row.patientId.fullName}
                                                 </TableCell>
-                                                <TableCell className='mode'>{row.fat}</TableCell>
-                                                <TableCell className='pay' >{row.carbs}</TableCell>
+                                                <TableCell className='mode'>{25}</TableCell>
+                                                <TableCell className='gender'>Male</TableCell>
+                                                <TableCell className='age'>{row.mode}</TableCell>
+                                                <TableCell className='pay' >{row.patientId.phoneNumber}</TableCell>
                                                 <TableCell className='time' >
                                                     {/* <Button variant='contained' sx={{background:'#D9EBF2',color:'black'}}>{row.carbs}</Button> */}
-                                                    <Chip label={row.carbs} color="primary" />
-                                                    </TableCell>
-                                                <TableCell className='status' >{row.fat}</TableCell>
-                                                <TableCell className='records'> 
-                                                {/* <Button variant="outlined" size='small' style={{ borderRadius: 50 }}>View</Button> */}
-                                                <Chip label="View" color="primary" variant="outlined" />
+                                                    <Chip label={moment(row.date).format('D MMM') + ' | ' + row.time.split('-')[0]} color="primary" />
+                                                </TableCell>
+                                                {/* <TableCell className='status' >{row.fat}</TableCell> */}
+                                                <TableCell className='records'>
+                                                    {/* <Button variant="outlined" size='small' style={{ borderRadius: 50 }}>View</Button> */}
+                                                    <Chip label="View" color="primary" variant="outlined" />
 
                                                 </TableCell>
 
                                                 <TableCell className='actions' >
-                                                <ChatBubbleOutlineIcon htmlColor='#464F53' sx={{marginRight:'10px'}}></ChatBubbleOutlineIcon>
-                                                <EdgesensorHighIcon htmlColor='#464F53'></EdgesensorHighIcon>
+                                                    {/* <ChatBubbleOutlineIcon htmlColor='#464F53' sx={{marginRight:'10px'}}></ChatBubbleOutlineIcon> */}
+                                                    <a href={'tel:' + row.patientId.phoneNumber}>
+                                                        <EdgesensorHighIcon htmlColor='#464F53'></EdgesensorHighIcon>
+                                                    </a>
                                                 </TableCell>
                                             </TableRow>
                                         );
@@ -314,7 +342,7 @@ export default function Patients() {
                         <TablePagination
                             rowsPerPageOptions={[5, 10, 25]}
                             component="div"
-                            count={rows.length}
+                            count={booking.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             onPageChange={handleChangePage}

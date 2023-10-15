@@ -20,10 +20,15 @@ import DownloadIcon from '@mui/icons-material/Download';
 import TableHead from '@mui/material/TableHead';
 import { Button } from '@mui/material';
 import './booking-table.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAppointmentsPatient } from '../../../../actions/bookingActions';
+import moment from 'moment';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 
 function TablePaginationActions(props) {
     const theme = useTheme();
     const { count, page, rowsPerPage, onPageChange } = props;
+
 
     const handleFirstPageButtonClick = (event) => {
         onPageChange(event, 0);
@@ -82,9 +87,7 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(name, calories, fat) {
-    return { name, calories, fat };
-}
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -94,29 +97,29 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         fontSize: 14,
     },
 }));
-const rows = [
-    createData('Cupcake', 305, 3.7),
-    createData('Donut', 452, 25.0),
-    createData('Eclair', 262, 16.0),
-    createData('Frozen yoghurt', 159, 6.0),
-    createData('Gingerbread', 356, 16.0),
-    createData('Honeycomb', 408, 3.2),
-    createData('Ice cream sandwich', 237, 9.0),
-    createData('Jelly Bean', 375, 0.0),
-    createData('KitKat', 518, 26.0),
-    createData('Lollipop', 392, 0.2),
-    createData('Marshmallow', 318, 0),
-    createData('Nougat', 360, 19.0),
-    createData('Oreo', 437, 18.0),
-].sort((a, b) => (a.calories < b.calories ? -1 : 1));
+
 
 export default function BookingTable() {
+
+    const bookingFromStore = useSelector((state) => {
+        console.log(state)
+        return state.booking.appointments
+    })
+    const [booking, setBooking] = React.useState(bookingFromStore || [])
+    const dispatch = useDispatch()
+
+    React.useEffect(() => {
+        if (!bookingFromStore)
+            dispatch(fetchAppointmentsPatient())
+    }, [bookingFromStore])
+
+
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - booking.length) : 0;
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -127,6 +130,21 @@ export default function BookingTable() {
         setPage(0);
     };
 
+    const navigate = useNavigate()
+
+    const bookAgain = (item) =>{
+        navigate({
+            pathname:'/search',
+            search: createSearchParams({
+                date:new Date(),
+                speciality:item.doctorId.speciality,
+                symptoms:''
+            }).toString()
+        })
+    }
+
+    
+
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
@@ -134,27 +152,32 @@ export default function BookingTable() {
                     <TableRow>
                         <StyledTableCell>Doctors</StyledTableCell>
                         <StyledTableCell align="right">Date</StyledTableCell>
+                        <StyledTableCell align="right">Time</StyledTableCell>
                         <StyledTableCell align="right">Actions</StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {(rowsPerPage > 0
-                        ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        : rows
+                        ? booking.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        : booking
                     ).map((row) => (
-                        <TableRow key={row.name}>
+                        <TableRow key={row._id}>
                             <TableCell component="th" scope="row">
-                                {row.name}
+                                Dr. {row.doctorId.fullName}
                             </TableCell>
                             <TableCell style={{ width: 160 }} align="right">
-                                {row.calories}
+                                {moment(row.date).format('MMMM Do YYYY')}
+                            </TableCell>
+                            
+                            <TableCell align="right">
+                                {row.time}
                             </TableCell>
                             <TableCell align="right" >
                                 <div className="row">
                                     <Button startIcon={<DownloadIcon />}>
                                         Prescription
                                     </Button>
-                                    <Button variant="outlined">
+                                    <Button variant="outlined" onClick={e=>{bookAgain(row)}}>
                                         Book Again
                                     </Button>
                                 </div>
@@ -171,8 +194,8 @@ export default function BookingTable() {
                     <TableRow>
                         <TablePagination
                             rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                            colSpan={3}
-                            count={rows.length}
+                            colSpan={4}
+                            count={booking.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             SelectProps={{

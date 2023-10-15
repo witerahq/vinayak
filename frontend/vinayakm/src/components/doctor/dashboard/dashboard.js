@@ -34,6 +34,9 @@ import ChatRoom from '../../chatroom';
 import Payments from '../payments/payments';
 import Patients from '../patient/patient';
 import ForumIcon from '@mui/icons-material/Forum';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCurrentUser } from '../../../actions/userActions';
+import { Avatar } from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -86,9 +89,9 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-    
+
     ({ theme, open }) => ({
-        
+
         flexShrink: 0,
         whiteSpace: 'nowrap',
         boxSizing: 'border-box',
@@ -111,7 +114,7 @@ const sideNav = [
     { name: 'Dashboard', route: '', icon: <DashboardIcon /> },
     { name: 'Appointments', route: 'appointments', icon: <InsertInvitationIcon /> },
     { name: 'Patients', route: 'patients', icon: <AccessibleIcon /> },
-    { name: 'Chat', route: 'chat', icon: <ForumIcon /> },
+    // { name: 'Chat', route: 'chat', icon: <ForumIcon /> },
     { name: 'Prescriptions', route: 'prescriptions', icon: <MedicationIcon /> },
     { name: 'Payments', route: 'payments', icon: <PaymentIcon /> },
 ];
@@ -131,11 +134,24 @@ export default function Dashboard() {
 
     const navigate = useNavigate();
 
+    const userFromStore = useSelector((state) => {
+        console.log(state, 'state from profile')
+        return state?.user?.user
+    });
 
+    const [user, setUser] = React.useState(userFromStore || {});
+
+    const dispatch = useDispatch()
+
+    React.useEffect(() => {
+        if (!userFromStore) {
+            dispatch(getCurrentUser());
+        }
+    }, [userFromStore]);
 
     return (
         <div className="Dashboard">
-            <Box sx={{ display: 'flex',width:'100%' }}>
+            <Box sx={{ display: 'flex', width: '100%' }}>
                 <CssBaseline />
                 <AppBar position="fixed" open={open}>
                     <Toolbar className='toolbar-header'>
@@ -152,16 +168,23 @@ export default function Dashboard() {
                                 <MenuIcon />
                             </IconButton>
                             <Typography variant="h6" noWrap component="div">
-                                <img src={Logo} alt="logo image" />
+                                <img src={Logo} alt="logo image" onClick={e=>navigate('/')} />
                             </Typography>
                         </Typography>
                         <Typography noWrap component="div" >
-                            <NavLink to="profile" className="user" activeClassName="active-link"></NavLink>
+                            <NavLink to="profile" activeClassName="active-link">
+                                {/* <img src={user.image} alt={user.fullName} /> */}
+                                <Avatar
+                                    alt={user.fullName}
+                                    src={user.image}
+                                    sx={{ width: 48, height: 48 }}
+                                />
+                            </NavLink>
                         </Typography>
                     </Toolbar>
                 </AppBar>
                 <Drawer variant="permanent" open={open}
-               
+
                 >
                     <DrawerHeader>
                         <IconButton onClick={handleDrawerClose}>

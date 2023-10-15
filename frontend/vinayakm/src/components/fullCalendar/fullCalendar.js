@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./fullCalendar.scss";
 
 import FullCalendar from "@fullcalendar/react";
@@ -10,8 +10,8 @@ import { formatDate } from '@fullcalendar/core';
 
 import events from "./events";
 
-export default function Calendar() {
-    const [currentEvents, setCurrentEvents] = useState([]);
+export default function Calendar({event}) {
+    const [currentEvents, setCurrentEvents] = useState(event);
 
 
     const handleDateClick = (selected) => {
@@ -38,10 +38,16 @@ export default function Calendar() {
           selected.event.remove();
         }
       };
+
+      useEffect(()=>{
+        console.log(event,'event')
+      },[])
   return (
     <div className="Calendar">
       <FullCalendar
             initialView="timeGridDay"
+            slotMinTime= "08:00:00"
+            slotMaxTime="20:00:00"
             headerToolbar={{
             left: 'prev,next today',
             center: 'title',
@@ -59,6 +65,7 @@ export default function Calendar() {
           dayMaxEvents={true}
           // select={handleDateClick}
           // eventClick={handleEventClick}
+          events={currentEvents}
           initialEvents={[
             {
               id: '12315',

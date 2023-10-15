@@ -50,7 +50,7 @@ function Bookings() {
         <div className="Booking">
             <div className="container">
                 <Box sx={{ width: '100%' }}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                             <Tab label="Upcoming" {...a11yProps(0)} />
                             <Tab label="Past Bookings" {...a11yProps(1)} />
@@ -58,10 +58,10 @@ function Bookings() {
                     </Box>
                     <CustomTabPanel value={value} index={0}>
                     <BookingTable></BookingTable>
-                    </CustomTabPanel>
-                    <CustomTabPanel value={value} index={1}>
+                    </CustomTabPanel> */}
+                    {/* <CustomTabPanel value={value} index={1}> */}
                     <BookingTable></BookingTable>
-                    </CustomTabPanel>
+                    {/* </CustomTabPanel> */}
                 </Box>
             </div>
         </div>

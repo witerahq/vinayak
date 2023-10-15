@@ -25,6 +25,9 @@ import { visuallyHidden } from '@mui/utils';
 import { Button, Chip } from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import EdgesensorHighIcon from '@mui/icons-material/EdgesensorHigh';
+import { getPayments } from '../../../actions/paymentActions';
+import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 function createData(name, calories, fat, carbs, protein) {
     return {
         name,
@@ -61,7 +64,7 @@ function getComparator(order, orderBy) {
 }
 
 function stableSort(array, comparator) {
-    const stabilizedThis = array.map((el, index) => [el, index]);
+    const stabilizedThis = array?.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
         const order = comparator(a[0], b[0]);
         if (order !== 0) {
@@ -89,7 +92,7 @@ const headCells = [
         id: 'pay',
         numeric: false,
         disablePadding: false,
-        label: 'Pay',
+        label: 'Amount',
     },
     {
         id: 'date_time',
@@ -98,23 +101,11 @@ const headCells = [
         label: 'Date & Time',
     },
     {
-        id: 'Status',
+        id: 'Transaction Id',
         numeric: false,
         disablePadding: false,
         label: 'Status',
-    },
-    {
-        id: 'medical_records',
-        numeric: false,
-        disablePadding: false,
-        label: 'Medical records',
-    },
-    {
-        id: 'actions',
-        numeric: false,
-        disablePadding: false,
-        label: 'Actions',
-    },
+    }
 ];
 
 function EnhancedTableHead(props) {
@@ -123,6 +114,7 @@ function EnhancedTableHead(props) {
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
+   
 
     return (
         <TableHead>
@@ -169,11 +161,24 @@ EnhancedTableHead.propTypes = {
 
 export default function Payments() {
     const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('calories');
+    const [orderBy, setOrderBy] = React.useState('time');
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+    const paymentFromStore = useSelector((state) => {
+        console.log(state)
+        return state.payment.payments
+    })
+
+    const [payment, setPayment] = React.useState(paymentFromStore || [])
+    const dispatch = useDispatch()
+
+    React.useEffect(() => {
+        if (!paymentFromStore)
+            dispatch(getPayments())
+    }, [paymentFromStore])
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -231,7 +236,7 @@ export default function Payments() {
 
     const visibleRows = React.useMemo(
         () =>
-            stableSort(rows, getComparator(order, orderBy)).slice(
+            stableSort(payment, getComparator(order, orderBy)).slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage,
             ),
@@ -261,7 +266,7 @@ export default function Payments() {
                                     rowCount={rows.length}
                                 />
                                 <TableBody>
-                                    {visibleRows.map((row, index) => {
+                                    {visibleRows?.map((row, index) => {
                                         const isItemSelected = isSelected(row.name);
                                         const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -285,25 +290,25 @@ export default function Payments() {
                                                     scope="row"
                                                     padding="none"
                                                 >
-                                                    {row.name}
+                                                    {row.patientId.fullName}
                                                 </TableCell>
-                                                <TableCell className='mode'>{row.fat}</TableCell>
-                                                <TableCell className='pay' >{row.carbs}</TableCell>
+                                                <TableCell className='mode'>{row.mode}</TableCell>
+                                                <TableCell className='pay' >₹ {row.amount}</TableCell>
                                                 <TableCell className='time' >
                                                     {/* <Button variant='contained' sx={{background:'#D9EBF2',color:'black'}}>{row.carbs}</Button> */}
-                                                    <Chip label={row.carbs} color="primary" />
+                                                    <Chip label={moment(row.time).format('Do MMM')+' | '+moment(row.time).format('h:mm a')} color="primary" />
                                                     </TableCell>
-                                                <TableCell className='status' >{row.fat}</TableCell>
-                                                <TableCell className='records'> 
-                                                {/* <Button variant="outlined" size='small' style={{ borderRadius: 50 }}>View</Button> */}
+                                                <TableCell className='status' >{row.transactionID}</TableCell>
+                                                {/* <TableCell className='records'> 
+                                                <Button variant="outlined" size='small' style={{ borderRadius: 50 }}>View</Button> 
                                                 <Chip label="View" color="primary" variant="outlined" />
 
-                                                </TableCell>
+                                                </TableCell> */}
 
-                                                <TableCell className='actions' >
+                                                {/* <TableCell className='actions' >
                                                 <ChatBubbleOutlineIcon htmlColor='#464F53' sx={{marginRight:'10px'}}></ChatBubbleOutlineIcon>
                                                 <EdgesensorHighIcon htmlColor='#464F53'></EdgesensorHighIcon>
-                                                </TableCell>
+                                                </TableCell> */}
                                             </TableRow>
                                         );
                                     })}
@@ -314,7 +319,7 @@ export default function Payments() {
                         <TablePagination
                             rowsPerPageOptions={[5, 10, 25]}
                             component="div"
-                            count={rows.length}
+                            count={payment.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             onPageChange={handleChangePage}

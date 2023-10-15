@@ -27,6 +27,10 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import EdgesensorHighIcon from '@mui/icons-material/EdgesensorHigh';
 import SettingsIcon from '@mui/icons-material/Settings';
 import WeekTabsModal from './modal';
+import { fetchAppointmentsDoctor } from '../../../actions/bookingActions';
+import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 function createData(name, calories, fat, carbs, protein) {
     return {
@@ -92,25 +96,19 @@ const headCells = [
         id: 'pay',
         numeric: false,
         disablePadding: false,
-        label: 'Pay',
+        label: 'Date',
     },
     {
         id: 'date_time',
         numeric: false,
         disablePadding: false,
-        label: 'Date & Time',
+        label: 'Time',
     },
     {
         id: 'Status',
         numeric: false,
         disablePadding: false,
         label: 'Status',
-    },
-    {
-        id: 'medical_records',
-        numeric: false,
-        disablePadding: false,
-        label: 'Medical records',
     },
     {
         id: 'actions',
@@ -172,12 +170,23 @@ EnhancedTableHead.propTypes = {
 
 export default function Appointments() {
     const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('calories');
+    const [orderBy, setOrderBy] = React.useState('time');
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const bookingFromStore = useSelector((state) => {
+        console.log(state)
+        return state.booking.appointments
+    })
+    const [booking, setBooking] = React.useState(bookingFromStore || [])
+    const dispatch = useDispatch()
+
+    React.useEffect(() => {
+        if (!bookingFromStore)
+            dispatch(fetchAppointmentsDoctor())
+    }, [bookingFromStore])
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -231,23 +240,29 @@ export default function Appointments() {
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - booking.length) : 0;
 
     const visibleRows = React.useMemo(
         () =>
-            stableSort(rows, getComparator(order, orderBy)).slice(
+            stableSort(booking, getComparator(order, orderBy)).slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage,
             ),
         [order, orderBy, page, rowsPerPage],
     );
 
+
+
+
+
+
+
     return (
         <div className="Appointments">
             <div className="container">
                 <div className="header">
                     <p>Appointments List</p>
-                    <Button onClick={() => setIsModalOpen(true)} variant="text"><SettingsIcon style={{marginRight:'4px'}}/> Appointment slots</Button>
+                    <Button onClick={() => setIsModalOpen(true)} variant="text"><SettingsIcon style={{ marginRight: '4px' }} /> Appointment slots</Button>
 
                 </div>
                 <WeekTabsModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}></WeekTabsModal>
@@ -265,7 +280,7 @@ export default function Appointments() {
                                     order={order}
                                     orderBy={orderBy}
                                     onRequestSort={handleRequestSort}
-                                    rowCount={rows.length}
+                                    rowCount={booking.length}
                                 />
                                 <TableBody>
                                     {visibleRows.map((row, index) => {
@@ -292,24 +307,27 @@ export default function Appointments() {
                                                     scope="row"
                                                     padding="none"
                                                 >
-                                                    {row.name}
+                                                    {row.patientId.fullName}
                                                 </TableCell>
-                                                <TableCell className='mode'>{row.fat}</TableCell>
-                                                <TableCell className='pay' >{row.carbs}</TableCell>
+                                                <TableCell className='mode'>{row.mode}</TableCell>
+                                                <TableCell className='pay' >{moment(row.date).format('MMMM, Do YYYY')}</TableCell>
                                                 <TableCell className='time' >
                                                     {/* <Button variant='contained' sx={{background:'#D9EBF2',color:'black'}}>{row.carbs}</Button> */}
-                                                    <Chip label={row.carbs} color="primary" />
-                                                    </TableCell>
-                                                <TableCell className='status' >{row.fat}</TableCell>
-                                                <TableCell className='records'> 
-                                                {/* <Button variant="outlined" size='small' style={{ borderRadius: 50 }}>View</Button> */}
+                                                    <Chip label={row.time} color="primary" />
+                                                </TableCell>
+                                                <TableCell className='status' >{row.status}</TableCell>
+                                                {/* <TableCell className='records'> 
+                                                <Button variant="outlined" size='small' style={{ borderRadius: 50 }}>View</Button> 
                                                 <Chip label="View" color="primary" variant="outlined" />
 
-                                                </TableCell>
+                                                </TableCell> */}
 
-                                                <TableCell className='actions' >
-                                                <ChatBubbleOutlineIcon htmlColor='#464F53' sx={{marginRight:'10px'}}></ChatBubbleOutlineIcon>
-                                                <EdgesensorHighIcon htmlColor='#464F53'></EdgesensorHighIcon>
+                                                <TableCell className='actions' align='left'>
+                                                    <ChatBubbleOutlineIcon htmlColor='#464F53' sx={{ marginRight: '10px' }}></ChatBubbleOutlineIcon>
+                                                    <a href={"https://wa.me/" + row.patientId.phoneNumber}>
+                                                        <WhatsAppIcon></WhatsAppIcon>
+                                                    </a>
+                                                    {/* <EdgesensorHighIcon htmlColor='#464F53'></EdgesensorHighIcon> */}
                                                 </TableCell>
                                             </TableRow>
                                         );
@@ -321,7 +339,7 @@ export default function Appointments() {
                         <TablePagination
                             rowsPerPageOptions={[5, 10, 25]}
                             component="div"
-                            count={rows.length}
+                            count={booking.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             onPageChange={handleChangePage}

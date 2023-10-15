@@ -4,7 +4,7 @@ import './login.scss';
 import authImage from '../../../assets/authImage.svg'
 import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
 import { login, setError, setSuccess } from "../../../actions/authActions";
@@ -25,6 +25,7 @@ function Login() {
     const [searchParams, setSearchParams] = useSearchParams()
     const { enqueueSnackbar } = useSnackbar();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const successMessage = useSelector((state) => {
         return state.auth.success
     });
@@ -36,12 +37,19 @@ function Login() {
     });
     const [loginClicked, setLoginClicked] = useState(false);
 
-    const register = () => setSearchParams(`?${new URLSearchParams({ auth: 'register' })}`)
+    const register = () => {
+        if(window.innerWidth>992)
+        setSearchParams(`?${new URLSearchParams({ auth: 'register' })}`)
+        else 
+        navigate('/register')
+    }
     const close = () => setSearchParams(``)
 
     const handleLogin = async (value) => {
         let response = await dispatch(login(value));
         setLoginClicked(!loginClicked)
+        if(window.innerWidth<992)
+        navigate('/')
     };
 
     useEffect(() => {

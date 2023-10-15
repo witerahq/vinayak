@@ -94,13 +94,22 @@
             width: 100%;
             justify-content: space-around;
             flex-wrap: wrap;
-            padding: 6px 12px;
+            padding: 0px 12px;
             .tab{
                 flex:0 1 calc(100% / 4);
                 max-width: calc(100% / 4);
                 padding: 12px;
                 display: flex;
                 justify-content: center;
+                svg{
+                    fill: #464F53;
+                }
+
+                &.active{
+                    svg{
+                        fill: #206BAC;
+                    }
+                }
             }
         }
     }

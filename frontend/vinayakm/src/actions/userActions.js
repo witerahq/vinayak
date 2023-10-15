@@ -39,7 +39,7 @@ export const getCurrentUser = () => async (dispatch) => {
 
 // Thunk Action for updating user details
 export const updateUserDetails = (updatedUserData) => async (dispatch) => {
-    dispatch(updateUserDetailsRequest());
+    // dispatch(updateUserDetailsRequest());
     try {
         const response = await instance.post('/api/user/update', updatedUserData);
         const user = response.data;

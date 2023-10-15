@@ -13,7 +13,7 @@ function Footer() {
                     <div className="content">
                         <div className="text">
                             <p>Download Our App Now!</p>
-                            <p>Sit exercitationem mollitia sed et distinctio excepturi unde quisquam perspiciatis. Odit dignissimos. Facilis molestias enim.</p>
+                            <p>Your journey to convenient and stress-free healthcare management begins here. Download the VinayakM app today and take control of your health with ease. Whether you're in need of a routine check-up, a specialist consultation, or simply want to stay on top of your healthcare appointments, our app has you covered.</p>
                             <div className="downloads">
                                 <div className="android">
                                     <img src={playIcon} alt="logo" />
@@ -37,32 +37,8 @@ function Footer() {
                     <div className="grid-links">
                         <div className="links">
                             <div className="link">About</div>
-                            <div className="link">Blogs</div>
-                            <div className="link">Careers</div>
-                            <div className="link">Press</div>
                             <div className="link">Contact Us</div>
 
-                        </div>
-                        <div className="links">
-                            <div className="link">For Patients</div>
-                            <div className="link">Blogs</div>
-                            <div className="link">Careers</div>
-                            <div className="link">Press</div>
-                            <div className="link">Contact Us</div>
-                        </div>
-                        <div className="links">
-                            <div className="link">For Doctors</div>
-                            <div className="link">Blogs</div>
-                            <div className="link">Careers</div>
-                            <div className="link">Press</div>
-                            <div className="link">Contact Us</div>
-                        </div>
-                        <div className="links">
-                            <div className="link">For Social Media</div>
-                            <div className="link">Blogs</div>
-                            <div className="link">Careers</div>
-                            <div className="link">Press</div>
-                            <div className="link">Contact Us</div>
                         </div>
                     </div>
                 </div>

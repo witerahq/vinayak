@@ -141,10 +141,19 @@
                 .image {
                     width: 32px;
                     height: 32px;
-                    border-radius: 50%;
-                    border: 1px solid #CC7A00;
                     padding: 1px;
                     margin-right: 4px;
+                    position: relative;
+                    z-index: 2;
+                    img{
+                        position: absolute;
+                        z-index: 1;
+                        width: 32px;
+                        height: 32px;
+                        width: 100%;
+                        border-radius: 50%;
+                        border: 1px solid #CC7A00;
+                    }
                 }
 
                 .text {
@@ -178,5 +187,11 @@
                 }
             }
         }
+    }
+}
+
+@media screen and (max-width:992px) {
+    .Insights{
+        padding-bottom: 70px;
     }
 }

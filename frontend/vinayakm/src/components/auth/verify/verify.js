@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { register } from "../../../actions/authActions";
 import { SnackbarProvider, useSnackbar } from 'notistack';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from "react-router-dom";
+import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
 import axios from 'axios';
 import { verifyEmail, verifyEmailError, verifyEmailSuccess } from "../../../actions/emailVerificationActions";
 
@@ -24,7 +24,20 @@ function Verify() {
   const [searchParams, setSearchParams] = useSearchParams()
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
-  const login = () => setSearchParams(`?${new URLSearchParams({ auth: 'login' })}`)
+  const navigate = useNavigate();
+  const login = () => {
+    if (window.innerWidth > 992) {
+      navigate({
+        pathname: '/',
+        search: createSearchParams({
+          auth: 'login',
+        }).toString()
+      })
+    }
+    // setSearchParams(`?${new URLSearchParams({ auth: 'login' })}`)
+    else
+      navigate('/login')
+  }
   const close = () => setSearchParams(``)
 
   const successMessage = useSelector((state) => {
@@ -39,13 +52,13 @@ function Verify() {
     return state.emailVerification.errorMessage
   });
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [verifyClicked,setverifyClicked] = useState(false);
+  const [verifyClicked, setverifyClicked] = useState(false);
 
   const handleClick = () => {
     setIsButtonDisabled(true);
     setTimeout(() => {
       setIsButtonDisabled(false);
-    }, 30000); 
+    }, 30000);
   };
 
   useEffect(() => {
@@ -74,23 +87,23 @@ function Verify() {
     setverifyClicked(!verifyClicked);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     if (errorMessage && errorMessage != 'null')
-    enqueueSnackbar(errorMessage, { variant: 'error' });
+      enqueueSnackbar(errorMessage, { variant: 'error' });
 
-  if (successMessage && successMessage != 'null'){
-    enqueueSnackbar(successMessage, { variant: 'success' });
-    login()
-  }
-  },[verifyClicked||(successMessage||errorMessage)])
-
-  useEffect(()=>{
-    return ()=>{
-      // setRegisterResponse(!registerResponse)
-      setTimeout(()=>{dispatch(verifyEmailSuccess(null));},1000)
-      setTimeout(()=>{dispatch(verifyEmailError(null));},1000)
+    if (successMessage && successMessage != 'null') {
+      enqueueSnackbar(successMessage, { variant: 'success' });
+      login()
     }
-  },[])
+  }, [verifyClicked || (successMessage || errorMessage)])
+
+  useEffect(() => {
+    return () => {
+      // setRegisterResponse(!registerResponse)
+      setTimeout(() => { dispatch(verifyEmailSuccess(null)); }, 1000)
+      setTimeout(() => { dispatch(verifyEmailError(null)); }, 1000)
+    }
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -109,10 +122,10 @@ function Verify() {
       return;
     }
 
-    setIsButtonDisabled(true); 
+    setIsButtonDisabled(true);
     handleVerify({
       code: formData.otp,
-      
+
       userId: searchParams.get('verify')
     })
 

@@ -21,9 +21,13 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   location: { type: String, required: true },
-  specialty:  { type: String },
+  speciality:  { type: String },
   latitude:{type:Number},
   longitude:{type:Number},
+  fullName:{
+    type:String,
+    required:true
+  },
   role: {
     type: String,
     enum: ['patient', 'doctor', 'admin'], // Add more roles as needed
@@ -37,6 +41,28 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  address: {
+    type: String,
+  },
+  
+  age: {
+    type: String,
+  },
+  
+  gender: {
+    type: String,
+  },
+  
+  hospital: {
+    type: String,
+  },
+  experience:{
+    type: String,
+  },
+  language: {
+    type: String,
+  },
+  
   emailVerificationCode: {
     type: String,
   },
