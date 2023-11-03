@@ -40,7 +40,7 @@ function Footer() {
                         <div className="links">
                             <div className="link" onClick={e=>{navigate('/about')}}>About</div>
                             <div className="link" onClick={e=>{navigate('/contact')}}>Contact Us</div>
-
+                            <div className="link" onClick={e=>{navigate('/privacy')}}>Privacy Policy</div>
                         </div>
                     </div>
                 </div>
