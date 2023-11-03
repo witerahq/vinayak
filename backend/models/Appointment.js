@@ -30,12 +30,10 @@ const appointmentSchema = new mongoose.Schema({
     required: true,
     enum: ['scheduled', 'completed', 'canceled'], // Define possible statuses
   },
-  medicalRecords: [
-    {
-      name: String,
-      link: String,
-    },
-  ],
+  medicalRecords: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'MedicalRecord', // Reference to the User model for doctors
+  },
 });
 
 // Create the Appointment model

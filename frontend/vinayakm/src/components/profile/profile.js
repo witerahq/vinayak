@@ -8,11 +8,13 @@ import { getCurrentUser, removeUserDetails, updateUserDetails } from '../../acti
 import Map from '../google-map/google-map';
 import { logout } from '../../actions/authActions';
 import { useNavigate } from 'react-router-dom';
+import { emptyImage, uploadFile } from '../../actions/fileUploadActions';
 
 function Profile() {
     const userFromStore = useSelector((state) => {
-        console.log(state,'state from profile')
-        return state?.user?.user});
+        console.log(state, 'state from profile')
+        return state?.user?.user
+    });
 
     const [user, setUser] = useState(userFromStore || {});
 
@@ -43,10 +45,51 @@ function Profile() {
         navigate('/')
     }
 
-    const updateUser = () =>{
+    const updateUser = () => {
         dispatch(updateUserDetails(user))
         setIsDirty(false)
     }
+
+    const handleEditProfileClick = () => {
+        const imageInput = document.getElementById('imageInput');
+        imageInput.click();
+    };
+
+    const image = useSelector((state) => state.file.url)
+
+    useEffect(() => {
+        if (image) {
+            console.log(image,'img')
+            setIsDirty(true)
+            setUser((prevUser) => ({
+
+                ...prevUser,
+                image
+            }))
+        }
+
+    }, [image])
+
+    useEffect(() => {
+        return () => {
+            if (image != null)
+                dispatch(emptyImage('profile'))
+        }
+    }, [])
+
+
+    const handleImageChange = (event) => {
+        const selectedFile = event.target.files[0];
+        if (selectedFile) {
+            // You can use FileReader to read the selected image as a data URL
+            const reader = new FileReader();
+            reader.onload = (e) => {
+
+                dispatch(uploadFile(selectedFile,'profile'));
+            };
+            reader.readAsDataURL(selectedFile);
+        }
+    };
 
     return (
         <div className="Profile">
@@ -65,16 +108,16 @@ function Profile() {
                         <TextField fullWidth id="profile-age" label="Age" variant="outlined" value={user?.age} name="age" onChange={handleInputChange} />
                         <FormLabel id="gender-label">Gender</FormLabel>
                         <RadioGroup
-                                row
-                                aria-labelledby="gender-label"
-                                name="gender"
-                                className='form-field'
-                                value={user?.gender}
-                                onChange={handleInputChange}
-                            >
-                                <FormControlLabel value="male" control={<Radio />} label="Male" />
-                                <FormControlLabel value="female" sele control={<Radio />} label="Female" />
-                            </RadioGroup>
+                            row
+                            aria-labelledby="gender-label"
+                            name="gender"
+                            className='form-field'
+                            value={user?.gender}
+                            onChange={handleInputChange}
+                        >
+                            <FormControlLabel value="male" control={<Radio />} label="Male" />
+                            <FormControlLabel value="female" sele control={<Radio />} label="Female" />
+                        </RadioGroup>
                         {
                             user && userFromStore?.role === 'doctor' ?
                                 <>
@@ -103,7 +146,9 @@ function Profile() {
                                             <MenuItem value={'ent'}>ENT</MenuItem>
                                             <MenuItem value={'skin'}>Skin</MenuItem>
                                             <MenuItem value={'stomach'}>Stomach</MenuItem>
-
+                                            <MenuItem value={'gyno'}>Gyno</MenuItem>
+                                            <MenuItem value={'dentist'}>Dentist</MenuItem>
+                                            <MenuItem value={'ortho'}>Ortho</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </> : null
@@ -125,9 +170,16 @@ function Profile() {
                         {/* <img src="" alt="" /> */}
                     </div>
                     <div className="edit">
-                        <Button startIcon={<UploadIcon />}>
+                        <Button startIcon={<UploadIcon />} onClick={handleEditProfileClick}>
                             Edit Profile
                         </Button>
+                        <input
+                            type="file"
+                            id="imageInput"
+                            accept="image/*"
+                            style={{ display: 'none' }}
+                            onChange={handleImageChange}
+                        />
                     </div>
 
                 </div>

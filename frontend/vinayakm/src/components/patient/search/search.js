@@ -106,16 +106,18 @@ function Search() {
                         <aside id='filters'>
                             <p className='head'>Filter By:</p>
                             <div className="filters">
-                                <label className='head'>Distance</label>
+                                <label className='head'>Distance: (kms)</label>
                                 <Box >
                                     <Slider
                                         aria-label="Custom marks"
+                                        step={5}
+                                        max={25}
+                                        
                                         defaultValue={20}
-                                        step={10}
                                         valueLabelDisplay="auto"
                                     />
                                 </Box>
-                                <hr />
+                                {/* <hr />
                                 <label className='head'>Experience</label>
                                 <Box >
                                     <Slider
@@ -146,7 +148,7 @@ function Search() {
                                         step={10}
                                         valueLabelDisplay="auto"
                                     />
-                                </Box>
+                                </Box> */}
                             </div>
                         </aside>
                         <section id='search-result'>
@@ -162,8 +164,8 @@ function Search() {
                                             <div className="appointment-card">
                                                 <div className="expand"><ExpandCircleDownIcon fontSize='medium' htmlColor='white'></ExpandCircleDownIcon></div>
                                                 <div className="doc-image">
-                                                    <img src={docImage} alt="docIMage" />
-                                                    <img src={doc1Image} alt="docIMage1" />
+                                                    <img src={item._doc.image} alt="docIMage" />
+                                                    <img src={item._doc.image} alt="docIMage1" />
                                                 </div>
                                                 <div className="booking-doc-details">
                                                     <div className="doc-detail">
@@ -172,7 +174,7 @@ function Search() {
                                                             <p>BDS, MDS</p>
                                                         </div>
                                                         <div className="info">
-                                                            <p>8+ Years of Experience</p>
+                                                            <p>{item._doc.experience}+ Years of Experience</p>
                                                             <div className="tags">
                                                                 <div className="langs">
                                                                     <div className="lang"><p>ENG</p></div>

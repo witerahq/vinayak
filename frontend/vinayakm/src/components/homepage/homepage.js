@@ -174,6 +174,19 @@ function Homepage() {
                             <div className="consult-type sanity" onClick={e => { search('sanity') }}>
                                 <p>Sanity</p>
                             </div>
+                            <div className="consult-type ortho" onClick={e => { search('ortho') }}>
+                                <p>Ortho</p>
+                            </div>
+                            <div className="consult-type gyno" onClick={e => { search('gyno') }}>
+                                <p>Gyno</p>
+                            </div>
+                            <div className="consult-type dentist" onClick={e => { search('dentist') }}>
+                                <p>Dentist</p>
+                            </div>
+                            <div className="consult-type physcian" onClick={e => { search('dentist') }}>
+                                <p>Physician</p>
+                            </div>
+                            
                         </div>
                     </div>
                 </section>
@@ -190,7 +203,7 @@ function Homepage() {
                                     return (
                                         <div className="clinic-type" onClick={e => { search('heart') }}>
                                             <div className="clinic-text">
-                                                <p>Bangalore</p>
+                                                <p>Meerut</p>
 
                                                 <p>VinayakM</p>
                                             </div>
@@ -249,7 +262,7 @@ function Homepage() {
                             <p>At VinayakM, our mission is to transform the way you access healthcare. We believe that everyone deserves convenient, reliable, and stress-free healthcare solutions. Our doctor appointment booking app is designed to put your well-being first, offering a seamless experience from start to finish.</p>
                             <p className='subhead'>Our Commitment to You</p>
                             <p>We understand that your time is precious, and your health is a top priority. With VinayakM, you can easily book appointments with just a few taps on your smartphone. Say goodbye to long waiting times and the frustration of navigating complex healthcare systems.</p>
-                            <button>Read More</button>
+                            <button onClick={e=>navigate('/about')}>Read More</button>
                         </div>
                     </div>
                 </section>

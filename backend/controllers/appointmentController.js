@@ -46,7 +46,6 @@ exports.getAppointmentsByDoctorId = async (req, res) => {
       path: 'patientId',
       model: User, // Specify the model to populate
     });
-
     
      populatedAppointments.forEach(appointment => {
       if (appointment.patientId) {

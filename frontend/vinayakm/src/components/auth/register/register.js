@@ -79,8 +79,15 @@ function Register() {
       enqueueSnackbar(successMessage, { variant: 'success' });
 
       if (registeredUser?._id) {
-        if (window.innerWidth > 992)
-          setSearchParams(`?${new URLSearchParams({ verify: registeredUser?._id })}`)
+        if (window.innerWidth > 992){
+          // setSearchParams(`?${new URLSearchParams({ verify: registeredUser?._id })}`)
+          navigate({
+            pathname: '/',
+            search: createSearchParams({
+              verify: registeredUser?._id,
+            }).toString()
+          })
+        }
         else
           navigate('/verify?verify=' + registeredUser?._id)
 
@@ -276,6 +283,9 @@ function Register() {
                         <MenuItem value={'ent'}>ENT</MenuItem>
                         <MenuItem value={'skin'}>Skin</MenuItem>
                         <MenuItem value={'stomach'}>Stomach</MenuItem>
+                        <MenuItem value={'gyno'}>Gyno</MenuItem>
+                        <MenuItem value={'dentist'}>Dentist</MenuItem>
+                        <MenuItem value={'ortho'}>Ortho</MenuItem>
                       </Select>
                     </FormControl>
                   </>
