@@ -19,6 +19,7 @@ import Register from "./components/auth/register/register";
 import ChatRoom from "./components/chatroom";
 import About from "./components/about/about";
 import Contact from "./components/contact-us/contact-us";
+import PrivacyPolicy from "./components/privacy/privacy";
 
 function ScrollToTop() {
   const location = useLocation();
@@ -90,6 +91,7 @@ function App() {
           <Route path="/search" element={<MobileRoute><Search /></MobileRoute>} />
           <Route path="/about" element={<MobileRoute><About /></MobileRoute>} />
           <Route path="/contact" element={<MobileRoute><Contact /></MobileRoute>} />
+          <Route path="/privacy" element={<MobileRoute><PrivacyPolicy /></MobileRoute>} />
           <Route path="/record/:id" element={<MobileRoute><Records /></MobileRoute>} />
           {
             window.innerWidth<992?
