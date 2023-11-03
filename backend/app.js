@@ -7,9 +7,18 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const User = require('./models/User'); // Replace with your User model import
+const https = require('https');
+const fs = require('fs');
+
+const port = 3000; // Default HTTPS port
+
+const options = {
+  key: fs.readFileSync('./certs/private.key'),         // Your SSL key
+  cert: fs.readFileSync('./certs/certificate.crt'),       // Your SSL certificate
+  ca: fs.readFileSync('./certs/ca_bundle.crt'),      // Your CA bundle certificate
+};
 
 const app = express();
-const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -61,6 +70,13 @@ app.use('/api/appointments', require('./routes/appointmentRoutes'));
 app.use('/api/file', require('./routes/uploadFileRoutes'));
 
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+
+app.get('/', (req, res) => {
+  res.send('Hello, HTTPS World (Local Test)!');
+});
+
+const server = https.createServer(options, app);
+
+server.listen(port, () => {
+  console.log(`HTTPS server is running on port ${port}`);
 });
