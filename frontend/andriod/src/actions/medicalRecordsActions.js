@@ -22,7 +22,7 @@ export const addMedicalRecord = (medicalRecordData) => async (dispatch) => {
 // Action to edit a medical record
 export const editMedicalRecord = (medicalRecordData) => async (dispatch) => {
   try {
-    const response = await axios.put('/api/medicalrecord/edit', medicalRecordData);
+    const response = await axios.post('/api/medicalrecord/edit', medicalRecordData);
     dispatch({
       type: EDIT_MEDICAL_RECORD,
       payload: response.data,

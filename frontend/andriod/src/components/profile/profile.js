@@ -8,6 +8,7 @@ import { getCurrentUser, removeUserDetails, updateUserDetails } from '../../acti
 import Map from '../google-map/google-map';
 import { logout } from '../../actions/authActions';
 import { useNavigate } from 'react-router-dom';
+import { emptyImage, uploadFile } from '../../actions/fileUploadActions';
 
 function Profile() {
     const userFromStore = useSelector((state) => {
@@ -54,17 +55,37 @@ function Profile() {
         imageInput.click();
     };
 
+    const image = useSelector((state) => state.file.url)
+
+    useEffect(() => {
+        if (image) {
+            console.log(image,'img')
+            setIsDirty(true)
+            setUser((prevUser) => ({
+
+                ...prevUser,
+                image
+            }))
+        }
+
+    }, [image])
+
+    useEffect(() => {
+        return () => {
+            if (image != null)
+                dispatch(emptyImage('profile'))
+        }
+    }, [])
+
+
     const handleImageChange = (event) => {
         const selectedFile = event.target.files[0];
         if (selectedFile) {
             // You can use FileReader to read the selected image as a data URL
             const reader = new FileReader();
             reader.onload = (e) => {
-                const imageDataURL = e.target.result;
-                setUser((prevUser) => ({
-                    ...prevUser,
-                    image: imageDataURL, // Update the image field in the state
-                }));
+
+                dispatch(uploadFile(selectedFile,'profile'));
             };
             reader.readAsDataURL(selectedFile);
         }
@@ -125,7 +146,9 @@ function Profile() {
                                             <MenuItem value={'ent'}>ENT</MenuItem>
                                             <MenuItem value={'skin'}>Skin</MenuItem>
                                             <MenuItem value={'stomach'}>Stomach</MenuItem>
-
+                                            <MenuItem value={'gyno'}>Gyno</MenuItem>
+                                            <MenuItem value={'dentist'}>Dentist</MenuItem>
+                                            <MenuItem value={'ortho'}>Ortho</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </> : null

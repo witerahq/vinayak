@@ -1,0 +1,36 @@
+.prescription-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 500px;
+  
+    .modal-header {
+      background-color: #206BAC;
+      color: white;
+    }
+  
+    .prescription-form {
+      .input-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+  
+        .MuiTextField-root {
+          flex-grow: 1;
+          margin-right: 10px;
+        }
+      }
+
+      .add-button{
+        margin-bottom: 15px;
+      }
+  
+      .select{
+        margin-bottom: 15px;
+      }
+    }
+  }
+  

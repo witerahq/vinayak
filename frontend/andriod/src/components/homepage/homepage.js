@@ -174,6 +174,19 @@ function Homepage() {
                             <div className="consult-type sanity" onClick={e => { search('sanity') }}>
                                 <p>Sanity</p>
                             </div>
+                            <div className="consult-type ortho" onClick={e => { search('ortho') }}>
+                                <p>Ortho</p>
+                            </div>
+                            <div className="consult-type gyno" onClick={e => { search('gyno') }}>
+                                <p>Gyno</p>
+                            </div>
+                            <div className="consult-type dentist" onClick={e => { search('dentist') }}>
+                                <p>Dentist</p>
+                            </div>
+                            <div className="consult-type physcian" onClick={e => { search('dentist') }}>
+                                <p>Physician</p>
+                            </div>
+                            
                         </div>
                     </div>
                 </section>

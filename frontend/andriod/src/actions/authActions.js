@@ -28,7 +28,7 @@ export const register = (userData) => async (dispatch) => {
     dispatch(setSuccess('Registration successful!'));
     return response
   } catch (error) {
-    dispatch(setError(error.response.statusText));
+    dispatch(setError(error?.response?.statusText));
   }
 };
 

@@ -113,7 +113,7 @@ function Login() {
                         <img src={authImage} alt=" auth image" />
                     </div>
                     <div className="auth-form">
-                        <p>Login test</p>
+                        <p>Login</p>
                         <div className="close" onClick={close}>
                             <CloseIcon></CloseIcon>
                         </div>

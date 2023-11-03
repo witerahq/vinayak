@@ -5,10 +5,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import './index.scss';
 import MultipleSelectPlaceholder from './select-prescriptions';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import jwt_decode from 'jwt-decode';
-import { addMedicalRecord, emptyPrescriptionDetails, getPrescriptionDetails } from '../../actions/medicalRecordsActions';
+import { addMedicalRecord, editMedicalRecord, emptyPrescriptionDetails, getPrescriptionDetails } from '../../actions/medicalRecordsActions';
+import { emptyImage, uploadFilePrescription } from '../../actions/fileUploadActions';
 
 const Records = () => {
 
@@ -17,7 +18,11 @@ const Records = () => {
         if (id)
             return state.medicalRecord.prescriptionDetails
     })
+
     const [prescription, setPrescription] = useState(medicalRecordFromStore?.prescriptions || [])
+
+    const [imageUrl,setImageUrl] = useState('')
+
     const changePrescription = (value) => {
         console.log(value)
         setPrescription(value)
@@ -30,14 +35,9 @@ const Records = () => {
         }
     })
 
-
     const selectedValue = medicalRecordFromStore?.prescriptions.map((item) => item.name)
 
-
-
-
     const [searchParams, setSearchParams] = useSearchParams()
-
 
     const [inputValue, setInputValue] = useState('');
     const [noteValue, setNoteValue] = useState(medicalRecordFromStore?.note || '');
@@ -60,18 +60,29 @@ const Records = () => {
 
     const dispatch = useDispatch()
 
+    const navigate = useNavigate()
+
     const prescribe = () => {
         let data = {
             patientId: searchParams.get('patientId'),
             symptoms: chipData,
             note: noteValue,
-            image: '',
+            image: imageUrl,
             appointmentId: searchParams.get('id'),
-            prescriptions: prescription.map((item) => item._id)
+            prescriptions: prescription.map((item) => item._id),
         }
         console.log(data)
 
-        dispatch(addMedicalRecord(data))
+        if(id){
+            data['medicalRecordId'] = id
+            dispatch(editMedicalRecord(data))
+            navigate('/dashboard/patients')
+            dispatch(emptyPrescriptionDetails())
+        } else {
+            dispatch(addMedicalRecord(data))
+            navigate('/dashboard/patients')
+            dispatch(emptyPrescriptionDetails())
+        }
     }
 
     useEffect(() => {
@@ -86,6 +97,35 @@ const Records = () => {
         setChipData((chips) => chips.filter((chip) => chip !== chipToDelete));
     };
 
+    const image = useSelector((state) => state.file.prescriptionUrl)
+
+    useEffect(()=>{
+        if(image){
+            setImageUrl(image)
+        }
+    },[image])
+
+    useEffect(()=>{
+        return () =>{
+            if(image!=null)
+            dispatch(emptyImage('prescription'))
+        }
+    },[])
+
+    const handleEditProfileClick = () => {
+        const imageInput = document.getElementById('imageInput');
+        imageInput.click();
+    };
+
+    const [prescriptionImage,setPrescriptionImage] = useState('')
+
+    const handleImageChange = (event) => {
+        const selectedFile = event.target.files[0];
+        setPrescriptionImage(selectedFile.name)
+        if(selectedFile){
+            dispatch(uploadFilePrescription(selectedFile));
+        }
+    };
 
     return (
         <div className="Records">
@@ -143,9 +183,25 @@ const Records = () => {
 
                         {
                             user.role != 'patient' ?
-                                <Box className="action-buttons" mt={2}>
-                                    <Button variant="outlined" color="primary" style={{ marginLeft: '10px' }} onClick={e => prescribe()}>Prescribe</Button>
-                                </Box> :
+                                <div className='d-flex'>
+                                    <input
+                                        type="file"
+                                        id="imageInputPrescription"
+                                        accept="image/*"
+                                        style={{ display: 'none' }}
+                                        onChange={handleImageChange}
+                                    />
+                                    {
+                                        prescriptionImage.length? <p>{prescriptionImage}</p>:null
+                                    }
+                                    <Box className="action-buttons" mt={2}>
+                                        {/* <Button variant="outlined" color="primary" style={{ marginLeft: '10px' }} onClick={handleEditProfileClick}>Upload</Button> */}
+                                    </Box>
+                                    <Box className="action-buttons" mt={2}>
+                                        <Button variant="outlined" color="primary" style={{ marginLeft: '10px' }} onClick={e => prescribe()}>Prescribe</Button>
+                                    </Box>
+                                </div>
+                                :
                                 <Box className="action-buttons" mt={2}>
                                     <Button variant="outlined" color="primary" style={{ marginLeft: '10px' }} >Download</Button>
                                 </Box>

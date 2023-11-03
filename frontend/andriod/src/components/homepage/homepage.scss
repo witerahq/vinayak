@@ -189,6 +189,7 @@
             .consult-type {
                 width: 164px;
                 height: 146px;
+                margin-bottom: 1rem;
                 flex: 0 1 calc((100% - 80px) / 6);
                 margin-right: 1rem;
                 border-radius: 16px;
@@ -222,7 +223,28 @@
                     background-size: cover;
                 }
 
-                &:last-child {
+                &.ortho {
+                    background: url('../../assets/ortho.jpg') no-repeat center, lightgray -70.862px 0px / 189.94% 142.466% no-repeat;
+                    background-size: cover;
+                }
+
+
+                &.gyno {
+                    background: url('../../assets/gyno.png') no-repeat center, lightgray -70.862px 0px / 189.94% 142.466% no-repeat;
+                    background-size: cover;
+                }
+
+                &.dentist {
+                    background: url('../../assets/dentist.jpg') no-repeat center, lightgray -70.862px 0px / 189.94% 142.466% no-repeat;
+                    background-size: cover;
+                }
+
+                &.physcian{
+                    background: url('../../assets/physcian.jpeg') no-repeat center, lightgray -70.862px 0px / 189.94% 142.466% no-repeat;
+                    background-size: cover;
+                }
+
+                &:last-child,&:nth-child(6n) {
                     margin-right: 0;
                 }
 
