@@ -18,7 +18,9 @@ function Footer() {
                             <p>Your journey to convenient and stress-free healthcare management begins here. Download the VinayakM app today and take control of your health with ease. Whether you're in need of a routine check-up, a specialist consultation, or simply want to stay on top of your healthcare appointments, our app has you covered.</p>
                             <div className="downloads">
                                 <div className="android">
-                                    <img src={playIcon} alt="logo" />
+                                    <a href="https://vinayakmudit.s3.ap-south-1.amazonaws.com/uploads/vinayakm.apk" download>
+                                        <img src={playIcon} alt="logo" />
+                                    </a>
                                 </div>
                                 <div className="iOS">
                                     <img src={appIcon} alt="logo" />
@@ -38,9 +40,9 @@ function Footer() {
                     </div>
                     <div className="grid-links">
                         <div className="links">
-                            <div className="link" onClick={e=>{navigate('/about')}}>About</div>
-                            <div className="link" onClick={e=>{navigate('/contact')}}>Contact Us</div>
-                            <div className="link" onClick={e=>{navigate('/privacy')}}>Privacy Policy</div>
+                            <div className="link" onClick={e => { navigate('/about') }}>About</div>
+                            <div className="link" onClick={e => { navigate('/contact') }}>Contact Us</div>
+                            <div className="link" onClick={e => { navigate('/privacy') }}>Privacy Policy</div>
                         </div>
                     </div>
                 </div>
