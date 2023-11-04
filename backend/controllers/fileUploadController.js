@@ -35,6 +35,7 @@ function uploadFile(req, res) {
         Bucket: AWS_BUCKET_NAME,
         Key: fileName,
         Body: fileData,
+        Expires: 31536000,
         ACL: 'public-read', // Make the uploaded file publicly accessible
       };
   
@@ -45,8 +46,21 @@ function uploadFile(req, res) {
       }
   
       const fileUrl = s3.getSignedUrl('getObject', { Bucket: AWS_BUCKET_NAME, Key: fileName });
-  
-      res.json({ url: fileUrl });
+      const imageUrl=fileUrl;
+
+      const regex = /\.(png|jpe?g|webp)/i;
+
+// Use the regular expression to find the match in the URL
+const match = imageUrl.match(regex);
+
+
+  // Extract the URL up to and including the file extension
+  const trimmedUrl = imageUrl.slice(0, match.index + match[0].length);
+  console.log(trimmedUrl);
+
+      // res.json({ url: fileUrl });
+      res.json({ url: trimmedUrl });
+      
     });
   }
   

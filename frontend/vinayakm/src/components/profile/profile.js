@@ -11,12 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import { emptyImage, uploadFile } from '../../actions/fileUploadActions';
 
 function Profile() {
-    const userFromStore = useSelector((state) => {
-        console.log(state, 'state from profile')
-        return state?.user?.user
-    });
-
-    const [user, setUser] = useState(userFromStore || {});
+    const [loading,setLoading] = useState(true)
+    
 
     const navigate = useNavigate();
     const [isDirty, setIsDirty] = useState(false);
@@ -32,11 +28,27 @@ function Profile() {
 
     const dispatch = useDispatch();
 
+    console.log('hey')
+
+    const userFromStore = useSelector((state) => {
+        console.log(state, 'state from profile')
+        return state?.user?.user
+    });
+
+    // const [loading,setLoading] = useState(true)
+
+
+    const [user, setUser] = useState(userFromStore || {});
+
     useEffect(() => {
-        if (!userFromStore) {
+        console.log('hi')
+        if (!userFromStore ) {
             dispatch(getCurrentUser());
+            // setLoading(false)
         }
-    }, [userFromStore]);
+    }, []);
+
+    
 
     const logoutUser = () => {
         dispatch(logout())
