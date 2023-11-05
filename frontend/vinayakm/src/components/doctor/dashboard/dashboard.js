@@ -38,6 +38,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentUser } from '../../../actions/userActions';
 import { Avatar } from '@mui/material';
 import Records from '../../records';
+import { fetchPrescriptions } from '../../../actions/prescriptionActions';
+import { fetchAppointmentsDoctor } from '../../../actions/bookingActions';
+import { getPayments } from '../../../actions/paymentActions';
 
 const drawerWidth = 240;
 
@@ -150,6 +153,24 @@ export default function Dashboard() {
         }
     }, [userFromStore]);
 
+    const callDispatch = (value) => {
+        switch (value.name) {
+            case 'Dashboard':
+                dispatch(fetchAppointmentsDoctor())
+                dispatch(getCurrentUser())
+            case 'Appointments':
+                dispatch(fetchAppointmentsDoctor())
+            case 'Patients':
+                dispatch(fetchAppointmentsDoctor())
+            // case 'Chat':
+            //   return { route: 'chat', icon: <ForumIcon /> };
+            case 'Prescriptions':
+                dispatch(fetchPrescriptions());
+            case 'Payments':
+                dispatch(getPayments())
+          }
+    }
+
     return (
         <div className="Dashboard">
             <Box sx={{ display: 'flex', width: '100%' }}>
@@ -168,12 +189,12 @@ export default function Dashboard() {
                             >
                                 <MenuIcon />
                             </IconButton>
-                            <Typography variant="h6" noWrap component="div">
+                            <Typography variant="h6" noWrap component="div" style={{display:'flex',alignItems:'center'}}>
                                 <img src={Logo} alt="logo image" onClick={e=>navigate('/')} />
                             </Typography>
                         </Typography>
                         <Typography noWrap component="div" >
-                            <NavLink to="profile" activeClassName="active-link">
+                            <NavLink to="profile" onClick={e=>{dispatch(getCurrentUser())}} activeClassName="active-link">
                                 {/* <img src={user.image} alt={user.fullName} /> */}
                                 <Avatar
                                     alt={user.fullName}
@@ -202,7 +223,10 @@ export default function Dashboard() {
                                         justifyContent: open ? 'initial' : 'center',
                                         px: 2.5,
                                     }}
-                                    onClick={e => navigate(item.route)}
+                                    onClick={e => {
+                                        navigate(item.route)
+                                        callDispatch(item)
+                                    }}
                                 >
                                     <ListItemIcon
                                         sx={{

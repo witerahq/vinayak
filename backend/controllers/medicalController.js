@@ -69,10 +69,11 @@ exports.getMedicalRecords = async (req, res) => {
     }
 
     // Find medical records that match the userId and doctorId
-    const medicalRecords = await MedicalRecord.find(query).populate('prescriptions');
+    const medicalRecords = await MedicalRecord.find(query);
 
     res.status(200).json(medicalRecords);
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: 'Failed to retrieve prescriptions' });
   }
 };
@@ -83,8 +84,7 @@ exports.getMedicalRecordDetails = async (req, res) => {
     const { medicalRecordId } = req.params;
 
     // Find the medical record by its ID
-    const medicalRecord = await MedicalRecord.findById(medicalRecordId)
-      .populate('prescriptions');
+    const medicalRecord = await MedicalRecord.findById(medicalRecordId);
 
     if (!medicalRecord) {
       return res.status(404).json({ error: 'Medical record not found' });

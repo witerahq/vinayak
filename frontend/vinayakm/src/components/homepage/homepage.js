@@ -18,6 +18,7 @@ import { searchDoctors } from "../../actions/searchActions";
 
 import SearchIcon from '@mui/icons-material/Search';
 import SearchDoctorsModal from "./searchModal/searchModal";
+import dayjs from "dayjs";
 
 function Homepage() {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -28,7 +29,7 @@ function Homepage() {
 
     const navigate = useNavigate()
     const [symptoms, setSymptoms] = useState('');
-    const [selectedDate, setSelectedDate] = useState('');
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const [speciality, setSpeciality] = useState('');
     const dispatch = useDispatch()
     const searchSubmit = () => {
@@ -53,7 +54,7 @@ function Homepage() {
         })
     }
 
-    const [isSearch,setIsSearch]=useState(false)
+    const [isSearch, setIsSearch] = useState(false)
     return (
         <>
             {
@@ -65,8 +66,8 @@ function Homepage() {
                                 <Verify></Verify> : null : null
             }
             {
-                window.innerWidth<992?
-                <SearchDoctorsModal isOpen={isSearch} onClose={e=>setIsSearch(false)}></SearchDoctorsModal>:null
+                window.innerWidth < 992 ?
+                    <SearchDoctorsModal isOpen={isSearch} onClose={e => setIsSearch(false)}></SearchDoctorsModal> : null
             }
             <div className="Homepage">
 
@@ -98,7 +99,8 @@ function Homepage() {
                                                             disablePast
                                                             views={['year', 'month', 'day']}
                                                             label="Set Date"
-                                                            value={selectedDate}
+                                                            value={dayjs(selectedDate)}
+                                                            defaultValue={dayjs(new Date())}
                                                             onChange={(newValue) => setSelectedDate(newValue)}
                                                         />
                                                     </DemoItem>
@@ -106,9 +108,15 @@ function Homepage() {
                                             </LocalizationProvider>
                                             <select name="stream" className='stream-select' id="stream" value={speciality} onChange={e => setSpeciality(e.target.value)}>
                                                 <option value="" disabled selected>Select Stream</option>
-                                                <option value="heart">Heart</option>
-                                                <option value="mouth">Mouth</option>
-                                                <option value="brain">Brain</option>
+                                                <option value={'heart'}>Heart</option>
+                                                <option value={'brain'}>Brain</option>
+                                                <option value={'sanity'}>Sanity</option>
+                                                <option value={'ent'}>ENT</option>
+                                                <option value={'skin'}>Skin</option>
+                                                <option value={'stomach'}>Stomach</option>
+                                                <option value={'gyno'}>Gyno</option>
+                                                <option value={'dentist'}>Dentist</option>
+                                                <option value={'ortho'}>Ortho</option>
                                             </select>
                                         </div>
                                         <div className="search">
@@ -116,7 +124,7 @@ function Homepage() {
                                         </div>
                                     </div>
                                 </div> :
-                                <div className="appointment-button" onClick={e=>setIsSearch(true)}>
+                                <div className="appointment-button" onClick={e => setIsSearch(true)}>
                                     <div className="icon">
                                         <SearchIcon></SearchIcon>
                                     </div>
@@ -186,7 +194,7 @@ function Homepage() {
                             <div className="consult-type physcian" onClick={e => { search('dentist') }}>
                                 <p>Physician</p>
                             </div>
-                            
+
                         </div>
                     </div>
                 </section>
@@ -201,7 +209,7 @@ function Homepage() {
                             {
                                 new Array(1).fill(0).map(() => {
                                     return (
-                                        <div className="clinic-type" onClick={e => { search('heart') }}>
+                                        <div className="clinic-type" onClick={e => { search('all') }}>
                                             <div className="clinic-text">
                                                 <p>Meerut</p>
 
@@ -262,7 +270,7 @@ function Homepage() {
                             <p>At VinayakM, our mission is to transform the way you access healthcare. We believe that everyone deserves convenient, reliable, and stress-free healthcare solutions. Our doctor appointment booking app is designed to put your well-being first, offering a seamless experience from start to finish.</p>
                             <p className='subhead'>Our Commitment to You</p>
                             <p>We understand that your time is precious, and your health is a top priority. With VinayakM, you can easily book appointments with just a few taps on your smartphone. Say goodbye to long waiting times and the frustration of navigating complex healthcare systems.</p>
-                            <button onClick={e=>navigate('/about')}>Read More</button>
+                            <button onClick={e => navigate('/about')}>Read More</button>
                         </div>
                     </div>
                 </section>

@@ -9,12 +9,18 @@ exports.searchAvailableDoctors = async (req, res) => {
     const { selectedDate, speciality } = req.body;
 
     // Find doctors with the role 'doctor' and the specified speciality
-    const doctorsWithSpeciality = await User.find({ role: 'doctor', speciality });
+    let query = {}
+    if (speciality && speciality != 'all') {
+      query = { role: 'doctor', speciality }
+    } else {
+      query = { role: 'doctor' }
+    }
+    const doctorsWithSpeciality = await User.find(query);
 
     // Create an array to store doctor data along with availability
     const doctorsWithAvailability = [];
 
-    console.log('doctorsWithSpeciality',doctorsWithSpeciality)
+    console.log('doctorsWithSpeciality', doctorsWithSpeciality,query)
     const startOfSelectedDate = new Date(selectedDate);
     startOfSelectedDate.setHours(0, 0, 0, 0); // Set to the beginning of the day
     const endOfSelectedDate = new Date(selectedDate);
@@ -24,9 +30,9 @@ exports.searchAvailableDoctors = async (req, res) => {
       const availability = await Availability.findOne({
         doctor: doctor._id,
         day: {
-            '$gte': startOfSelectedDate,
-            '$lte': endOfSelectedDate,
-          },
+          '$gte': startOfSelectedDate,
+          '$lte': endOfSelectedDate,
+        },
         $or: [
           { 'timeSlots.morning.status': 'open' },
           { 'timeSlots.afternoon.status': 'open' },
@@ -34,14 +40,14 @@ exports.searchAvailableDoctors = async (req, res) => {
         ],
       });
 
-      
+
       if (availability) {
-          // If availability data exists, add it to the doctor object
-          
-          let data = {...doctor}
-          delete data['_doc']['password']
-          data['availability'] = availability
-          console.log(data)
+        // If availability data exists, add it to the doctor object
+
+        let data = { ...doctor }
+        delete data['_doc']['password']
+        data['availability'] = availability
+        console.log(data)
         doctorsWithAvailability.push(data);
       }
     }

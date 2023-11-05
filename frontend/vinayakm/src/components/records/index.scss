@@ -37,9 +37,6 @@
         border-radius: 8px;
   
         .list-item {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
           margin-bottom: 8px;
           margin-top: 8px;
 
@@ -61,11 +58,16 @@
           .occurance-text{
             width: 100%;
             display: flex;
-            justify-content: flex-end;
-            p:first-child{
-              border-right: 1px solid black;
-              padding-right: 4px;
-              margin-right: 4px;
+            justify-content:space-between;
+            // p:first-child{
+            //   border-right: 1px solid black;
+            //   padding-right: 4px;
+            //   margin-right: 4px;
+            // }
+            input{
+              width: 30px;
+              padding: 4px;
+              font-size: 16px;
             }
           }
         }

@@ -1,5 +1,20 @@
 const mongoose = require('mongoose');
 
+
+const prescriptionSchema = new mongoose.Schema({
+  name: String,
+  tests: [String],
+  medicines: [{
+    name: String,
+    frequency: Number,
+    duration: Number,
+  }],
+  doctorID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User' // Assuming you have a 'Doctor' schema
+  }
+});
+
 // Define the Medical Record schema
 const medicalRecordSchema = new mongoose.Schema({
    patientId: {
@@ -16,10 +31,7 @@ const medicalRecordSchema = new mongoose.Schema({
   symptoms: [String],     // An array of symptoms
   note: String,           // A note related to the medical record
   image: String,          // URL or path to an image, if applicable
-  prescriptions: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Prescription'    // Reference to the Prescription schema
-  }]
+  prescriptions: [prescriptionSchema]
   
 });
 

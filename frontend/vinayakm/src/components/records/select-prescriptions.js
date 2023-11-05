@@ -57,6 +57,7 @@ export default function MultipleSelectPlaceholder({ changePrescription,selectedV
         const selectedNames = typeof value === 'string' ? value.split(',') : value;
         setPersonName(selectedNames);
 
+        console.log(prescription,'inside',prescriptionFromStore)
         // Find and store the selected prescription IDs based on the selected names
         const selectedIds = prescription
             .filter((item) => selectedNames.includes(item.name))

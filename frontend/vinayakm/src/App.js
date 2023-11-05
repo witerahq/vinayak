@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Homepage from "./components/homepage/homepage";
 import Appointments from "./components/patient/appointments/appointments";
 import Checkout from "./components/patient/checkout/checkout";
@@ -72,15 +72,23 @@ function App() {
     return children;
   };
 
+
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log(location.pathname);
+    // You can update the class here based on location.pathname
+  }, [location.pathname]);
+
   return (
-    <div className="App">
-      <Router>
+    <div className={isAuthenticated?'authenticated '+"App "+user?.role+' '+location.pathname.split('/')[1]:"App "+location.pathname.split('/')[1]}>
+      {/* <Router> */}
       <ScrollToTop />
         
         {
-        !(user?.role === 'doctor' && window.location.pathname.includes('dashboard'))  && (window.innerWidth<992?isAuthenticated:true)?
+      
         <Header></Header>
-        :null
+     
 
       }
         <Routes>
@@ -118,7 +126,7 @@ function App() {
         <Footer></Footer>:null
 
       }
-      </Router>
+      {/* </Router> */}
     </div>
   );
 }

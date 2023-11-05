@@ -159,6 +159,7 @@ export default function BookingTable() {
                         <StyledTableCell>Doctors</StyledTableCell>
                         <StyledTableCell align="right">Date</StyledTableCell>
                         <StyledTableCell align="right">Time</StyledTableCell>
+                        <StyledTableCell align="right">Mode</StyledTableCell>
                         <StyledTableCell align="right">Actions</StyledTableCell>
                     </TableRow>
                 </TableHead>
@@ -177,6 +178,9 @@ export default function BookingTable() {
 
                             <TableCell align="right">
                                 {row.time}
+                            </TableCell>
+                            <TableCell className='mode' align="right">
+                                {row.mode}
                             </TableCell>
                             <TableCell align="right" >
                                 <div className="row">

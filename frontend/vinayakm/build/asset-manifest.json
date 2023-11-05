@@ -1,9 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.e8db98ad.css",
-    "main.js": "/static/js/main.bc443c4f.js",
+    "main.css": "/static/css/main.b6589ee1.css",
+    "main.js": "/static/js/main.f5c1ff36.js",
     "static/media/children.svg": "/static/media/children.2eac69e1a930148e3f0c.svg",
     "static/media/authImage.svg": "/static/media/authImage.cbf1fe7ab4accb45bda5ce76cd86a560.svg",
+    "static/media/auth-Image.svg": "/static/media/auth-Image.1b4907a7d9a20ab05f542f74da76191b.svg",
     "static/media/ortho.jpg": "/static/media/ortho.52097dde1689057c9315.jpg",
     "static/media/doc.svg": "/static/media/doc.865defed1b1ed0213a892cc48c839c7a.svg",
     "static/media/doc1.svg": "/static/media/doc1.6673d375a1a20ef228beb14d48afb3d4.svg",
@@ -51,11 +52,11 @@
     "static/media/active-logo.svg": "/static/media/active-logo.2c916580b3ad2f87dab1fd411397c8a2.svg",
     "index.html": "/index.html",
     "static/media/check.svg": "/static/media/check.c368287f53162c2e0c8d.svg",
-    "main.e8db98ad.css.map": "/static/css/main.e8db98ad.css.map",
-    "main.bc443c4f.js.map": "/static/js/main.bc443c4f.js.map"
+    "main.b6589ee1.css.map": "/static/css/main.b6589ee1.css.map",
+    "main.f5c1ff36.js.map": "/static/js/main.f5c1ff36.js.map"
   },
   "entrypoints": [
-    "static/css/main.e8db98ad.css",
-    "static/js/main.bc443c4f.js"
+    "static/css/main.b6589ee1.css",
+    "static/js/main.f5c1ff36.js"
   ]
 }
