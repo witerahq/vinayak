@@ -188,7 +188,7 @@ function Search() {
                                                 <div className="booking-doc-details">
                                                     <div className="doc-detail">
                                                         <div className="profile">
-                                                            <p>Dr. {item._doc.fullName}</p>
+                                                            <p>Dr. {item._doc?.fullName}</p>
                                                             <p>BDS, MDS</p>
                                                         </div>
                                                         <div className="info">

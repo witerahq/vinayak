@@ -29,6 +29,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchAppointmentsDoctor } from '../../../actions/bookingActions';
 import moment from 'moment';
 import { createSearchParams, useNavigate } from 'react-router-dom';
+import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
+
 function createData(name, calories, fat, carbs, protein) {
     return {
         name,
@@ -102,10 +104,10 @@ const headCells = [
         label: 'Mode',
     },
     {
-        id: 'pay',
+        id: 'phone',
         numeric: false,
         disablePadding: false,
-        label: 'Pay',
+        label: 'Phone Number',
     },
     {
         id: 'date_time',
@@ -272,7 +274,7 @@ export default function Patients() {
                 pathname: '/dashboard/record/' + item.medicalRecords,
                 search: createSearchParams({
                     id: item._id,
-                    name: item.patientId.fullName,
+                    name: item?.patientId?.fullName,
                     age: item.patientId.age,
                     gender: item.patientId.gender,
                     image: item.patientId.image,
@@ -284,7 +286,7 @@ export default function Patients() {
                 pathname: '/dashboard/record',
                 search: createSearchParams({
                     id: item._id,
-                    name: item.patientId.fullName,
+                    name: item?.patientId?.fullName,
                     age: item.patientId.age,
                     gender: item.patientId.gender,
                     image: item.patientId.image,
@@ -343,7 +345,7 @@ export default function Patients() {
                                                     scope="row"
                                                     padding="none"
                                                 >
-                                                    {row.patientId.fullName}
+                                                    {row.patientId?.fullName}
                                                 </TableCell>
                                                 <TableCell className='mode'>{25}</TableCell>
                                                 <TableCell className='gender'>Male</TableCell>
@@ -363,7 +365,7 @@ export default function Patients() {
                                                 <TableCell className='actions' >
                                                     {/* <ChatBubbleOutlineIcon htmlColor='#464F53' sx={{marginRight:'10px'}}></ChatBubbleOutlineIcon> */}
                                                     <a href={'tel:' + row.patientId.phoneNumber}>
-                                                        <EdgesensorHighIcon htmlColor='#464F53'></EdgesensorHighIcon>
+                                                        <PhoneInTalkIcon htmlColor='#464F53'></PhoneInTalkIcon>
                                                     </a>
                                                 </TableCell>
                                             </TableRow>

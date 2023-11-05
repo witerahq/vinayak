@@ -35,12 +35,25 @@ function Insights() {
         return state.booking.appointments
     })
 
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        if (!appointmentFromStore)
+            dispatch(fetchAppointmentsDoctor())
+    }, [appointmentFromStore])
+
+    useEffect(() => {
+        if (!userFromStore) {
+            dispatch(getCurrentUser());
+        }
+    }, [userFromStore]);
+
     const eventFromStore = useSelector((state) => {
         if (state.booking.appointments) {
             let newBooking = state.booking.appointments.map((item) => {
                 if (item?.time?.length)
                     return {
-                        title: 'Appointment with ' + item.patientId.fullName,
+                        title: 'Appointment with ' + item?.patientId?.fullName,
                         start: addHoursToDate(item.date, item.time.split('-')[0]),
                         end: addHoursToDate(item.date, item.time.split('-')[0])
                     }
@@ -63,18 +76,8 @@ function Insights() {
         }
     }, []);
 
-    const dispatch = useDispatch()
 
-    useEffect(() => {
-        if (!appointmentFromStore)
-            dispatch(fetchAppointmentsDoctor())
-    }, [appointmentFromStore])
-
-    useEffect(() => {
-        if (!userFromStore) {
-            dispatch(getCurrentUser());
-        }
-    }, [userFromStore]);
+    
 
 
     return (
@@ -108,15 +111,17 @@ function Insights() {
                 <div className="patient-lists">
                     <p className='heading'>Patient List</p>
                     {
-                        appointmentFromStore?.map((item) => {
+                        appointmentFromStore&&appointmentFromStore?.filter((item)=>{
+                            return new Date(addHoursToDate(item.date, item.time.split('-')[0]))>=new Date()
+                        }).length?appointmentFromStore?.filter((item)=>new Date(addHoursToDate(item.date, item.time.split('-')[0]))>=new Date())?.map((item) => {
                             return (
                                 <div className="patient-list" key={item._id}>
                                     <div className="profile">
                                         <div className="image">
-                                            <img src={item.patientId.image} alt={item.patientId.fullName} />
+                                            <img src={item.patientId.image} alt={item?.patientId?.fullName} />
                                         </div>
                                         <div className="text">
-                                            <p>{item.patientId.fullName}</p>
+                                            <p>{item?.patientId?.fullName}</p>
                                             <h6>{moment(item.date).format('MMMM, Do YYYY')}</h6>
                                         </div>
 
@@ -127,6 +132,9 @@ function Insights() {
                                 </div>
                             )
                         })
+                        : <>
+                        <p>There is a patient with an upcoming appointment.</p>
+                        </>
                     }
                 </div>
             </div>

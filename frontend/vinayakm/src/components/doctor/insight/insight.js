@@ -53,9 +53,9 @@ function Insights() {
             let newBooking = state.booking.appointments.map((item) => {
                 if (item?.time?.length)
                     return {
-                        title: 'Appointment with ' + item.patientId.fullName,
-                        start: addHoursToDate(item.date, item.time.split('-')[0]),
-                        end: addHoursToDate(item.date, item.time.split('-')[0])
+                        title: 'Appointment with ' + item?.patientId?.fullName,
+                        start: addHoursToDate(item.date, item?.time?.split('-')[0]),
+                        end: addHoursToDate(item.date, item?.time?.split('-')[0])
                     }
             })
             console.log(newBooking)
@@ -118,10 +118,10 @@ function Insights() {
                                 <div className="patient-list" key={item._id}>
                                     <div className="profile">
                                         <div className="image">
-                                            <img src={item.patientId.image} alt={item.patientId.fullName} />
+                                            <img src={item.patientId.image} alt={item?.patientId?.fullName} />
                                         </div>
                                         <div className="text">
-                                            <p>{item.patientId.fullName}</p>
+                                            <p>{item?.patientId?.fullName}</p>
                                             <h6>{moment(item.date).format('MMMM, Do YYYY')}</h6>
                                         </div>
 

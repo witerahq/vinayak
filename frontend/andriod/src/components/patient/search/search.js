@@ -77,6 +77,24 @@ function Search() {
     }
     const [isSearch, setIsSearch] = useState(false)
 
+    const addHoursToDate = (date, time) => {
+        // Parse the time string into hours and minutes
+
+
+        var [hours, minutes] = time?.split(':')?.map((part) => parseInt(part, 10));
+
+        // Check if the time is in the afternoon (PM) and adjust hours accordingly
+        if (time.toLowerCase().includes('pm') && hours !== 12) {
+            hours += 12;
+        }
+
+        // Create a new Date object and add the hours and minutes
+        const newDate = new Date(date);
+        newDate.setHours(hours, minutes);
+
+        return newDate;
+    }
+
     return (
         <>
             {
@@ -162,7 +180,7 @@ function Search() {
                                     search?.map((item, index) => {
                                         return (
                                             <div className="appointment-card">
-                                                <div className="expand"><ExpandCircleDownIcon fontSize='medium' htmlColor='white'></ExpandCircleDownIcon></div>
+                                                <div className="expand"><ExpandCircleDownIcon fontSize='medium' htmlColor='black'></ExpandCircleDownIcon></div>
                                                 <div className="doc-image">
                                                     <img src={item._doc.image} alt="docIMage" />
                                                     <img src={item._doc.image} alt="docIMage1" />
@@ -170,7 +188,7 @@ function Search() {
                                                 <div className="booking-doc-details">
                                                     <div className="doc-detail">
                                                         <div className="profile">
-                                                            <p>Dr. {item._doc.fullName}</p>
+                                                            <p>Dr. {item._doc?.fullName}</p>
                                                             <p>BDS, MDS</p>
                                                         </div>
                                                         <div className="info">
@@ -195,12 +213,13 @@ function Search() {
                                                     </div>
                                                     <div className="booking-detail">
                                                         <div className="heading">
-                                                            <p>Book Your Slot:</p>
+                                                            <p>Book Your Slot: </p>
                                                         </div>
                                                         <div className="timings">
                                                             {
                                                                 Object.keys(item.availability.timeSlots).map((slot, i) => {
                                                                     return item.availability.timeSlots[slot].map((el, idx) => {
+                                                                        if(new Date(addHoursToDate(item.availability.day, el.startTime.split('-')[0]))>=new Date())
                                                                         return (
                                                                             <Chip className={"timing " + el.status} label={el.startTime + ' - ' + el.endTime} onClick={e => bookAppointment(e, item, el)}>
 

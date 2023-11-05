@@ -274,7 +274,7 @@ export default function Patients() {
                 pathname: '/dashboard/record/' + item.medicalRecords,
                 search: createSearchParams({
                     id: item._id,
-                    name: item.patientId.fullName,
+                    name: item?.patientId?.fullName,
                     age: item.patientId.age,
                     gender: item.patientId.gender,
                     image: item.patientId.image,
@@ -286,7 +286,7 @@ export default function Patients() {
                 pathname: '/dashboard/record',
                 search: createSearchParams({
                     id: item._id,
-                    name: item.patientId.fullName,
+                    name: item?.patientId?.fullName,
                     age: item.patientId.age,
                     gender: item.patientId.gender,
                     image: item.patientId.image,
@@ -345,7 +345,7 @@ export default function Patients() {
                                                     scope="row"
                                                     padding="none"
                                                 >
-                                                    {row.patientId.fullName}
+                                                    {row?.patientId?.fullName}
                                                 </TableCell>
                                                 <TableCell className='mode'>{25}</TableCell>
                                                 <TableCell className='gender'>Male</TableCell>

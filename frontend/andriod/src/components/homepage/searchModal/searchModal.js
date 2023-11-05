@@ -26,7 +26,7 @@ const SearchDoctorsModal = ({ isOpen, onClose }) => {
     const [symptoms, setSymptoms] = useState('');
     const [selectedDate, handleDateChange] = useState(null);
     const [speciality, setSpeciality] = useState('');
-    const navigate =useNavigate()
+    const navigate = useNavigate()
 
     const dispatch = useDispatch()
 
@@ -36,7 +36,7 @@ const SearchDoctorsModal = ({ isOpen, onClose }) => {
         console.log('Selected Date:', selectedDate);
         console.log('Speciality:', speciality);
 
-        
+
         dispatch(searchDoctors(selectedDate, speciality))
 
         navigate({
@@ -44,7 +44,7 @@ const SearchDoctorsModal = ({ isOpen, onClose }) => {
             search: createSearchParams({
                 date: selectedDate,
                 speciality: speciality,
-                symptoms:speciality
+                symptoms: speciality
             }).toString()
         })
         // Close the modal
@@ -105,21 +105,26 @@ const SearchDoctorsModal = ({ isOpen, onClose }) => {
                             <MenuItem value="">
                                 <em>Choose Speciality</em>
                             </MenuItem>
-                            <MenuItem value="heart">Heart</MenuItem>
-                            <MenuItem value="brain">Brain</MenuItem>
-                            <MenuItem value="stomach">Stomach</MenuItem>
-                            <MenuItem value="skin">Skin</MenuItem>
+                            <MenuItem value={'heart'}>Heart</MenuItem>
+                            <MenuItem value={'brain'}>Brain</MenuItem>
+                            <MenuItem value={'sanity'}>Sanity</MenuItem>
+                            <MenuItem value={'ent'}>ENT</MenuItem>
+                            <MenuItem value={'skin'}>Skin</MenuItem>
+                            <MenuItem value={'stomach'}>Stomach</MenuItem>
+                            <MenuItem value={'gyno'}>Gyno</MenuItem>
+                            <MenuItem value={'dentist'}>Dentist</MenuItem>
+                            <MenuItem value={'ortho'}>Ortho</MenuItem>
                         </Select>
                     </FormControl>
                 </div>
 
 
 
-                 <div className="search-button">
-                <Button variant="contained" color="primary" onClick={handleSearch} className='search'>
-                    Search
-                </Button>
-                 </div>
+                <div className="search-button">
+                    <Button variant="contained" color="primary" onClick={handleSearch} className='search'>
+                        Search
+                    </Button>
+                </div>
             </div>
         </Modal>
     );

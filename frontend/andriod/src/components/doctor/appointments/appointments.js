@@ -307,7 +307,7 @@ export default function Appointments() {
                                                     scope="row"
                                                     padding="none"
                                                 >
-                                                    {row.patientId.fullName}
+                                                    {row?.patientId?.fullName}
                                                 </TableCell>
                                                 <TableCell className='mode'>{row.mode}</TableCell>
                                                 <TableCell className='pay' >{moment(row.date).format('MMMM, Do YYYY')}</TableCell>

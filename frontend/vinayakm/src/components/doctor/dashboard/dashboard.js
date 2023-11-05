@@ -197,7 +197,7 @@ export default function Dashboard() {
                             <NavLink to="profile" onClick={e=>{dispatch(getCurrentUser())}} activeClassName="active-link">
                                 {/* <img src={user.image} alt={user.fullName} /> */}
                                 <Avatar
-                                    alt={user.fullName}
+                                    alt={user?.fullName}
                                     src={user.image}
                                     sx={{ width: 48, height: 48 }}
                                 />

@@ -18,14 +18,16 @@ const Records = () => {
         if (id)
             return state.medicalRecord.prescriptionDetails
     })
+    const initialPrescription = medicalRecordFromStore?.prescriptions || [];
+    const [prescription, setPrescription] = useState([...initialPrescription])
+    const [prescriptionCopy, setPrescriptionCopy] = useState([...initialPrescription])
 
-    const [prescription, setPrescription] = useState(medicalRecordFromStore?.prescriptions || [])
 
-    const [imageUrl,setImageUrl] = useState('')
+    const [imageUrl, setImageUrl] = useState('')
 
     const changePrescription = (value) => {
-        console.log(value)
-        setPrescription(value)
+        console.log(value,'changed value',prescription)
+        setPrescriptionCopy(value)
     }
 
     const user = useSelector((state) => {
@@ -69,11 +71,11 @@ const Records = () => {
             note: noteValue,
             image: imageUrl,
             appointmentId: searchParams.get('id'),
-            prescriptions: prescription.map((item) => item._id),
+            prescriptions: prescriptionCopy,
         }
         console.log(data)
 
-        if(id){
+        if (id) {
             data['medicalRecordId'] = id
             dispatch(editMedicalRecord(data))
             navigate('/dashboard/patients')
@@ -99,32 +101,47 @@ const Records = () => {
 
     const image = useSelector((state) => state.file.prescriptionUrl)
 
-    useEffect(()=>{
-        if(image){
+    useEffect(() => {
+        if (image) {
             setImageUrl(image)
         }
-    },[image])
+    }, [image])
 
-    useEffect(()=>{
-        return () =>{
-            if(image!=null)
-            dispatch(emptyImage('prescription'))
+    useEffect(() => {
+        return () => {
+            if (image != null)
+                dispatch(emptyImage('prescription'))
         }
-    },[])
+    }, [])
 
     const handleEditProfileClick = () => {
         const imageInput = document.getElementById('imageInput');
         imageInput.click();
     };
 
-    const [prescriptionImage,setPrescriptionImage] = useState('')
+    const [prescriptionImage, setPrescriptionImage] = useState('')
 
     const handleImageChange = (event) => {
         const selectedFile = event.target.files[0];
         setPrescriptionImage(selectedFile.name)
-        if(selectedFile){
+        if (selectedFile) {
             dispatch(uploadFilePrescription(selectedFile));
         }
+    };
+
+    const handleRemoveMedicine = (indexToRemove, itemIndex) => {
+
+        const updatedPrescription = [...prescriptionCopy];
+        const itemToUpdate = updatedPrescription[itemIndex];
+        itemToUpdate.medicines = itemToUpdate.medicines.filter((_, idx) => idx !== indexToRemove);
+
+        setPrescriptionCopy(updatedPrescription);
+    }
+
+    const handleUpdateMedicine = (updatedMed, itemIndex, medIndex) => {
+        const updatedPrescription = [...prescriptionCopy];
+        updatedPrescription[itemIndex].medicines[medIndex] = updatedMed;
+        setPrescriptionCopy(updatedPrescription);
     };
 
     return (
@@ -141,8 +158,8 @@ const Records = () => {
                         <p className='heading'>Prescription</p>
                         <Box className="med-list" mt={4}>
                             {
-                                prescription.length ?
-                                    prescription.map((item, index) => {
+                                prescriptionCopy.length ?
+                                    prescriptionCopy.map((item, index) => {
                                         return (
                                             <>
                                                 {
@@ -151,13 +168,41 @@ const Records = () => {
                                                             <>
                                                                 <div className="list-item" key={item._id}>
                                                                     <h3 className="med-name">{med.name}
-                                                                        {/* <IconButton className="delete-icon">
-                                                                        <DeleteIcon />
-                                                                    </IconButton> */}
+                                                                        {
+                                                                            // user.role != 'patient' ?
+                                                                            //     <IconButton className="delete-icon" onClick={() => handleRemoveMedicine(idx, index)}>
+                                                                            //         {/* <DeleteIcon /> */}
+                                                                            //     </IconButton> : ''
+                                                                        }
                                                                     </h3>
                                                                     <div className='occurance-text'>
-                                                                        <p>{med.frequency} times</p>
-                                                                        <p>{med.duration} days</p>
+                                                                        {
+                                                                            user.role != 'patient' ?
+                                                                                <>
+                                                                                    <div>
+                                                                                        <input type="text" value={med.frequency}
+                                                                                            onChange={(e) => {
+                                                                                                const updatedMed = { ...med, frequency: e.target.value };
+                                                                                                handleUpdateMedicine(updatedMed, index, idx);
+                                                                                            }}
+                                                                                        />
+                                                                                        <span> time</span>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                        <input type="text" value={med.duration}
+                                                                                            onChange={(e) => {
+                                                                                                const updatedMed = { ...med, duration: e.target.value };
+                                                                                                handleUpdateMedicine(updatedMed, index, idx);
+                                                                                            }}
+                                                                                        />
+                                                                                        <span> duration</span>
+                                                                                    </div>
+                                                                                </> :
+                                                                                <>
+                                                                                    <p>{med.frequency}</p>
+                                                                                    <p>{med.duration}</p>
+                                                                                </>
+                                                                        }
                                                                     </div>
                                                                 </div>
                                                                 {
@@ -192,7 +237,7 @@ const Records = () => {
                                         onChange={handleImageChange}
                                     />
                                     {
-                                        prescriptionImage.length? <p>{prescriptionImage}</p>:null
+                                        prescriptionImage.length ? <p>{prescriptionImage}</p> : null
                                     }
                                     <Box className="action-buttons" mt={2}>
                                         {/* <Button variant="outlined" color="primary" style={{ marginLeft: '10px' }} onClick={handleEditProfileClick}>Upload</Button> */}
@@ -203,7 +248,7 @@ const Records = () => {
                                 </div>
                                 :
                                 <Box className="action-buttons" mt={2}>
-                                    <Button variant="outlined" color="primary" style={{ marginLeft: '10px' }} >Download</Button>
+                                    {/* <Button variant="outlined" color="primary" style={{ marginLeft: '10px' }} >Download</Button> */}
                                 </Box>
                         }
                     </div>
@@ -212,7 +257,7 @@ const Records = () => {
                         <div className="patient-details">
                             <Avatar className="user-avatar" alt="User" src={searchParams.get('image')} />
                             <h2 className="user-name">{searchParams.get('name')}</h2>
-                            <p className="user-age">{searchParams.get('age')} years | {searchParams.get('gender') == 'male' ? 'Male' : 'Female'}</p>
+                            <p className="user-age">{searchParams.get('age') ? searchParams.get('age') + ' years |' : ''}  {searchParams.get('gender') ? searchParams.get('gender') : ''}</p>
                             <Divider className="divider" />
                         </div>
 

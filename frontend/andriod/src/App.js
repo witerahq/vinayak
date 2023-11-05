@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Homepage from "./components/homepage/homepage";
 import Appointments from "./components/patient/appointments/appointments";
 import Checkout from "./components/patient/checkout/checkout";
@@ -19,6 +19,7 @@ import Register from "./components/auth/register/register";
 import ChatRoom from "./components/chatroom";
 import About from "./components/about/about";
 import Contact from "./components/contact-us/contact-us";
+import PrivacyPolicy from "./components/privacy/privacy";
 
 function ScrollToTop() {
   const location = useLocation();
@@ -71,15 +72,23 @@ function App() {
     return children;
   };
 
+
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log(location.pathname);
+    // You can update the class here based on location.pathname
+  }, [location.pathname]);
+
   return (
-    <div className="App">
-      <Router>
+    <div className={isAuthenticated?'authenticated '+"App "+user?.role+' '+location.pathname.split('/')[1]:"App "+location.pathname.split('/')[1]}>
+      {/* <Router> */}
       <ScrollToTop />
         
         {
-        !(user?.role === 'doctor' && window.location.pathname.includes('dashboard'))  && (window.innerWidth<992?isAuthenticated:true)?
+      
         <Header></Header>
-        :null
+     
 
       }
         <Routes>
@@ -90,6 +99,7 @@ function App() {
           <Route path="/search" element={<MobileRoute><Search /></MobileRoute>} />
           <Route path="/about" element={<MobileRoute><About /></MobileRoute>} />
           <Route path="/contact" element={<MobileRoute><Contact /></MobileRoute>} />
+          <Route path="/privacy" element={<MobileRoute><PrivacyPolicy /></MobileRoute>} />
           <Route path="/record/:id" element={<MobileRoute><Records /></MobileRoute>} />
           {
             window.innerWidth<992?
@@ -116,7 +126,7 @@ function App() {
         <Footer></Footer>:null
 
       }
-      </Router>
+      {/* </Router> */}
     </div>
   );
 }

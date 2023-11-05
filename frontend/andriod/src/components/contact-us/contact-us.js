@@ -10,19 +10,23 @@ function Contact() {
                         <div class="form-txt">
                             <h1>Contact Us</h1>
                             <span>At VinayakM, we value your feedback and inquiries. Our dedicated support team is here to assist you with any questions or concerns you may have. Whether you need help with using our app, want to inquire about our services, or have suggestions to share, we're all ears!</span>
+                            <p>
+                                If you have any questions, concerns, or requests related to this Privacy Policy, or if you wish to delete your account, please contact us at:
+                            </p>
                             {/* <h3>USA</h3> */}
                             <div class="business-hours">
-                                    <br />
+                                <br />
                                 <p><strong>Business Hours:</strong></p>
                                 <ul>
                                     <li><strong>Monday to Friday:</strong> 9:00 AM - 6:00 PM</li>
                                     <li><strong>Saturday:</strong> 10:00 AM - 2:00 PM</li>
-                                    <li><strong>Sunday:</strong> Closed</li>
+                                    <li><strong>Sunday:</strong> Evening closed</li>
+                                    <li><strong>Phone:</strong>  +91-8439006178</li>
                                 </ul>
                             </div>
                             <br />
                             <h4>India</h4>
-                            <p>HW95+C9C, Mhada Colony, Viman Nagar, Pune, Maharashtra<br />411014</p>
+                            <p>Maa Annapurna Charitable Hospital Westend Road, Meerut, Uttar Pradesh<br />250001</p>
                         </div>
                         <div class="form-details">
                             <input type="text" name="name" id="name" placeholder="Name" required />

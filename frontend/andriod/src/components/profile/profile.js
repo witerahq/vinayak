@@ -1,7 +1,7 @@
 import { Box, Button, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, OutlinedInput, Radio, RadioGroup, Select, TextField } from '@mui/material';
 import './profile.scss';
 import UploadIcon from '@mui/icons-material/Upload';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import instance from '../../service/apiService';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentUser, removeUserDetails, updateUserDetails } from '../../actions/userActions';
@@ -11,12 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import { emptyImage, uploadFile } from '../../actions/fileUploadActions';
 
 function Profile() {
-    const userFromStore = useSelector((state) => {
-        console.log(state, 'state from profile')
-        return state?.user?.user
-    });
+    const [loading, setLoading] = useState(true)
 
-    const [user, setUser] = useState(userFromStore || {});
 
     const navigate = useNavigate();
     const [isDirty, setIsDirty] = useState(false);
@@ -32,11 +28,33 @@ function Profile() {
 
     const dispatch = useDispatch();
 
+    console.log('hey')
+
+    const userFromStore = useSelector((state) => {
+        console.log(state, 'state from profile')
+        return state?.user?.user
+    });
+
+    // const [loading,setLoading] = useState(true)
+
+
+    const [user, setUser] = useState(userFromStore || {});
+    const memoizedUser = useMemo(() => userFromStore, [userFromStore]);
+    const [hasFetchedUser, setHasFetchedUser] = useState(false);
+
+
     useEffect(() => {
+        console.log('hi')
         if (!userFromStore) {
             dispatch(getCurrentUser());
+            // setLoading(false)
         }
-    }, [userFromStore]);
+    }, [dispatch, userFromStore]);
+
+
+  
+
+
 
     const logoutUser = () => {
         dispatch(logout())
@@ -59,7 +77,7 @@ function Profile() {
 
     useEffect(() => {
         if (image) {
-            console.log(image,'img')
+            console.log(image, 'img')
             setIsDirty(true)
             setUser((prevUser) => ({
 
@@ -85,7 +103,7 @@ function Profile() {
             const reader = new FileReader();
             reader.onload = (e) => {
 
-                dispatch(uploadFile(selectedFile,'profile'));
+                dispatch(uploadFile(selectedFile, 'profile'));
             };
             reader.readAsDataURL(selectedFile);
         }
@@ -104,7 +122,7 @@ function Profile() {
                         autoComplete="off"
                     >
                         <TextField fullWidth id="profile-name" label="Full name" variant="outlined" value={user?.fullName} name="fullName" onChange={handleInputChange} />
-                        <TextField fullWidth id="profile-username" label="Username" variant="outlined" value={user?.username} name="fullName" />
+                        <TextField fullWidth style={{ display: 'none' }} id="profile-username" label="Username" variant="outlined" value={user?.username} name="fullName" />
                         <TextField fullWidth id="profile-age" label="Age" variant="outlined" value={user?.age} name="age" onChange={handleInputChange} />
                         <FormLabel id="gender-label">Gender</FormLabel>
                         <RadioGroup

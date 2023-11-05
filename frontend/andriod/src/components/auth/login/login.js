@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import './login.scss';
-import authImage from '../../../assets/authImage.svg'
+import authImage from '../../../assets/auth-Image.svg'
 import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate, useSearchParams } from "react-router-dom";

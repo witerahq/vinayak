@@ -103,7 +103,7 @@ function Checkout() {
                             <div className="booking-doc-details">
                                 <div className="doc-detail">
                                     <div className="profile">
-                                        <p>Dr. {cartFromStore.docDetail._doc.fullName}</p>
+                                        <p>Dr. {cartFromStore.docDetail._doc?.fullName}</p>
                                         <p>BDS, MDS</p>
                                     </div>
                                     <div className="info">

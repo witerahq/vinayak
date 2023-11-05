@@ -14,6 +14,7 @@ import { getCurrentUser } from "../../actions/userActions";
 import { Avatar } from "@mui/material";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ChatIcon from '@mui/icons-material/Chat';
+import { fetchAppointmentsDoctor, fetchAppointmentsPatient } from "../../actions/bookingActions";
 
 function Header() {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -65,6 +66,22 @@ function Header() {
         }
     }, [user]);
 
+    const booking = () =>{
+        dispatch(fetchAppointmentsPatient());
+    }
+
+    const appointment = () =>{
+        dispatch(fetchAppointmentsPatient());
+    }
+
+    const profile = () =>{
+        dispatch(getCurrentUser());
+    }
+
+    const insights = () =>{
+        dispatch(fetchAppointmentsDoctor())
+    }
+
     return (
         <div className="Header">
             <div className="container">
@@ -81,10 +98,10 @@ function Header() {
                     ((auth.isAuthenticated) && decodeUser?.role == 'patient') ?
 
                         <div className="links">
-                            <NavLink to="/bookings" className="link" activeClassName="active-link">
+                            <NavLink to="/bookings" onClick={e=>{booking()}} className="link" activeClassName="active-link">
                                 Bookings
                             </NavLink>
-                            <NavLink to="/appointments" className="link" activeClassName="active-link">
+                            <NavLink to="/appointments" onClick={e=>{appointment()}} className="link" activeClassName="active-link">
                                 Appointments
                             </NavLink>
                             {/* <NavLink to="/reports" className="link" activeClassName="active-link">
@@ -103,10 +120,10 @@ function Header() {
                     (auth.isAuthenticated && decodeUser?.role == 'doctor') ?
 
                         <div className="links">
-                            <NavLink to="/chat" className="link" activeClassName="active-link">
+                            {/* <NavLink to="/chat" className="link" activeClassName="active-link">
                                 Chat
-                            </NavLink>
-                            <NavLink to="/dashboard" className="link" activeClassName="active-link">
+                            </NavLink> */}
+                            <NavLink to="/dashboard" onClick={e=>{insights()}} className="link" activeClassName="active-link">
                                 Dashboard
                             </NavLink>
                         </div> : null
@@ -117,14 +134,14 @@ function Header() {
                         <NavLink className="tab" activeClassName="active-link" to='/'><HomeIcon fontSize="large" /></NavLink>
                         {
                             decodeUser?.role != 'doctor'?<>
-                            <NavLink className="tab" activeClassName="active-link" to='/bookings'><InsertInvitationIcon fontSize="large" /></NavLink>
-                            <NavLink className="tab" activeClassName="active-link" to='/appointments'><AssignmentIcon fontSize="large" /></NavLink>
+                            <NavLink className="tab" onClick={e=>{booking()}}  activeClassName="active-link" to='/bookings'><InsertInvitationIcon fontSize="large" /></NavLink>
+                            <NavLink className="tab" onClick={e=>{appointment()}}  activeClassName="active-link" to='/appointments'><AssignmentIcon fontSize="large" /></NavLink>
                             </>:<>
-                            <NavLink className="tab" activeClassName="active-link" to='/dashboard'><DashboardIcon fontSize="large" /></NavLink>
-                            <NavLink className="tab" activeClassName="active-link" to='/chat'><ChatIcon fontSize="large" /></NavLink>
+                            <NavLink className="tab" onClick={e=>{insights()}} activeClassName="active-link" to='/dashboard'><DashboardIcon fontSize="large" /></NavLink>
+                            {/* <NavLink className="tab" activeClassName="active-link" to='/chat'><ChatIcon fontSize="large" /></NavLink> */}
                             </>
                         }
-                        <NavLink className="tab" activeClassName="active-link" to='/profile'><PersonIcon fontSize="large" /></NavLink>
+                        <NavLink className="tab" onClick={e=>{profile()}} activeClassName="active-link" to='/profile'><PersonIcon fontSize="large" /></NavLink>
                     </div>:null
                 }
             </div>
