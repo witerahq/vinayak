@@ -54,9 +54,8 @@ async function verifyEmail(req, res) {
     }
 
     const currentTime = new Date();
-    const timeDiff =
-      currentTime - user.lastEmailVerificationSent;
-    const cooldown = 30 * 1000; // 30 seconds
+    const timeDiff = currentTime - user.lastEmailVerificationSent;
+    const cooldown = 3 * 1000; // 30 seconds
 
     if (timeDiff < cooldown) {
       return res.status(400).json({
