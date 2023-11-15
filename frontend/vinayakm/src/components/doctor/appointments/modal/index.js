@@ -4,7 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import './index.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchDoctorAvailability, updateAvailabilityStatus } from '../../../../actions/doctorAvailabilityActions';
+import { fetchDoctorAvailability, updateAvailabilityStatus, updateDayslotStatus } from '../../../../actions/doctorAvailabilityActions';
 import moment from 'moment';
 
 const WeekTabsModal = ({ isOpen, onClose }) => {
@@ -47,6 +47,18 @@ const WeekTabsModal = ({ isOpen, onClose }) => {
   const updateAvailability = () =>{
     dispatch(updateAvailabilityStatus(availability))
   }
+  
+
+  const updateDayAvailability = (value) =>{
+    console.log('value',value._id)
+    var status = ''
+    if(value.status=='open'){
+        status = 'closed'
+    } else {
+      status = 'open'
+    }
+    dispatch(updateDayslotStatus(value._id,status))
+  }
 
   return (
     <Modal open={isOpen} onClose={onClose}>
@@ -69,6 +81,10 @@ const WeekTabsModal = ({ isOpen, onClose }) => {
             })}
             {/* <Tab icon={<CalendarTodayIcon />} /> */}
           </Tabs>
+
+
+
+          <Button variant='outlined' onClick={e=>{updateDayAvailability(availability?.[selectedTab])}} size='small' style={{marginTop:'24px',marginBottom:'12px'}}>Slots : {availability?.[selectedTab]?.status}</Button>
 
           <Box className="time-sections">
             {availability?.[selectedTab]&&Object.keys(availability?.[selectedTab]?.timeSlots).map((time, idx) => (

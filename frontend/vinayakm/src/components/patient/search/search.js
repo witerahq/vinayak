@@ -182,17 +182,17 @@ function Search() {
                                             <div className="appointment-card">
                                                 <div className="expand"><ExpandCircleDownIcon fontSize='medium' htmlColor='black'></ExpandCircleDownIcon></div>
                                                 <div className="doc-image">
-                                                    <img src={item._doc.image} alt="docIMage" />
-                                                    <img src={item._doc.image} alt="docIMage1" />
+                                                    <img src={item?.image} alt="docIMage" />
+                                                    <img src={item?.image} alt="docIMage1" />
                                                 </div>
                                                 <div className="booking-doc-details">
                                                     <div className="doc-detail">
                                                         <div className="profile">
-                                                            <p>Dr. {item._doc?.fullName}</p>
+                                                            <p>Dr. {item?.fullName}</p>
                                                             <p>BDS, MDS</p>
                                                         </div>
                                                         <div className="info">
-                                                            <p>{item._doc.experience}+ Years of Experience</p>
+                                                            <p>{item?.experience}+ Years of Experience</p>
                                                             <div className="tags">
                                                                 <div className="langs">
                                                                     <div className="lang"><p>ENG</p></div>
@@ -208,6 +208,7 @@ function Search() {
                                                                 <p className="days">Monday - Saturday</p>
                                                                 <p className='timing'>7:00 AM 12:00 PM</p>
                                                                 <p className='timing'>2:00 PM to 7:00 PM</p>
+                                                                <p style={{fontSize:'12px',opacity:0.7}}>If the preferred time slots are not available, please feel free to contact us: {item.phoneNumber}</p>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -6,6 +6,7 @@ import axios from '../service/apiService';
 export const FETCH_DOCTOR_AVAILABILITY_SUCCESS = 'FETCH_DOCTOR_AVAILABILITY_SUCCESS';
 export const UPDATE_AVAILABILITY_STATUS_SUCCESS = 'UPDATE_AVAILABILITY_STATUS_SUCCESS';
 export const UPDATE_TIMESLOT_STATUS = 'UPDATE_TIMESLOT_STATUS';
+export const UPDATE_DAYSLOT_STATUS = 'UPDATE_DAYSLOT_STATUS';
 
 // Action Creators
 export const fetchDoctorAvailabilitySuccess = (availability) => ({
@@ -45,7 +46,6 @@ export const updateAvailabilityStatus = (updates) => async (dispatch) => {
   }
 };
 
-
 export const updateTimeslotStatus = (availabilityId, timeSlotType, timeSlotIndex, newStatus) => async (dispatch) => {
   try {
     const response = await axios.post(`/api/doctor/update-timeslot-status`, {
@@ -60,5 +60,21 @@ export const updateTimeslotStatus = (availabilityId, timeSlotType, timeSlotIndex
     });
   } catch (error) {
     // Handle errors
+  }
+};
+
+export const updateDayslotStatus = (availabilityId, newStatus) => async (dispatch) => {
+  try {
+    const response = await axios.post(`/api/doctor/update-day-status`, { 
+      newStatus,
+      availabilityId,
+    });
+    dispatch({
+      type: UPDATE_DAYSLOT_STATUS,
+      payload: response.data.updatedAvailability, // Update your payload as needed
+    });
+  } catch (error) {
+    // Handle errors
+    console.error('Error updating dayslot status:', error);
   }
 };

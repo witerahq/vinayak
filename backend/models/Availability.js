@@ -12,6 +12,7 @@ const availabilitySchema = new mongoose.Schema({
   doctor: { type: mongoose.Schema.Types.ObjectId, 
     ref: 'User' }, // Reference to the Doctor model
   day: Date, // Date for the availability entry
+  status:{ type: String, default: 'open' },
   timeSlots: {
     morning: [timeSlotSchema],
     afternoon: [timeSlotSchema],

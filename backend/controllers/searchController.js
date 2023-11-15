@@ -6,53 +6,63 @@ const User = require('../models/User');
 // Function to search for doctors available on the selected date with a specific speciality
 exports.searchAvailableDoctors = async (req, res) => {
   try {
-    const { selectedDate, speciality } = req.body;
+    const { selectedDate, speciality, symptoms } = req.body;
 
     // Find doctors with the role 'doctor' and the specified speciality
-    let query = {}
-    if (speciality && speciality != 'all') {
-      query = { role: 'doctor', speciality }
-    } else {
-      query = { role: 'doctor' }
+    let query = { role: 'doctor' };
+
+    if (speciality && speciality !== 'all') {
+      query.speciality = speciality;
     }
-    const doctorsWithSpeciality = await User.find(query);
 
-    // Create an array to store doctor data along with availability
-    const doctorsWithAvailability = [];
+    if (symptoms) {
+      query.fullName = symptoms;
+    }
 
-    console.log('doctorsWithSpeciality', doctorsWithSpeciality,query)
-    const startOfSelectedDate = new Date(selectedDate);
-    startOfSelectedDate.setHours(0, 0, 0, 0); // Set to the beginning of the day
-    const endOfSelectedDate = new Date(selectedDate);
-    endOfSelectedDate.setHours(23, 59, 59, 999);
-    // Iterate through each doctor and fetch their availability
-    for (const doctor of doctorsWithSpeciality) {
-      const availability = await Availability.findOne({
-        doctor: doctor._id,
-        day: {
-          '$gte': startOfSelectedDate,
-          '$lte': endOfSelectedDate,
-        },
-        $or: [
-          { 'timeSlots.morning.status': 'open' },
-          { 'timeSlots.afternoon.status': 'open' },
-          { 'timeSlots.evening.status': 'open' },
-        ],
-      });
+    // Search for doctors with the specified criteria
+    var doctorsWithSpeciality = await User.find(query);
 
+    if (doctorsWithSpeciality.length === 0) {
+      delete query.name;
+      doctorsWithSpeciality = await User.find(query); 
+    }
 
-      if (availability) {
-        // If availability data exists, add it to the doctor object
+      // If doctors found with query.name or without it, return the response
+      const doctorsWithAvailability = [];
+      const startOfSelectedDate = new Date(selectedDate);
+      startOfSelectedDate.setHours(0, 0, 0, 0); // Set to the beginning of the day
+      const endOfSelectedDate = new Date(selectedDate);
+      endOfSelectedDate.setHours(23, 59, 59, 999);
 
-        let data = { ...doctor }
-        delete data['_doc']['password']
-        data['availability'] = availability
-        console.log(data)
-        doctorsWithAvailability.push(data);
+      // Iterate through each doctor and fetch their availability
+      for (const doctor of doctorsWithSpeciality) {
+        const availability = await Availability.findOne({
+          doctor: doctor._id,
+          day: {
+            $gte: startOfSelectedDate,
+            $lte: endOfSelectedDate,
+          },
+          status:'open',
+          $or: [
+            { 'timeSlots.morning.status': 'open' },
+            { 'timeSlots.afternoon.status': 'open' },
+            { 'timeSlots.evening.status': 'open' },
+          ]
+        });
+
+        if (availability) {
+          // If availability data exists, add it to the doctor object
+          let data = { ...doctor.toObject() };
+          delete data.password;
+          data.availability = availability;
+          console.log(data);
+          doctorsWithAvailability.push(data);
+        }
       }
-    }
 
-    res.status(200).json(doctorsWithAvailability);
+      
+      
+      res.status(200).json(doctorsWithAvailability);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: 'Error searching for available doctors' });

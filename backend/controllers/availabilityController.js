@@ -146,6 +146,39 @@ exports.updateTimeSlotStatus = async (req, res) => {
   }
 };
 
+exports.updateDayAvailabilityStatus = async (req, res) => {
+  try {
+    const { availabilityId, newStatus } = req.body;
+
+    // Validate input parameters
+    if (!availabilityId || !newStatus) {
+      return res.status(400).json({ error: 'Missing required parameters' });
+    }
+
+    // Validate that the new status is either 'open' or 'closed'
+    if (newStatus !== 'open' && newStatus !== 'closed') {
+      return res.status(400).json({ error: 'Invalid status. Must be either "open" or "closed"' });
+    }
+
+    // Find the availability entry by ID
+    const availability = await Availability.findById(availabilityId);
+
+    if (!availability) {
+      return res.status(404).json({ error: 'Availability entry not found' });
+    }
+
+    // Update the status
+    availability.status = newStatus;
+
+    // Save the updated availability entry
+    await availability.save();
+
+    res.status(200).json({ message: 'Availability status updated successfully', updatedAvailability: availability });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Error updating availability status' });
+  }
+};
 
 // Schedule a cron job to run daily availability creation
 cron.schedule('0 0 * * *', async () => {

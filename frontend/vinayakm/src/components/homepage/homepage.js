@@ -80,7 +80,7 @@ function Homepage() {
                                 <div className="appointment-form">
                                     <div className="container">
                                         <div className="appointment">
-                                            <input type="text" placeholder='Type your Symptoms here'
+                                            <input type="text" placeholder="Search by symptoms, doctor's name"
                                                 className="symptoms"
                                                 value={symptoms}
                                                 onChange={(e) => setSymptoms(e.target.value)}

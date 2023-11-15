@@ -9,6 +9,12 @@
     align-items: center;
     z-index: 20;
 
+
+    .css-78me8v-MuiFormControl-root{
+        margin: 0;
+        margin-bottom: 24px;
+    }
+
     .auth-content {
         display: flex;
         background: #1F67A6;
@@ -118,10 +124,6 @@
                 }
             }
 
-            .css-78me8v-MuiFormControl-root{
-                margin: 0;
-                margin-bottom: 24px;
-            }
 
             .auth-form{
                 padding-left: 12px;
