@@ -158,6 +158,7 @@ export default function BookingTable() {
                     <TableRow>
                         <StyledTableCell>Doctors</StyledTableCell>
                         <StyledTableCell align="right">Date</StyledTableCell>
+                        <StyledTableCell align="right">Booked for</StyledTableCell>
                         <StyledTableCell align="right">Time</StyledTableCell>
                         <StyledTableCell align="right">Mode</StyledTableCell>
                         <StyledTableCell align="right">Actions</StyledTableCell>
@@ -174,6 +175,10 @@ export default function BookingTable() {
                             </TableCell>
                             <TableCell style={{ width: 160 }} align="right">
                                 {moment(row.date).format('MMMM Do YYYY')}
+                            </TableCell>
+
+                            <TableCell align="right">
+                                {row?.patientName?row?.patientName:row?.patientId?.fullName}
                             </TableCell>
 
                             <TableCell align="right">

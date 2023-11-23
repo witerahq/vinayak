@@ -49,7 +49,7 @@ function App() {
     redirectPath = '/',
     children,
   }) => {
-    if(window.inner<992&&!isAuthenticated){
+    if(window.innerWidth<992&&!isAuthenticated){
       return <Navigate to={'/login'} replace />;
     }
     if (!user) {
@@ -64,9 +64,9 @@ function App() {
     redirectPath = '/',
     children,
   }) => {
-    if(window.innerWidth<992&&!isAuthenticated){
-      return <Navigate to={'/login'} replace />;
-    }
+    // if(window.innerWidth<992&&!isAuthenticated){
+    //   return <Navigate to={'/login'} replace />;
+    // }
    
 
     return children;
@@ -95,12 +95,12 @@ function App() {
 
           
 
-          <Route path="/" element={<MobileRoute><Homepage /></MobileRoute>} />
-          <Route path="/search" element={<MobileRoute><Search /></MobileRoute>} />
-          <Route path="/about" element={<MobileRoute><About /></MobileRoute>} />
-          <Route path="/contact" element={<MobileRoute><Contact /></MobileRoute>} />
-          <Route path="/privacy" element={<MobileRoute><PrivacyPolicy /></MobileRoute>} />
-          <Route path="/record/:id" element={<MobileRoute><Records /></MobileRoute>} />
+          <Route path="/" element={<Homepage />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/record/:id" element={<Records />} />
           {
             window.innerWidth<992?
             <> 

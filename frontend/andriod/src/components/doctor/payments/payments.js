@@ -290,7 +290,7 @@ export default function Payments() {
                                                     scope="row"
                                                     padding="none"
                                                 >
-                                                    {row.patientId.fullName}
+                                                    {row?.patientId?.fullName}
                                                 </TableCell>
                                                 <TableCell className='mode'>{row.mode}</TableCell>
                                                 <TableCell className='pay' >₹ {row.amount}</TableCell>

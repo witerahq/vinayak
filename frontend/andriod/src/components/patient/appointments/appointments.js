@@ -33,7 +33,7 @@ function Appointments() {
                 console.log()
                 if(item?.time?.length)
                 return {
-                    title:'Appointment with Dr.'+item.doctorId.fullName,
+                    title:'Appointment with Dr.'+item.doctorId?.fullName,
                     start: addHoursToDate(item.date, item.time.split('-')[0]),
                     end: addHoursToDate(item.date, item.time.split('-')[0])
                 }

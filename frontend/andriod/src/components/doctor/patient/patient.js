@@ -345,12 +345,12 @@ export default function Patients() {
                                                     scope="row"
                                                     padding="none"
                                                 >
-                                                    {row.patientId?.fullName}
+                                                    {row?.patientName?row?.patientName:row?.patientId?.fullName}
                                                 </TableCell>
                                                 <TableCell className='mode'>{25}</TableCell>
                                                 <TableCell className='gender'>Male</TableCell>
                                                 <TableCell className='age'>{row.mode}</TableCell>
-                                                <TableCell className='pay' >{row.patientId.phoneNumber}</TableCell>
+                                                <TableCell className='pay' >{row?.patientPhoneNumber?row?.patientPhoneNumber:row.patientId.phoneNumber}</TableCell>
                                                 <TableCell className='time' >
                                                     {/* <Button variant='contained' sx={{background:'#D9EBF2',color:'black'}}>{row.carbs}</Button> */}
                                                     <Chip label={moment(row.date).format('D MMM') + ' | ' + row.time.split('-')[0]} color="primary" />
@@ -364,7 +364,7 @@ export default function Patients() {
 
                                                 <TableCell className='actions' >
                                                     {/* <ChatBubbleOutlineIcon htmlColor='#464F53' sx={{marginRight:'10px'}}></ChatBubbleOutlineIcon> */}
-                                                    <a href={'tel:' + row.patientId.phoneNumber}>
+                                                    <a href={'tel:' + row?.patientPhoneNumber?row?.patientPhoneNumber:row.patientId.phoneNumber}>
                                                         <PhoneInTalkIcon htmlColor='#464F53'></PhoneInTalkIcon>
                                                     </a>
                                                 </TableCell>

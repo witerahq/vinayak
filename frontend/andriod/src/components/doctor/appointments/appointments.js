@@ -87,6 +87,12 @@ const headCells = [
         label: 'Patients',
     },
     {
+        id: 'name',
+        numeric: false,
+        disablePadding: true,
+        label: 'Booked by',
+    },
+    {
         id: 'mode',
         numeric: false,
         disablePadding: false,
@@ -307,7 +313,16 @@ export default function Appointments() {
                                                     scope="row"
                                                     padding="none"
                                                 >
-                                                    {row?.patientId?.fullName}
+                                                    {row.patientName?row.patientName:row.patientId.fullName}
+                                                </TableCell>
+                                                <TableCell
+                                                    className='name'
+                                                    component="th"
+                                                    id={labelId}
+                                                    scope="row"
+                                                    padding="none"
+                                                >
+                                                    {row.patientId.fullName}
                                                 </TableCell>
                                                 <TableCell className='mode'>{row.mode}</TableCell>
                                                 <TableCell className='pay' >{moment(row.date).format('MMMM, Do YYYY')}</TableCell>
@@ -324,7 +339,7 @@ export default function Appointments() {
 
                                                 <TableCell className='actions' align='left'>
                                                     <ChatBubbleOutlineIcon htmlColor='#464F53' sx={{ marginRight: '10px' }}></ChatBubbleOutlineIcon>
-                                                    <a href={"https://wa.me/" + row.patientId.phoneNumber}>
+                                                    <a href={"https://wa.me/"+(row.patientPhoneNumber?row.patientPhoneNumber:row.patientId.phoneNumber)}>
                                                         <WhatsAppIcon></WhatsAppIcon>
                                                     </a>
                                                     {/* <EdgesensorHighIcon htmlColor='#464F53'></EdgesensorHighIcon> */}

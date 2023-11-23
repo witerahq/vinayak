@@ -102,6 +102,12 @@
       }
     }
   }
+  .flex{
+    display: flex;
+  }
+  .align-items-center{
+    align-items: center;
+  }
 }
 
 @media screen and (max-width:992px) {

@@ -3,6 +3,7 @@
 import {
   FETCH_DOCTOR_AVAILABILITY_SUCCESS,
   UPDATE_AVAILABILITY_STATUS_SUCCESS,
+  UPDATE_DAYSLOT_STATUS,
   UPDATE_TIMESLOT_STATUS,
 } from '../actions/doctorAvailabilityActions';
 
@@ -24,6 +25,16 @@ const doctorAvailabilityReducer = (state = initialState, action) => {
       // Update your state based on the action payload
       return {
         ...state,
+        // Update your state properties here
+      };
+    case UPDATE_DAYSLOT_STATUS:
+        // Update your state based on the action payload
+        const newArray = state.availability.map(obj =>
+          obj._id === action.payload._id ? action.payload : obj
+        );
+      return {
+        ...state,
+        availability:newArray
         // Update your state properties here
       };
     default:

@@ -1,24 +1,26 @@
 // controllers/appointmentController.js
 
-const Appointment = require('../models/Appointment');
-const User = require('../models/User');
+const Appointment = require("../models/Appointment");
+const User = require("../models/User");
 
 // Get all appointments for a specific patient
 exports.getAppointmentsByPatientId = async (req, res) => {
-  const { _id:patientId } = req.user;
+  const { _id: patientId } = req.user;
 
   try {
-    const appointments = await Appointment.find({ patientId }).populate('patientId');
+    const appointments = await Appointment.find({ patientId }).populate(
+      "patientId"
+    );
     const populatedAppointments = await Appointment.populate(appointments, {
-      path: 'doctorId',
+      path: "doctorId",
       model: User, // Specify the model to populate
     });
 
-    console.log(populatedAppointments)
+    console.log(populatedAppointments);
 
     // delete populatedAppointments.patientId.password
     // delete populatedAppointments.doctorId.password
-    populatedAppointments.forEach(appointment => {
+    populatedAppointments.forEach((appointment) => {
       if (appointment.patientId) {
         delete appointment.patientId.password;
       }
@@ -30,24 +32,28 @@ exports.getAppointmentsByPatientId = async (req, res) => {
     res.status(200).json(populatedAppointments);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error fetching appointments for the patient.' });
+    res
+      .status(500)
+      .json({ error: "Error fetching appointments for the patient." });
   }
 };
 
 // Get all appointments for a specific doctor
 exports.getAppointmentsByDoctorId = async (req, res) => {
-  const { _id:doctorId } = req.user;
+  const { _id: doctorId } = req.user;
 
   try {
     // const appointments = await Appointment.find({ doctorId });
     // res.status(200).json(appointments);
-    const appointments = await Appointment.find({ doctorId }).populate('doctorId');
+    const appointments = await Appointment.find({ doctorId }).populate(
+      "doctorId"
+    );
     const populatedAppointments = await Appointment.populate(appointments, {
-      path: 'patientId',
+      path: "patientId",
       model: User, // Specify the model to populate
     });
-    
-     populatedAppointments.forEach(appointment => {
+
+    populatedAppointments.forEach((appointment) => {
       if (appointment.patientId) {
         delete appointment.patientId.password;
       }
@@ -58,30 +64,34 @@ exports.getAppointmentsByDoctorId = async (req, res) => {
     res.status(200).json(populatedAppointments);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error fetching appointments for the doctor.' });
+    res
+      .status(500)
+      .json({ error: "Error fetching appointments for the doctor." });
   }
 };
 
 // Create a new appointment
 exports.createAppointment = async (req, res) => {
-  const { doctorId, mode, time, status, medicalRecords,date } = req.body;
+  const { doctorId, mode, time, status, medicalRecords, date, patientName, patientPhoneNumber } = req.body;
 
   try {
     const appointment = new Appointment({
-      patientId:req.user._id,
+      patientId: req.user._id,
       doctorId,
       mode,
       date,
       time,
       status,
       medicalRecords,
+      patientName,
+      patientPhoneNumber,
     });
 
     const newAppointment = await appointment.save();
     res.status(201).json(newAppointment);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error creating the appointment.' });
+    res.status(500).json({ error: "Error creating the appointment." });
   }
 };
 
@@ -91,16 +101,20 @@ exports.updateAppointmentStatus = async (req, res) => {
   const { status } = req.body;
 
   try {
-    const appointment = await Appointment.findByIdAndUpdate(appointmentId, { status }, { new: true });
+    const appointment = await Appointment.findByIdAndUpdate(
+      appointmentId,
+      { status },
+      { new: true }
+    );
 
     if (!appointment) {
-      return res.status(404).json({ error: 'Appointment not found.' });
+      return res.status(404).json({ error: "Appointment not found." });
     }
 
     res.status(200).json(appointment);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error updating appointment status.' });
+    res.status(500).json({ error: "Error updating appointment status." });
   }
 };
 

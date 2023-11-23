@@ -172,12 +172,12 @@ function Search() {
                         <section id='search-result'>
                             <div className="heading">
                                 <p>Results found for {searchParams.get('speciality')} on {moment(searchParams.get('date')).format("MMM Do YY")}</p>
-                                <p>{search?.length} Results Found</p>
+                                <p>{searchFromStore?.length} Results Found</p>
                             </div>
                             <div className="appointment-cards">
                                 {
-                                    search?.length?
-                                    search?.map((item, index) => {
+                                    searchFromStore?.length?
+                                    searchFromStore?.map((item, index) => {
                                         return (
                                             <div className="appointment-card">
                                                 <div className="expand"><ExpandCircleDownIcon fontSize='medium' htmlColor='black'></ExpandCircleDownIcon></div>

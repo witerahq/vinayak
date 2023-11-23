@@ -54,8 +54,8 @@ function Insights() {
                 if (item?.time?.length)
                     return {
                         title: 'Appointment with ' + item?.patientId?.fullName,
-                        start: addHoursToDate(item.date, item.time.split('-')[0]),
-                        end: addHoursToDate(item.date, item.time.split('-')[0])
+                        start: addHoursToDate(item.date, item?.time?.split('-')[0]),
+                        end: addHoursToDate(item.date, item?.time?.split('-')[0])
                     }
             })
             console.log(newBooking)
