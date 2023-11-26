@@ -60,7 +60,7 @@ body {
 
     &:not(.authenticated) {
       .Header{
-        display: none;
+        // display: none;
       }
     }
     &.doctor.dashboard {

@@ -124,7 +124,6 @@ function App() {
       {
         !(user?.role === 'doctor' && window.location.pathname.includes('dashboard'))?
         <Footer></Footer>:null
-
       }
       {/* </Router> */}
     </div>

@@ -73,7 +73,7 @@ function Homepage() {
 
                 <div className="banner">
                     <div className="container">
-                        <p>Book Your Appointment <br /> in few easy steps</p>
+                        <p className="heading">Book Your Appointment <br /> in few easy steps</p>
 
                         {
                             window.innerWidth > 992 ?
