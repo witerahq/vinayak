@@ -153,7 +153,8 @@ function Register() {
         handleRegister(updatedFormData);
       } catch (error) {
         console.log(error.message)
-        enqueueSnackbar(error.message, { variant: 'error' });
+
+        handleRegister(formData);
       }
     };
 

@@ -34,7 +34,8 @@ async function getCurrentUser(req, res) {
             experience:user.experience,
             address:user.address,
             gender:user.gender,
-            language:user.language
+            language:user.language,
+            hospital:user.hospital
             // Include other user properties as needed
         };
 

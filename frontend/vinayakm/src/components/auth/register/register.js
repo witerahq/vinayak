@@ -140,23 +140,30 @@ function Register() {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-
+    
           const updatedFormData = {
             ...formData,
             latitude,
             longitude,
           };
-
-          handleRegister(updatedFormData)
-
+    
+          // Call handleRegister with updatedFormData
+          handleRegister(updatedFormData);
         },
         (error) => {
-          enqueueSnackbar('Error getting location', { variant: 'error' });
+          console.error('Error getting location');
+    
+          // If there's an error, still call handleRegister (you might want to handle the error in handleRegister)
+          handleRegister(formData);
         }
       );
     } else {
-      enqueueSnackbar('Geolocation not available', { variant: 'error' });
+      console.error('Geolocation not available');
+    
+      // If geolocation is not available, still call handleRegister
+      handleRegister(formData);
     }
+    
 
   };
 
