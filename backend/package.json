@@ -11,8 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.441.0",
-    "aws-sdk": "^2.1487.0",
+    "@aws-sdk/client-s3": "^3.458.0",
+    "@aws-sdk/credential-provider-ini": "^3.458.0",
+    "@aws-sdk/credential-provider-node": "^3.458.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "connect-multiparty": "^2.2.0",

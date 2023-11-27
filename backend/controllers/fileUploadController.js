@@ -1,4 +1,5 @@
-const AWS = require('aws-sdk');
+const { S3Client } = require('@aws-sdk/client-s3');
+const { fromIni } = require('@aws-sdk/credential-provider-ini');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const path = require('path');
@@ -10,13 +11,10 @@ const AWS_SECRET_ACCESS_KEY = 'rV0SblN+/tLOXREDqVvL+h4EZp1GpO4MkOH0AGVx';
 const AWS_BUCKET_NAME = 'vinayakmudit';
 
 // Initialize the AWS SDK
-AWS.config.update({
-  accessKeyId: AWS_ACCESS_KEY_ID,
-  secretAccessKey: AWS_SECRET_ACCESS_KEY,
-   region: 'ap-south-1'
+const s3 = new S3Client({
+  credentials: fromIni(),
+  region: 'ap-south-1',
 });
-
-const s3 = new AWS.S3();
 
 
 function uploadFile(req, res) {
