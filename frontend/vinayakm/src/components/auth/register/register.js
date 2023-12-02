@@ -176,6 +176,81 @@ function Register() {
     });
   };
 
+  const anatomicalRegions = [
+    "scalp",
+    "forehead",
+    "eye",
+    "nose",
+    "ear",
+    "face",
+    "mouth",
+    "jaw",
+    "neck",
+    "Upper chest",
+    "Sternum",
+    "Breast",
+    "Chest",
+    "shoulder",
+    "armpit",
+    "upper arm",
+    "elbow",
+    "forearm",
+    "wrist",
+    "hand",
+    "fingers",
+    "epigastric",
+    "upper abdomen",
+    "suprapubic",
+    "pelvic",
+    "hip",
+    "groin",
+    "thigh",
+    "knee",
+    "shin",
+    "ankle",
+    "foot",
+    "toes",
+    "head",
+    "upper back",
+    "back",
+    "flank",
+    "lower back",
+    "tailbone",
+    "buttock",
+    "rectum",
+    "calf",
+    "skin",
+    "general",
+    "leg",
+  ];
+
+  const specialist = [
+    "paediatric",
+    "dermatologist",
+    "surgery",
+    "medicine",
+    "psychiatrist",
+    "ophthalmologist",
+    "ENT",
+    "pulmonologist",
+    "orthopaedic",
+    "gyanecologist",
+    "neurologist",
+    "dentist",
+    "endocrinologist",
+    "oncologist",
+    "gastroentrologist",
+    "urologist",
+    "sexologist",
+    "psychiatry",
+    "cardiologist",
+  ];
+
+  // Function to convert a string to Title Case
+  const toTitleCase = (str) =>
+    str.replace(/\b\w/g, (char) => char.toUpperCase());
+
+
 
 
   return (
@@ -269,32 +344,29 @@ function Register() {
                       <MenuItem value={'stomach'}>Stomach</MenuItem>
 
                     </Select> */}
-                    <FormControl sx={{ m: 1, width: '100%' }}>
-                      <InputLabel id="speciality-label">Speciality</InputLabel>
-                      <Select
-                        labelId="speciality-label"
-                        id="speciality"
-                        value={formData.speciality}
-                        onChange={handleFieldChange}
-                        name="speciality"
-                        fullWidth
-                        // input={<OutlinedInput label="Speciality" />}
-                        label="Speciality"
-                      >
-                        <MenuItem disabled value="">
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={'heart'}>Heart</MenuItem>
-                        <MenuItem value={'brain'}>Brain</MenuItem>
-                        <MenuItem value={'sanity'}>Sanity</MenuItem>
-                        <MenuItem value={'ent'}>ENT</MenuItem>
-                        <MenuItem value={'skin'}>Skin</MenuItem>
-                        <MenuItem value={'stomach'}>Stomach</MenuItem>
-                        <MenuItem value={'gyno'}>Gyno</MenuItem>
-                        <MenuItem value={'dentist'}>Dentist</MenuItem>
-                        <MenuItem value={'ortho'}>Ortho</MenuItem>
-                      </Select>
-                    </FormControl>
+                    <FormControl sx={{ m: 1, width: "100%" }}>
+                  <InputLabel id="speciality-label">
+                    Anatomical Region
+                  </InputLabel>
+                  <Select
+                    labelId="speciality-label"
+                    id="speciality"
+                    value={formData?.speciality}
+                    onChange={handleFieldChange}
+                    name="speciality"
+                    fullWidth
+                    label="Anatomical Region"
+                  >
+                    <MenuItem value="" disabled>
+                      <em>None</em>
+                    </MenuItem>
+                    {anatomicalRegions.map((item) => {
+                      return (
+                        <MenuItem value={item}>{toTitleCase(item)}</MenuItem>
+                      );
+                    })}
+                  </Select>
+                </FormControl>
                   </>
                 )
                   : ''
