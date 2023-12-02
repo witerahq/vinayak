@@ -31,7 +31,23 @@
         }
         
     }
+    .css-mhc70k-MuiGrid-root{
+        width: 100%;
+    }
+    .css-mhc70k-MuiGrid-root>.MuiGrid-item{
+        padding-top: 0;padding-bottom: 16px;
+    }
+    .css-mhc70k-MuiGrid-root>.MuiGrid-item{
+        padding-left: 0;
+    }
+    .css-mhc70k-MuiGrid-root>.MuiGrid-item:nth-child(odd){
+        padding-right: 8px;
+    }
+    .css-mhc70k-MuiGrid-root>.MuiGrid-item:nth-child(even){
+        padding-left: 8px;
+    }
 }
+
 
 @media screen and (max-width:992px) {
     .Profile{

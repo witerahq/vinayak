@@ -35,7 +35,11 @@ async function getCurrentUser(req, res) {
             address:user.address,
             gender:user.gender,
             language:user.language,
-            hospital:user.hospital
+            hospital:user.hospital,
+            "Primary Specialist": user["Primary Specialist"],
+            "Secondary Specialist": user["Secondary Specialist"],
+            "Tertiary Specialist": user["Tertiary Specialist"],
+            priceAppointment:user.priceAppointment
             // Include other user properties as needed
         };
 
@@ -51,6 +55,8 @@ async function updateUserDetails(req, res) {
     try {
         const userId = req.user._id; // Assuming the user's ID is in the token
         const updates = req.body; // Fields to be updated
+
+        console.log(updates)
 
         const user = await User.findByIdAndUpdate(userId, updates, { new: true });
 

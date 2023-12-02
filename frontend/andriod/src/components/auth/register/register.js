@@ -21,7 +21,8 @@ function Register() {
     password: '',
     role: 'patient',
     licenseNumber: '',
-    location: '', speciality: ''
+    location: '', 
+    speciality: ''
   });
   const [formErrors, setFormErrors] = useState({
     fullName: false,
@@ -159,6 +160,7 @@ function Register() {
     };
 
     getLocation()
+    
 
   };
 

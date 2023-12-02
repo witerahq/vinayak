@@ -8,11 +8,11 @@ export const SEARCH_DOCTORS_SUCCESS = 'SEARCH_DOCTORS_SUCCESS';
 export const SEARCH_DOCTORS_FAILURE = 'SEARCH_DOCTORS_FAILURE';
 
 // Action creators
-export const searchDoctors = (selectedDate, speciality) => (dispatch) => {
+export const searchDoctors = (selectedDate, speciality,symptoms) => (dispatch) => {
 //   dispatch({ type: SEARCH_DOCTORS_REQUEST });
 
   axios
-    .post('/api/search/doctors', { selectedDate, speciality })
+    .post('/api/search/doctors', { selectedDate, speciality, symptoms })
     .then((response) => {
       dispatch({ type: SEARCH_DOCTORS_SUCCESS, doctors: response.data });
     })

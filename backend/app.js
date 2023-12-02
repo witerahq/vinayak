@@ -9,6 +9,9 @@ const session = require('express-session');
 const User = require('./models/User'); // Replace with your User model import
 const https = require('https');
 const fs = require('fs');
+const xlsx = require('xlsx'); // Import the xlsx module for Excel file handling
+const SymptomModel = require('./models/Symptom');
+const { searchSymptoms } = require('./controllers/elasticSearchController');
 
 const port = 3000; // Default HTTPS port
 
@@ -26,7 +29,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
+const client = mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -57,6 +60,47 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+// import excel data
+async function importExcelToMongo(req, res) {
+  try {
+    // Replace 'path/to/your/excel-file.xlsx' with the actual path to your Excel file
+    const excelFilePath = './symptoms.xlsx';
+
+    // Connect to MongoDB
+    // const client = new MongoClient(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+    // await client.connect();
+    // console.log('Connected to MongoDB');
+
+    // Read Excel File
+    const workbook = xlsx.readFile(excelFilePath);
+    const sheetName = workbook.SheetNames[0];
+    const excelData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+    // Insert Data into MongoDB
+    // const db = client.db();
+    // const collection = db.collection('symptoms'); // Replace with your MongoDB collection name
+    // const result = await collection.insertMany(excelData);
+
+    console.log(`Inserted ${excelData[0]} documents into MongoDB`);
+
+    // Close MongoDB Connection
+    const result = await SymptomModel.insertMany(excelData);
+
+    // await client.close();
+    // console.log('Disconnected from MongoDB');
+
+    res.json({ success: true, message: 'Data imported successfully',data:result });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+}
+
+
+
+
+
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/email', require('./routes/verifyEmail'));
@@ -69,11 +113,15 @@ app.use('/api/medicalrecord', require('./routes/medicalRecordRoutes'));
 app.use('/api/appointments', require('./routes/appointmentRoutes'));
 app.use('/api/file', require('./routes/uploadFileRoutes'));
 
+app.get('/api/import-excel', importExcelToMongo);
+// Update this line in your app.js or route configuration
+app.get('/api/search-symptoms/:query', searchSymptoms);
 
 
 app.get('/', (req, res) => {
   res.send('Hello, HTTPS World (Local Test)!');
 });
+
 
 const server = https.createServer(options, app);
 

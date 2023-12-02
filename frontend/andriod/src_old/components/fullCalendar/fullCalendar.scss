@@ -1,0 +1,10 @@
+@media screen and (max-width:992px) {
+    .Calendar{
+        .fc-header-toolbar{
+            flex-wrap: wrap;
+            .fc-toolbar-chunk{
+                margin-top: 12px;
+            }
+        }
+    }
+}

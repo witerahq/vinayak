@@ -24,95 +24,140 @@
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
-
+      
             .container {
-                display: flex;
-                align-items: center;
+              display: flex;
+              align-items: center;
             }
-
+      
             .search {
-                margin-left: 16px;
-
-                button {
-                    border-radius: 100px;
-                    font-size: 16px;
-                    font-style: normal;
-                    font-weight: 500;
-                    line-height: 24px;
-                    cursor: pointer;
-                    padding: 10px 24px;
-                    background: #206BAC;
-                    border: 1px solid #206BAC;
-                    color: #FFF;
-                }
+              margin-left: 16px;
+      
+              button {
+                border-radius: 100px;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 24px;
+                cursor: pointer;
+                padding: 10px 24px;
+                background: #206bac;
+                border: 1px solid #206bac;
+                color: #fff;
+              }
             }
-        }
-
-        .appointment {
+          }
+      
+          .appointment {
             width: 100%;
             flex: 90%;
-            background: #FFF;
+            background: #fff;
             display: flex;
             align-items: center;
             border-radius: 24px;
-            overflow: hidden;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
+      
             .symptoms {
-                flex: 40%;
-                background: #FFF;
-                padding: 10px 12px;
-                color: #171A1C;
-                font-size: 16px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: 16px;
-                border: none;
-                outline: none;
-                height: 100%;
-
-                &::placeholder {
-                    color: #171A1C;
-                    font-size: 1rem;
-                    font-style: normal;
-                    font-weight: 400;
-                    line-height: 16px;
-                }
-            }
-
-            .MuiStack-root {
-                flex: 30%;
-                padding-top: 0;
-
-                .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
-                    border-radius: 0;
-
-                }
-
-                .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
-                    border-top: 0;
-                    border-bottom: 0;
-                    border-right: 1px solid #171A1C;
-                    border-left: 1px solid #171A1C;
-
-                }
-
-            }
-
-            .stream-select {
-                flex: 30%;
-                background: #FFF;
-                padding: 10px 12px;
-                color: #171A1C;
+              flex: 40%;
+              background: #fff;
+              padding: 10px 12px;
+              color: #171a1c;
+              font-size: 16px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: 16px;
+              border: none;
+              outline: none;
+              height: 100%;
+      
+              &::placeholder {
+                color: #171a1c;
                 font-size: 1rem;
                 font-style: normal;
                 font-weight: 400;
                 line-height: 16px;
-                border: none;
-                outline: none;
-                height: 100%;
+              }
             }
-        }
+      
+            .MuiStack-root {
+              flex: 30%;
+              padding-top: 0;
+      
+              .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
+                border-radius: 0;
+              }
+      
+              .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+                border-top: 0;
+                border-bottom: 0;
+                border-left: 1px solid #171a1c;
+              }
+              input{
+                  outline: none;
+                  border: 0px;
+              }
+            }
+      
+            .stream-select {
+              flex: 30%;
+              background: #fff;
+              padding: 10px 12px;
+              color: #171a1c;
+              font-size: 1rem;
+              font-style: normal;
+              font-weight: 400;
+              line-height: 16px;
+              border: none;
+              outline: none;
+              height: 100%;
+            }
+      
+            .react-autosuggest__container {
+              flex: 90%;
+              position: relative;
+              input {
+                width: 100%;
+                font-size: 16px;
+                padding: 16px;
+                border: 0px;
+                outline: none;
+                border-radius: 24px;
+              }
+              .react-autosuggest__suggestions-container {
+                position: absolute;
+                 z-index: 1000;
+                left: 0;
+                background: white;
+                // box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+                max-height: 120px;
+                overflow-y:auto ;
+                right: 0;
+                top: 60px;
+                padding: 8px;
+                ul{
+                  list-style: none;
+              }
+              }
+              .react-autosuggest__suggestion--highlighted{
+                background: lightgray;
+              }
+              .autocomplete{
+                  &.title-case{
+                      letter-spacing: 1px;margin-top: 2px;
+                      &:hover{
+                          background: lightgray;
+                      }
+                      cursor: pointer;
+                      em{
+                          font-weight: 700;
+                      }
+                      &::first-letter{
+                          text-transform: uppercase;
+                      }
+                  }
+              }
+            }
+          }
     }
 
     .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root.Mui-focused,
