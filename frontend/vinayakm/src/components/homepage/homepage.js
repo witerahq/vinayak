@@ -203,7 +203,7 @@ function Homepage() {
                     </LocalizationProvider>
                   </div>
                   <div className="search">
-                    <button onClick={(e) => searchSubmit()}>Search</button>
+                    <button onClick={(e) => searchSubmit()} disabled={!symptoms}>Search</button>
                   </div>
                 </div>
               </div>

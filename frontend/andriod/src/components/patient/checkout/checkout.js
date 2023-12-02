@@ -88,7 +88,7 @@ function Checkout() {
       doctorId: cartFromStore.docDetail._id,
       time: new Date(),
       transactionID: uuidv4(),
-      amount: 550,
+      amount: cartFromStore.docDetail.priceAppointment,
       mode: "UPI",
     };
 
@@ -160,21 +160,34 @@ function Checkout() {
                 <div className="doc-detail">
                   <div className="profile">
                     <p>Dr. {cartFromStore.docDetail?.fullName}</p>
-                    <p>BDS, MDS</p>
+                    {cartFromStore.docDetail?.education ? <p>BDS, MDS</p> : null}
                   </div>
                   <div className="info">
-                    <p>8+ Years of Experience</p>
+                    {}
+                    {cartFromStore.docDetail?.experience ? (
+                      <p>{cartFromStore.docDetail?.experience}+ Years of Experience</p>
+                    ) : null}
                     <div className="tags">
                       <div className="langs">
+                        {cartFromStore.docDetail?.gender ? (
+                          <div className="lang">
+                            <p style={{ margin: 0 }}>
+                              {cartFromStore.docDetail?.gender == "male" ? "Male" : "Female"}
+                            </p>
+                          </div>
+                        ) : null}
                         <div className="lang">
-                          <p>ENG</p>
+                          <p style={{ margin: 0 }}>ENG</p>
                         </div>
                         <div className="lang">
-                          <p>हिंदी</p>
+                          <p style={{ margin: 0 }}>हिंदी</p>
                         </div>
                       </div>
+                     
                     </div>
-                    <p className="hospital">AIIMS, New Delhi.</p>
+                    {cartFromStore.docDetail?.hospital ? (
+                      <p className="hospital">{cartFromStore.docDetail?.hospital}</p>
+                    ) : null}{" "}
                   </div>
                 </div>
                 <div className="booking-detail">
@@ -201,13 +214,18 @@ function Checkout() {
             {/* Accordion for booking appointment for someone else */}
             <Accordion
               onChange={handleAccordionChange}
-              style={{ backgroundColor: "transparent",marginTop:'20px',border:'0px',boxShadow:'none' }} // Set the background color to transparent
+              style={{
+                backgroundColor: "transparent",
+                marginTop: "20px",
+                border: "0px",
+                boxShadow: "none",
+              }} // Set the background color to transparent
             >
               <AccordionSummary
-                expandIcon={<ExpandMoreIcon  htmlColor="#206BAC"/>}
+                expandIcon={<ExpandMoreIcon htmlColor="#206BAC" />}
                 aria-controls="book-appointment-panel-content"
                 id="book-appointment-panel-header"
-                style={{color:'#206BAC',fontSize:'16px'}}
+                style={{ color: "#206BAC", fontSize: "16px" }}
               >
                 Schedule an appointment on behalf of another person.
               </AccordionSummary>
@@ -218,7 +236,7 @@ function Checkout() {
                   fullWidth
                   value={patientInfo.name}
                   onChange={handlePatientInfoChange("name")}
-                  style={{marginBottom:'16px'}}
+                  style={{ marginBottom: "16px" }}
                 />
                 <TextField
                   label="Patient Phone Number"
@@ -237,17 +255,32 @@ function Checkout() {
           </div>
           <div className="checkout-card">
             <p>
-              Consultation Fees: <span>₹500.00</span>
+              Consultation Fees:{" "}
+              <span>₹{cartFromStore.docDetail?.priceAppointment}</span>
             </p>
             <p className="tax">
-              CGST: (9%) <span>₹45.00</span>
+              CGST: (9%){" "}
+              <span>
+                ₹{(cartFromStore.docDetail?.priceAppointment * 0.09).toFixed(2)}
+              </span>
             </p>
             <p className="tax">
-              CGST: (9%) <span>₹45.00</span>
+              CGST: (9%){" "}
+              <span>
+                ₹{(cartFromStore.docDetail?.priceAppointment * 0.09).toFixed(2)}
+              </span>
             </p>
             <div className="apply"></div>
             <p className="total">
-              Total <span>₹590.00</span>
+              Total{" "}
+              <span>
+                ₹
+                {Math.round(
+                  Number(cartFromStore.docDetail?.priceAppointment) +
+                    Number(cartFromStore.docDetail?.priceAppointment * 0.09) +
+                    Number(cartFromStore.docDetail?.priceAppointment * 0.09)
+                )}
+              </span>
             </p>
             <button className="checkout" onClick={(e) => checkout()}>
               Proceed to Checkout

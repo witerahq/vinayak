@@ -100,7 +100,7 @@ function Insights() {
                     </div>
                     <div className="insight-box income">
                         <p>Income</p>
-                        <h6>₹ {appointmentFromStore?.length * 550}</h6>
+                        <h6>₹ {appointmentFromStore?.length * userFromStore?.priceAppointment}</h6>
                     </div>
 
                 </div>

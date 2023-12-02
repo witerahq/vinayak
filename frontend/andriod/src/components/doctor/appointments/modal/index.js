@@ -212,9 +212,9 @@ const WeekTabsModal = ({ isOpen, onClose }) => {
               updateDayAvailability(availability?.[selectedTab]);
             }}
             size="small"
-            style={{ marginTop: "24px", marginBottom: "12px" }}
+            style={{ marginTop: "24px", marginBottom: "12px", textTransform:'none' }}
           >
-            Slots : {availability?.[selectedTab]?.status}
+            Your slots for the day : {availability?.[selectedTab]?.status}
           </Button>
 
           <Box className="time-sections">
@@ -324,7 +324,10 @@ const WeekTabsModal = ({ isOpen, onClose }) => {
           </DialogContent>
           <DialogActions>
             <Button onClick={closeDialog}>Cancel</Button>
-            <Button onClick={handleDialogDelete}>Delete</Button>
+            {
+              selectedTime.index !== undefined?
+            <Button onClick={handleDialogDelete}>Delete</Button>:null
+            }
             <Button onClick={handleDialogSave}>Save</Button>
           </DialogActions>
         </Dialog>

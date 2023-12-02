@@ -9,6 +9,13 @@ import { register, setError, setSuccess } from "../../../actions/authActions";
 import { SnackbarProvider, useSnackbar } from 'notistack';
 import { useSelector, shallowEqual } from 'react-redux';
 import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
+import InputAdornment from '@mui/material/InputAdornment';
+import FlagIcon from '@mui/icons-material/Flag';
+
+const countries = [
+  { code: '+91', name: 'India', icon: <FlagIcon /> },
+  // Add more countries as needed
+];
 
 function Register() {
 
@@ -250,7 +257,12 @@ function Register() {
   const toTitleCase = (str) =>
     str.replace(/\b\w/g, (char) => char.toUpperCase());
 
+    const [country, setCountry] = React.useState('+91');
 
+    const handleCountryChange = (event) => {
+      setCountry(event.target.value);
+    };
+  
 
 
   return (
@@ -308,6 +320,11 @@ function Register() {
                 label="Phone Number"
                 value={formData.phoneNumber}
                 onChange={handleFieldChange}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start"><></>🇮🇳 +91</InputAdornment>
+                  ),
+                }}
               />
               {
                 formData.role === 'doctor' ? (

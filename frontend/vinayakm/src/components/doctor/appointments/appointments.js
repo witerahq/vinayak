@@ -338,9 +338,9 @@ export default function Appointments() {
                                                 </TableCell> */}
 
                                                 <TableCell className='actions' align='left'>
-                                                    <ChatBubbleOutlineIcon htmlColor='#464F53' sx={{ marginRight: '10px' }}></ChatBubbleOutlineIcon>
+                                                    <ChatBubbleOutlineIcon htmlColor='#464F53' sx={{ marginRight: '10px', display:'none' }}></ChatBubbleOutlineIcon>
                                                     <a href={"https://wa.me/"+(row.patientPhoneNumber?row.patientPhoneNumber:row.patientId.phoneNumber)}>
-                                                        <WhatsAppIcon></WhatsAppIcon>
+                                                        <WhatsAppIcon htmlColor='#25D366'></WhatsAppIcon>
                                                     </a>
                                                     {/* <EdgesensorHighIcon htmlColor='#464F53'></EdgesensorHighIcon> */}
                                                 </TableCell>

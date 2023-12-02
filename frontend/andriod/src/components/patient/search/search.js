@@ -27,12 +27,11 @@ import dayjs from "dayjs";
 import Autosuggest from "react-autosuggest";
 import algoliasearch from "algoliasearch/lite";
 
-
 const searchClient = algoliasearch(
-    "LGS1V09J5I",
-    "c7520fea6b34aed0d7451b5377b61583"
-  );
-  const index = searchClient.initIndex("dev_vinayakm");
+  "LGS1V09J5I",
+  "c7520fea6b34aed0d7451b5377b61583"
+);
+const index = searchClient.initIndex("dev_vinayakm");
 
 function Search() {
   const searchFromStore = useSelector((state) => {
@@ -47,30 +46,40 @@ function Search() {
   const [speciality, setSpeciality] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const dispatch = useDispatch();
-  const [selectedSuggestion,setSelectedSuggestion] = useState({})
+  const [selectedSuggestion, setSelectedSuggestion] = useState({});
   const onSuggestionSelected = (_, { suggestion }) => {
     // Store the entire selected object in the symptoms state
     // setSymptoms(suggestion);
-    console.log(suggestion)
-    setSelectedSuggestion(suggestion)
+    console.log(suggestion);
+    setSelectedSuggestion(suggestion);
   };
   const searchSubmit = () => {
     console.log(symptoms, selectedDate, speciality);
-    dispatch(searchDoctors(selectedDate, selectedSuggestion,symptoms));
+    dispatch(searchDoctors(selectedDate, selectedSuggestion, symptoms));
     navigate({
       pathname: "/search",
       search: createSearchParams({
         date: selectedDate,
-        speciality:JSON.stringify(selectedSuggestion),
+        speciality: JSON.stringify(selectedSuggestion),
         symptoms,
       }).toString(),
     });
   };
   const date = searchParams.get("date");
   const specialityParam = searchParams.get("speciality");
+  const symptomsParam = searchParams.get("symptoms");
   useEffect(() => {
+    console.log(date, specialityParam, symptomsParam);
     if (!searchFromStore) {
-      dispatch(searchDoctors(date, specialityParam));
+      dispatch(
+        searchDoctors(
+          date,
+          specialityParam.includes("{")
+            ? JSON.parse(specialityParam)
+            : specialityParam,
+          symptomsParam
+        )
+      );
     }
   }, [searchFromStore]);
 
@@ -81,8 +90,6 @@ function Search() {
     timing: null,
     type: "online",
   });
-
-  
 
   const bookAppointment = (event, docDetail, timing) => {
     setAppointment({
@@ -129,9 +136,11 @@ function Search() {
   const getSuggestions = async (value) => {
     try {
       const result = await index.search(value);
-      console.log(result.hits.map((hit) =>{
-       return hit
-    }))
+      console.log(
+        result.hits.map((hit) => {
+          return hit;
+        })
+      );
       setSuggestions(result.hits.map((hit) => hit)); // Replace 'name' with the field you want to display
     } catch (error) {
       console.error("Algolia search error:", error);
@@ -147,15 +156,21 @@ function Search() {
     setSuggestions([]);
   };
 
-  const renderSuggestion = (suggestions,e,v) => {
-    console.log(suggestions,e,v)
-    return (<div className="autocomplete title-case" dangerouslySetInnerHTML={{ __html: suggestions._highlightResult.Symptom.value }}></div>);
+  const renderSuggestion = (suggestions, e, v) => {
+    console.log(suggestions, e, v);
+    return (
+      <div
+        className="autocomplete title-case"
+        dangerouslySetInnerHTML={{
+          __html: suggestions._highlightResult.Symptom.value,
+        }}
+      ></div>
+    );
   };
 
   const onChange = (event, { newValue }) => {
     setSymptoms(newValue);
   };
-
 
   const handleSearch = () => {
     // You can process the values here, e.g., log them to the console
@@ -175,10 +190,26 @@ function Search() {
     });
   };
 
-  const getSuggestionValue = suggestion => {
-    return suggestion.Symptom
-   };
+  const getSuggestionValue = (suggestion) => {
+    return suggestion.Symptom;
+  };
 
+  const checkTotalSlots = (value) => {
+    var count = 0;
+    Object.keys(value.availability.timeSlots).map((slot, i) => {
+      return value.availability.timeSlots[slot].map((el, idx) => {
+        if (
+          new Date(
+            addHoursToDate(value.availability.day, el.startTime.split("-")[0])
+          ) >= new Date()
+        ) {
+          count++;
+        }
+      });
+    });
+    console.log(value, "value", count);
+    return count;
+  };
 
   return (
     <>
@@ -251,7 +282,7 @@ function Search() {
                     </LocalizationProvider>
                   </div>
                   <div className="search">
-                    <button onClick={(e) => searchSubmit()}>Search</button>
+                    <button onClick={(e) => searchSubmit()} disabled={!symptoms}>Search</button>
                   </div>
                 </div>
               </div>
@@ -335,34 +366,109 @@ function Search() {
                           <div className="doc-detail">
                             <div className="profile">
                               <p>Dr. {item?.fullName}</p>
-                              <p>BDS, MDS</p>
+                              {item?.education ? <p>BDS, MDS</p> : null}
                             </div>
                             <div className="info">
-                              <p>{item?.experience}+ Years of Experience</p>
+                              {item?.experience ? (
+                                <p>{item?.experience}+ Years of Experience</p>
+                              ) : null}
                               <div className="tags">
                                 <div className="langs">
+                                  {item?.gender ? (
+                                    <div className="lang">
+                                      <p style={{ margin: 0 }}>
+                                        {item?.gender=='male'?'Male':'Female'}
+                                      </p>
+                                    </div>
+                                  ) : null}
                                   <div className="lang">
-                                    <p>ENG</p>
+                                    <p style={{ margin: 0 }}>ENG</p>
                                   </div>
                                   <div className="lang">
-                                    <p>हिंदी</p>
+                                    <p style={{ margin: 0 }}>हिंदी</p>
                                   </div>
                                 </div>
                                 <div className="rating">
-                                  <p>
+                                
+                                  <p style={{ margin: 0 }}>
                                     4.5{" "}
                                     <span>
                                       <StarIcon fontSize="small"></StarIcon>
                                     </span>
                                   </p>
+
                                 </div>
                               </div>
                               <div className="more-details">
-                                <p className="hospital">AIIMS, New Delhi.</p>
+                                {item.hospital ? (
+                                  <p className="hospital">{item.hospital}</p>
+                                ) : null}
                                 <p className="subhead">Available from:</p>
-                                <p className="days">Monday - Saturday</p>
-                                <p className="timing">7:00 AM 12:00 PM</p>
-                                <p className="timing">2:00 PM to 7:00 PM</p>
+                                {/* <p className="days">Monday - Saturday</p> */}
+                                <p
+                                  style={{
+                                    fontSize: "11px",
+                                    marginTop: "5px",
+                                    marginBottom: "5px",
+                                  }}
+                                  className="timing"
+                                >
+                                  Morning:{" "}
+                                  {
+                                    item.availability.timeSlots["morning"][0]
+                                      .startTime
+                                  }{" "}
+                                  to{" "}
+                                  {
+                                    item.availability.timeSlots["morning"][
+                                      item.availability.timeSlots["morning"]
+                                        .length - 1
+                                    ].endTime
+                                  }
+                                </p>
+                                <p
+                                  style={{
+                                    fontSize: "11px",
+                                    marginTop: "5px",
+                                    marginBottom: "5px",
+                                  }}
+                                  className="timing"
+                                >
+                                  Afternoon:{" "}
+                                  {
+                                    item.availability.timeSlots["afternoon"][0]
+                                      .startTime
+                                  }{" "}
+                                  to{" "}
+                                  {
+                                    item.availability.timeSlots["afternoon"][
+                                      item.availability.timeSlots["morning"]
+                                        .length - 1
+                                    ].endTime
+                                  }
+                                </p>
+                                <p
+                                  style={{
+                                    fontSize: "11px",
+                                    marginTop: "5px",
+                                    marginBottom: "5px",
+                                  }}
+                                  className="timing"
+                                >
+                                  Evening:{" "}
+                                  {
+                                    item.availability.timeSlots["evening"][0]
+                                      .startTime
+                                  }{" "}
+                                  to{" "}
+                                  {
+                                    item.availability.timeSlots["evening"][
+                                      item.availability.timeSlots["morning"]
+                                        .length - 1
+                                    ].endTime
+                                  }
+                                </p>
+                                {/* <p className="timing">2:00 PM to 7:00 PM</p> */}
                                 <p style={{ fontSize: "12px", opacity: 0.7 }}>
                                   If the preferred time slots are not available,
                                   please feel free to contact us:{" "}
@@ -373,13 +479,17 @@ function Search() {
                           </div>
                           <div className="booking-detail">
                             <div className="heading">
-                              <p>Book Your Slot: </p>
+                              <p style={{ fontWeight: 500 }}>
+                                Book Your Slot:{" "}
+                              </p>
                             </div>
                             <div className="timings">
-                              {Object.keys(item.availability.timeSlots).map(
-                                (slot, i) => {
-                                  return item.availability.timeSlots[slot].map(
-                                    (el, idx) => {
+                              {checkTotalSlots(item) ? (
+                                Object.keys(item.availability.timeSlots).map(
+                                  (slot, i) => {
+                                    return item.availability.timeSlots[
+                                      slot
+                                    ].map((el, idx) => {
                                       if (
                                         new Date(
                                           addHoursToDate(
@@ -399,9 +509,19 @@ function Search() {
                                             }
                                           ></Chip>
                                         );
-                                    }
-                                  );
-                                }
+                                    });
+                                  }
+                                )
+                              ) : (
+                                <p
+                                  style={{
+                                    marginTop: 0,
+                                    marginBottom: "12px",
+                                    fontSize: "12px",
+                                  }}
+                                >
+                                  No slot available.
+                                </p>
                               )}
                             </div>
                             <div className="book-button">
@@ -409,6 +529,9 @@ function Search() {
                                 onClick={(e) => {
                                   book();
                                 }}
+                                disabled={
+                                  !checkTotalSlots(item) || !appointment.timing
+                                }
                               >
                                 Book Appointment
                               </button>

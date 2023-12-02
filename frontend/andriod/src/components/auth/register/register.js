@@ -9,7 +9,14 @@ import { register, setError, setSuccess } from "../../../actions/authActions";
 import { SnackbarProvider, useSnackbar } from 'notistack';
 import { useSelector, shallowEqual } from 'react-redux';
 import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
+import InputAdornment from '@mui/material/InputAdornment';
+import FlagIcon from '@mui/icons-material/Flag';
 import { Geolocation } from '@capacitor/geolocation';
+
+const countries = [
+  { code: '+91', name: 'India', icon: <FlagIcon /> },
+  // Add more countries as needed
+];
 
 function Register() {
 
@@ -21,8 +28,7 @@ function Register() {
     password: '',
     role: 'patient',
     licenseNumber: '',
-    location: '', 
-    speciality: ''
+    location: '', speciality: ''
   });
   const [formErrors, setFormErrors] = useState({
     fullName: false,
@@ -69,81 +75,6 @@ function Register() {
     let response = await dispatch(register(value));
     setregisterClicked(!registerClicked)
   };
-
-  const anatomicalRegions = [
-    "scalp",
-    "forehead",
-    "eye",
-    "nose",
-    "ear",
-    "face",
-    "mouth",
-    "jaw",
-    "neck",
-    "Upper chest",
-    "Sternum",
-    "Breast",
-    "Chest",
-    "shoulder",
-    "armpit",
-    "upper arm",
-    "elbow",
-    "forearm",
-    "wrist",
-    "hand",
-    "fingers",
-    "epigastric",
-    "upper abdomen",
-    "suprapubic",
-    "pelvic",
-    "hip",
-    "groin",
-    "thigh",
-    "knee",
-    "shin",
-    "ankle",
-    "foot",
-    "toes",
-    "head",
-    "upper back",
-    "back",
-    "flank",
-    "lower back",
-    "tailbone",
-    "buttock",
-    "rectum",
-    "calf",
-    "skin",
-    "general",
-    "leg",
-  ];
-
-  const specialist = [
-    "paediatric",
-    "dermatologist",
-    "surgery",
-    "medicine",
-    "psychiatrist",
-    "ophthalmologist",
-    "ENT",
-    "pulmonologist",
-    "orthopaedic",
-    "gyanecologist",
-    "neurologist",
-    "dentist",
-    "endocrinologist",
-    "oncologist",
-    "gastroentrologist",
-    "urologist",
-    "sexologist",
-    "psychiatry",
-    "cardiologist",
-  ];
-
-  // Function to convert a string to Title Case
-  const toTitleCase = (str) =>
-    str.replace(/\b\w/g, (char) => char.toUpperCase());
-
 
   useEffect(() => {
 
@@ -248,6 +179,86 @@ function Register() {
     });
   };
 
+  const anatomicalRegions = [
+    "scalp",
+    "forehead",
+    "eye",
+    "nose",
+    "ear",
+    "face",
+    "mouth",
+    "jaw",
+    "neck",
+    "Upper chest",
+    "Sternum",
+    "Breast",
+    "Chest",
+    "shoulder",
+    "armpit",
+    "upper arm",
+    "elbow",
+    "forearm",
+    "wrist",
+    "hand",
+    "fingers",
+    "epigastric",
+    "upper abdomen",
+    "suprapubic",
+    "pelvic",
+    "hip",
+    "groin",
+    "thigh",
+    "knee",
+    "shin",
+    "ankle",
+    "foot",
+    "toes",
+    "head",
+    "upper back",
+    "back",
+    "flank",
+    "lower back",
+    "tailbone",
+    "buttock",
+    "rectum",
+    "calf",
+    "skin",
+    "general",
+    "leg",
+  ];
+
+  const specialist = [
+    "paediatric",
+    "dermatologist",
+    "surgery",
+    "medicine",
+    "psychiatrist",
+    "ophthalmologist",
+    "ENT",
+    "pulmonologist",
+    "orthopaedic",
+    "gyanecologist",
+    "neurologist",
+    "dentist",
+    "endocrinologist",
+    "oncologist",
+    "gastroentrologist",
+    "urologist",
+    "sexologist",
+    "psychiatry",
+    "cardiologist",
+  ];
+
+  // Function to convert a string to Title Case
+  const toTitleCase = (str) =>
+    str.replace(/\b\w/g, (char) => char.toUpperCase());
+
+    const [country, setCountry] = React.useState('+91');
+
+    const handleCountryChange = (event) => {
+      setCountry(event.target.value);
+    };
+  
 
 
   return (
@@ -305,6 +316,11 @@ function Register() {
                 label="Phone Number"
                 value={formData.phoneNumber}
                 onChange={handleFieldChange}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start"><></>🇮🇳 +91</InputAdornment>
+                  ),
+                }}
               />
               {
                 formData.role === 'doctor' ? (

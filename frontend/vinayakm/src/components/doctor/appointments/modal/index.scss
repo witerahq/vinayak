@@ -95,7 +95,6 @@
 
           &.booked {
             background-color: #f5f5f5; // Grey
-            color: white;
             pointer-events: none; // Prevents the chip from being clicked
           }
         }

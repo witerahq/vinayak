@@ -198,6 +198,7 @@ const SearchDoctorsModal = ({ isOpen, onClose }) => {
             color="primary"
             onClick={handleSearch}
             className="search"
+            disabled={!symptoms}
           >
             Search
           </Button>
