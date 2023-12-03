@@ -98,7 +98,7 @@ function Header() {
     dispatch(fetchAppointmentsDoctor());
   };
 
-  const [city, setCity] = React.useState('');
+  const [city, setCity] = React.useState('meerut');
 
   const handleChange = (event) => {
     setCity(event.target.value);
@@ -137,7 +137,7 @@ function Header() {
                 label="City"
                 onChange={handleChange}
               >
-                <MenuItem value={'meerut'}>Meerut</MenuItem>
+                <MenuItem value={'meerut'} >Meerut</MenuItem>
               </Select>
             </FormControl>
           </>

@@ -41,7 +41,8 @@ import Records from '../../records';
 import { fetchPrescriptions } from '../../../actions/prescriptionActions';
 import { fetchAppointmentsDoctor } from '../../../actions/bookingActions';
 import { getPayments } from '../../../actions/paymentActions';
-
+import AddSymptoms from '../addSymptoms/addSymptoms';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -121,6 +122,8 @@ const sideNav = [
     // { name: 'Chat', route: 'chat', icon: <ForumIcon /> },
     { name: 'Prescriptions', route: 'prescriptions', icon: <MedicationIcon /> },
     { name: 'Payments', route: 'payments', icon: <PaymentIcon /> },
+    { name: 'Add symptoms', route: 'addSymptoms', icon: <ManageSearchIcon /> },
+
 ];
 
 
@@ -254,6 +257,7 @@ export default function Dashboard() {
                         <Route path="patients" element={<Patients />} />
                         <Route path="payments" element={<Payments />} />
                         <Route path="record" element={<Records />} />
+                        <Route path="addSymptoms" element={<AddSymptoms />} />
                         <Route path="record/:id" element={<Records />} />
 
                     </Routes>
