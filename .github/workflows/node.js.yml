@@ -26,14 +26,8 @@ jobs:
       run: |
         echo "hello"
         cd /opt/aws/hospital/github/_work/vinayak/vinayak/backend
-        npm install --legacy-peer-deps
+        npm install --legacy-peer-deps    
     
-    - name: Start PM2 process
-      run: |
-        cd /opt/aws/hospital/github/_work/vinayak/vinayak/backend
-        # npm install -g pm2
-        # pm2 start your-app.js --name your-app --log your-app.log
-
     - name: Restart PM2 process
       run: |
         cd /opt/aws/hospital/github/_work/vinayak/vinayak/backend
