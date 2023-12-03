@@ -27,16 +27,4 @@ jobs:
         echo "hello"
         cd /opt/aws/hospital/github/_work/vinayak/vinayak/backend
         npm install --legacy-peer-deps
-        cd ../frontend/vinayakm
-        npm install --legacy-peer-deps
-
-    - name: Build backend
-      run: |
-        cd backend
-        npm run build
-
-    - name: Build frontend
-      run: |
-        cd frontend
-        npm run build
    
