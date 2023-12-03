@@ -24,9 +24,9 @@ jobs:
 
     - name: Install dependencies
       run: |
-        cd backend
+        cd /opt/aws/hospital/github/_work/vinayak/vinayak/backend
         npm install
-        cd ../frontend
+        cd ../frontend/vinayakm
         npm install
 
     - name: Build backend
