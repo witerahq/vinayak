@@ -31,7 +31,7 @@ jobs:
     - name: Restart PM2 process
       run: |
         cd /opt/aws/hospital/github/_work/vinayak/vinayak/backend
-        pm2 restart vinayakm
+        sudo pm2 restart vinayakm
 
     - name: Restart Nginx
       run: sudo service nginx restart
