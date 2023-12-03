@@ -27,4 +27,18 @@ jobs:
         echo "hello"
         cd /opt/aws/hospital/github/_work/vinayak/vinayak/backend
         npm install --legacy-peer-deps
+    
+    - name: Start PM2 process
+      run: |
+        cd /opt/aws/hospital/github/_work/vinayak/vinayak/backend
+        # npm install -g pm2
+        # pm2 start your-app.js --name your-app --log your-app.log
+
+    - name: Restart PM2 process
+      run: |
+        cd /opt/aws/hospital/github/_work/vinayak/vinayak/backend
+        pm2 restart vinayakm
+
+    - name: Restart Nginx
+      run: sudo service nginx restart
    
