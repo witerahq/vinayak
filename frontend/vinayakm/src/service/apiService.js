@@ -3,8 +3,8 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  // baseURL: 'https://vinayakm.co.in:3000',
-  baseURL: 'https://localhost:3000',
+  baseURL: 'https://vinayakm.co.in:3000',
+  // baseURL: 'https://localhost:3000',
 
    // Replace with your API base URL
 });
