@@ -1,0 +1,38 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+ 
+
+jobs:
+  build:
+
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: |
+        echo "hello"
+        cd /opt/aws/hospital/github/_work/vinayak/vinayak/backend
+        npm install --legacy-peer-deps    
+    
+    - name: Restart PM2 process
+      run: |
+        cd /opt/aws/hospital/github/_work/vinayak/vinayak/backend
+        sudo pm2 restart vinayakm
+
+    - name: Restart Nginx
+      run: sudo service nginx restart
+   
