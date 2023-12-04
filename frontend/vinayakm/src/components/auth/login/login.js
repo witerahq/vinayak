@@ -126,6 +126,7 @@ function Login() {
                                 className='form-field'
                                 value={formData.role}
                                 onChange={handleFieldChange}
+                                style={{display:'none'}}
                             >
                                 <FormControlLabel value="patient" control={<Radio />} label="Patient" />
                                 <FormControlLabel value="doctor" sele control={<Radio />} label="Doctor" />

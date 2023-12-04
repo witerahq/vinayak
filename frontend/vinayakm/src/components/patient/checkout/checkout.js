@@ -19,7 +19,7 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import moment from "moment";
-import { createAppointment } from "../../../actions/bookingActions";
+import { createAppointment, fetchAppointmentsPatient } from "../../../actions/bookingActions";
 import { v4 as uuidv4 } from "uuid";
 import { createPayment } from "../../../actions/paymentActions";
 import { updateTimeslotStatus } from "../../../actions/doctorAvailabilityActions";
@@ -114,6 +114,7 @@ function Checkout() {
     );
     dispatch(createAppointment(data));
     dispatch(createPayment(paymentData));
+    dispatch(fetchAppointmentsPatient());
 
     navigate("/bookings");
   };

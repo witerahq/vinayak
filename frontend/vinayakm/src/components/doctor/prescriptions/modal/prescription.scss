@@ -32,5 +32,16 @@
         margin-bottom: 15px;
       }
     }
+    
+}
+
+@media screen and (min-width:992px) {
+  .prescription-modal{
+    .prescription-modal-body{
+      max-height: 70vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
   }
+}
   

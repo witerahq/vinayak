@@ -35,6 +35,7 @@ async function sendVerificationEmail(user) {
     if (error) {
       console.error(error);
     } else {
+      console.log(info)
       console.log(`Email sent: ${info.response}`);
     }
   });

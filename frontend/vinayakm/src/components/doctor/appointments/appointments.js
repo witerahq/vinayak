@@ -257,12 +257,6 @@ export default function Appointments() {
         [order, orderBy, page, rowsPerPage],
     );
 
-
-
-
-
-
-
     return (
         <div className="Appointments">
             <div className="container">

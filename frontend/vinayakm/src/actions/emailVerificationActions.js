@@ -15,6 +15,6 @@ export const verifyEmail = (verificationData) => async (dispatch) => {
     // Handle success actions as needed
     return response;
   } catch (error) {
-    dispatch(verifyEmailError(error.message));
+    dispatch(verifyEmailError(error?.response?.data?.message));
   }
 };

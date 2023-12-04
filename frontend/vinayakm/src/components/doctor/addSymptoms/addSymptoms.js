@@ -8,8 +8,10 @@ import {
   Divider,
   Snackbar,
 } from "@material-ui/core";
+import { v4 as uuidv4 } from "uuid";
+
 // import MuiAlert from '@material-ui/lab/Alert';
-import algoliasearch from "algoliasearch/lite";
+import algoliasearch from "algoliasearch";
 import { enqueueSnackbar } from "notistack";
 import { useDispatch, useSelector } from 'react-redux';
 import { alpha } from '@mui/material/styles';
@@ -36,6 +38,12 @@ import { visuallyHidden } from '@mui/utils';
 import { Button, Chip } from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import EdgesensorHighIcon from '@mui/icons-material/EdgesensorHigh';
+
+const searchClient = algoliasearch(
+  "LGS1V09J5I",
+  "7ada72ac4aced8301591fd628d806047"
+);
+const index = searchClient.initIndex("dev_vinayakm");
 
 const AddSymptoms = () => {
   const specialists = [
@@ -73,11 +81,6 @@ const AddSymptoms = () => {
 
   const handleSave = async () => {
     try {
-      const searchClient = algoliasearch(
-        "LGS1V09J5I",
-        "c7520fea6b34aed0d7451b5377b61583"
-      );
-      const index = searchClient.initIndex("dev_vinayakm");
       const objectToSave = {
         Symptom: formData.symptoms,
         Age: formData.age,
@@ -86,7 +89,10 @@ const AddSymptoms = () => {
         "Secondary Specialist": userFromStore["Secondary Specialist"],
         "Tertiary Specialist": userFromStore["Tertiary Specialist"],
         "Anatomical Region": userFromStore.speciality,
+        objectID:uuidv4()
       };
+
+      console.log(index)
 
       const result = await index.saveObject(objectToSave);
 

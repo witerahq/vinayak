@@ -79,7 +79,7 @@ const PrescriptionModal = ({ isOpen, onClose, prescriptionData }) => {
                         </IconButton>
                     }
                 />
-                <CardContent>
+                <CardContent className='prescription-modal-body'>
                     <form className="prescription-form">
                         <TextField
                             label="Name"
@@ -160,7 +160,7 @@ const PrescriptionModal = ({ isOpen, onClose, prescriptionData }) => {
                             Add More Test
                         </Button>
 
-                        <Button variant="contained" color="primary" onClick={updatePrescription}>
+                        <Button variant="contained" color="primary" onClick={updatePrescription} style={{float:'right'}}>
                             {prescriptionData?'Edit':'Add'}
                         </Button>
                     </form>

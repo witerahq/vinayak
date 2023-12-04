@@ -85,9 +85,6 @@ function Homepage() {
   const getSuggestions = async (value) => {
     try {
       const result = await index.search(value);
-      console.log(result.hits.map((hit) =>{
-       return hit
-    }))
       setSuggestions(result.hits.map((hit) => hit)); // Replace 'name' with the field you want to display
     } catch (error) {
       console.error("Algolia search error:", error);
