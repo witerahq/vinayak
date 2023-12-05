@@ -20,7 +20,7 @@ async function sendVerificationEmail(user) {
 
     auth: {
       user: 'vinayakminfo@gmail.com',
-      pass: 'yodc ovdb zhwv mgtk',
+      pass: 'lsju scxx jhyu jyfc',
     },
   });
 
