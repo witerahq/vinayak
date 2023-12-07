@@ -32,7 +32,7 @@ function Register() {
   const [formErrors, setFormErrors] = useState({
     fullName: false,
     email: false,
-    phoneNumber: false,
+    // phoneNumber: false,
     password: false,
     licenseNumber: false,
     speciality: false
@@ -122,9 +122,9 @@ function Register() {
     if (!formData.email) {
       errors.email = true;
     }
-    if (!formData.phoneNumber) {
-      errors.phoneNumber = true;
-    }
+    // if (!formData.phoneNumber) {
+    //   errors.phoneNumber = true;
+    // }
     if (!formData.licenseNumber && formData.role === 'doctor') {
       errors.licenseNumber = true;
     }
@@ -313,7 +313,6 @@ function Register() {
                 onChange={handleFieldChange}
               />
               <TextField
-                required
                 className='form-field'
                 fullWidth
                 name="phoneNumber"
