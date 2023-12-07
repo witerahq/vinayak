@@ -122,9 +122,6 @@ function Register() {
     if (!formData.email) {
       errors.email = true;
     }
-    // if (!formData.phoneNumber) {
-    //   errors.phoneNumber = true;
-    // }
     if (!formData.licenseNumber && formData.role === 'doctor') {
       errors.licenseNumber = true;
     }
