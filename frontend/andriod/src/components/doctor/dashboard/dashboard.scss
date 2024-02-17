@@ -1,0 +1,38 @@
+.Dashboard{
+    .css-19z1ozs-MuiPaper-root-MuiAppBar-root,.css-1191obr-MuiPaper-root-MuiAppBar-root{
+        background: #EEF1F1;
+    }
+    
+    .user{
+        display: block;
+        margin-left: 16px;
+        padding: 18px 0;
+        width: 48px;height: 48px;
+        background: #c4c4c4;
+        border-radius: 50%;
+        &.active{
+            border: 1px solid #206BAC;
+        }
+    }
+    .toolbar-header{
+        justify-content: space-between;
+    }
+}
+
+@media screen and (max-width:992px) {
+    .Dashboard{
+        .toolbar-header{
+            .user{
+                display: none;
+            }
+        }
+        .dashboard-components{
+            padding-left: 0;
+            padding-right: 0;
+            box-sizing: border-box;
+            max-width: 100%;
+            overflow-x: hidden;
+            min-height: calc(100vh - 80px);
+        }
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "name": "vinayakm",
+    "integrations": {
+      "capacitor": {}
+    },
+    "type": "react"
+  }

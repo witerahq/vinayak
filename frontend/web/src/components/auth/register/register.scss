@@ -1,0 +1,165 @@
+.Register {
+    background: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    z-index: 20;
+
+
+    .css-78me8v-MuiFormControl-root{
+        margin: 0;
+        margin-bottom: 24px;
+    }
+
+    .auth-content {
+        display: flex;
+        background: #1F67A6;
+        border-radius: 16px;
+        position: relative;
+
+        .image {
+            flex: 50%;
+
+            img {
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .close{
+            position: absolute;
+            top: 20px;right: 20px;
+            svg{
+                fill: #fff;
+            }
+        }
+
+        .auth-form {
+            flex: 50%;
+
+            padding: 40px;
+
+            p {
+                font-size: 28px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 36px;
+                margin-bottom: 16px;
+                color: #fff;
+            }
+
+            .form {
+                padding: 24px;
+                border-radius: 16px;
+                background: #FFF;
+                max-height: 520px;
+                overflow-y: auto;
+                overflow-x: hidden;
+
+                .form-field {
+                    display: block;
+                    margin-bottom: 24px;
+                }
+
+                button {
+                    padding: 10px;
+                    color: #F0F3F5;
+                    text-align: center;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 24px;
+                    width: 100%;
+                    border-radius: 16px;
+                    background: #1F67A6;
+                    border: none;
+                    outline: none;
+                }
+
+                a {
+                    margin-top: 16px;
+
+                    font-size: 11px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 16px;
+                    color: #49454F;
+                    display: block;
+                    span{
+                        color: #1F67A6;
+                    }
+                }
+            }
+        }
+    }
+
+    .auth-content {
+        min-height: calc(100vh - 60px);
+        display: flex;justify-content: center;
+        background: rgba(241, 249, 255, 1) !important;
+        padding: 16px;
+        .image {
+          display: none !important;
+        }
+        .auth-form {
+            flex: unset;
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          background-color: #fff;
+          border-radius: 16px;
+        }
+      }
+}
+
+@media screen and (max-width:992px) {
+    .Register{
+        position: unset;
+        background: transparent;
+        .close{
+            display: none;
+        }
+        .container{
+            width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .auth-content{
+            background: #fff;
+            border-radius: 0px;
+            flex-direction: column;
+            .image{
+                min-height: 240px;
+                display: block;
+                background: url('../../../assets/authImage.svg');
+                background-position-y: bottom;
+                img{
+                    display: none;
+                }
+            }
+
+            .css-78me8v-MuiFormControl-root{
+                margin: 0;
+                margin-bottom: 24px;
+            }
+
+            .auth-form{
+                padding-left: 12px;
+                padding-right: 12px;
+                p{
+                    color: #000;
+                }
+                .form{
+                    padding-left: 0;
+                    padding-right: 0;
+                    max-height: fit-content;
+                    label span{
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+}

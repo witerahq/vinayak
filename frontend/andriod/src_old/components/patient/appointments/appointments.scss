@@ -1,0 +1,16 @@
+.Appointment{
+    margin-bottom: 80px;
+    margin-top: 80px;
+}
+
+@media screen and (max-width:992px) {
+    .Appointment{
+        .fc-header-toolbar{
+            display: flex;
+            flex-direction: column;
+        }
+        .fc-view-harness{
+            min-height: 400px;
+        }
+    }
+}

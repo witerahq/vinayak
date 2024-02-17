@@ -1,0 +1,52 @@
+.Booking{
+    margin: 30px 0;
+    .booking-card{
+
+        margin-bottom: 24px;
+        border-radius: 8px;
+        padding: 10px;
+        .header{
+            padding: 0;
+            span{
+                display: flex;align-items: center;
+                justify-content: space-between;
+            }
+            .date,.time{
+                display: flex;align-items: center;
+                svg{
+                    fill: #818589;
+                }
+                p{
+                    color:#818589;
+                }
+            }
+            button{
+                padding-left: 0;
+            }
+        }
+        .doctor-detail{
+            margin-top: 10px;margin-bottom: 10px; 
+            .MuiChip-filled{
+               color: #206BAC;
+               background: rgba(241, 249, 255, 1);
+                span::first-letter{
+                text-transform: uppercase;
+               }
+            }
+        }
+        .checkout-type{
+            .type{
+                &::first-letter{
+                    text-transform: uppercase;
+                }
+            }
+            button{
+                padding-left: 0;
+            }
+            svg{
+                fill: #818589;
+            }
+        }
+
+    }
+}

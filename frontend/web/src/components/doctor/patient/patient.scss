@@ -1,0 +1,27 @@
+.Patients {
+    .header {
+        padding: 8px 0;
+        border-bottom:1px solid #C8CED0;
+        margin-top: 24px;
+        p{
+            color: #171A1C;
+            font-size: 19px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 24px;
+        }
+        margin-bottom: 24px;
+    }
+
+    tbody {
+        tr {
+            &:nth-child(even) {
+                background: #c8ced071;
+            }
+
+            &:nth-child(odd) {
+                background: #c8ced022;
+            }
+        }
+    }
+}

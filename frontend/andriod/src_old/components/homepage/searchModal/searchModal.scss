@@ -1,0 +1,44 @@
+.search-modal {
+    .modal-container {
+        height: 100%;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modal-content {
+        padding: 0 16px;
+        margin-bottom: 10px;
+    }
+
+    .symptoms,
+    .speciality,
+    .css-4jnixx-MuiStack-root {
+        margin-top: 16px;
+        padding-top: 0;
+    }
+
+
+    .search-button{
+        flex: auto;
+        padding-left: 16px;padding-right: 16px;
+        display: flex;
+        align-items: end;
+        padding-bottom: 24px;
+
+        button.search {
+            width: 100%;
+            border-radius: 100px;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 24px;
+            cursor: pointer;
+            padding: 10px 24px;
+            background: #206BAC;
+            border: 1px solid #206BAC;
+            color: #FFF;
+    
+        }
+    }
+}

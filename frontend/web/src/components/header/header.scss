@@ -1,0 +1,236 @@
+.Header {
+    width: 100%;
+    background: #FFF;
+    position: sticky;
+    top: 0;
+    z-index: 11;
+    box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.15), 0px 2px 3px 0px rgba(0, 0, 0, 0.10);
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 12px;
+    }
+
+    .buttons {
+        margin-top: 12px;
+        margin-bottom: 12px;
+
+        button {
+            border-radius: 8px;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 16px;
+            cursor: pointer;
+            padding: 10px 24px;
+        }
+
+        
+
+        .login {
+            background: transparent;
+            border: 1px solid #206BAC;
+            color: #206BAC;
+        }
+
+        .register {
+            background: #fff;
+            color: #206BAC;
+            border: 1px solid #206BAC;
+            margin-right: 16px;
+        }
+    }
+
+    .links {
+        display: flex;
+        align-items: center;
+        .link {
+            display: flex;
+            height: 100%;
+            color: #49454F;
+            text-align: center;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 24px;
+            padding: 18px 16px;
+            &.active{
+                font-weight: 500;
+                border-bottom: 1px solid #206BAC;
+            }
+        }
+        .user{
+            margin-left: 16px;
+            padding: 18px 0;
+            width: 48px;height: 48px;
+            background: #c4c4c4;
+            border-radius: 50%;
+            &.active{
+                border: 1px solid #206BAC;
+            }
+        }
+    }
+
+    .logo{
+        display: flex;
+        align-items: center;
+        svg{
+            margin-right: 8px;
+            fill: #206BAC;
+            cursor: pointer;
+        }
+        img{
+            cursor: pointer;
+        }
+    }
+
+    .mobile-tabs{
+        display: none;
+    }
+
+    .city{
+        display: flex;align-items: center;
+        justify-content: center;
+        img{
+           width: 30px;
+        }
+    }
+
+
+
+}
+
+.MuiDrawer-modal{
+    .user{
+        display: flex;
+        align-items: center;
+        .user-icon{
+            img{
+                object-fit: contain;
+            }
+            margin-right: 16px;
+        }
+        .user-info{
+            button{
+                background:#206BAC;
+                margin-bottom: 10px;
+                color: white;
+                border: 0px;
+                border-radius: 32px;
+                padding: 5px 8px;
+                font-size: 11px;
+            }
+            p{
+                font-size: 9px;
+                color: #206BAC;
+                margin:0;
+            }
+            .name{
+                p{
+                    color: #49454F;
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+            }
+        }
+        margin-bottom: 16px;
+        margin-top: 16px;
+
+    }
+    .MuiDrawer-paperAnchorLeft{
+        padding: 8px 16px;
+    }
+    .menu-items{
+        margin-top: 16px;
+        .menu-item{
+            display: flex;align-items: center;
+            margin-top: 8px;
+            margin-bottom: 8px;
+            p{
+                font-size: 13px;
+                margin: 0;
+                line-height: 13px;
+            }
+            .icon{
+                margin-right: 8px;
+                display: flex;align-items: center;
+                svg{
+                    fill: #206BAC;
+                }
+            }
+        }
+    }
+
+    .css-cveggr-MuiListItemIcon-root {
+        min-width: 30px;
+    }
+
+    .get-health-app{
+        button{
+            background: #206BAC;
+            color: white;
+            border-radius: 8px;
+            border: 0px;
+            padding: 8px 16px;
+            margin-top: 16px;
+            display: flex;align-items: center;
+        }
+
+    }
+}
+
+
+@media screen and (max-width:992px) {
+    .Header{
+        display: flex;align-items: center;
+        z-index: 1000;
+
+        .container{
+            width: 100%;
+        }
+
+        .links{
+            display: none;
+        }
+
+        .logo{
+            padding-top:8px;
+            padding-bottom:8px;
+        }
+        
+
+        min-height: 60px;
+        .mobile-tabs{
+            position: fixed;
+            bottom: 0;
+            display: none;
+            width: 100%;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            background: #FFF;
+            padding: 0px 12px;
+            left: 0;
+            right: 0;
+
+            box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+            .tab{
+                flex:0 1 calc(100% / 4);
+                max-width: calc(100% / 4);
+                padding: 12px;
+                display: flex;
+                justify-content: center;
+                svg{
+                    fill: #464F53;
+                }
+
+                &.active{
+                    svg{
+                        fill: #206BAC;
+                    }
+                }
+            }
+        }
+    }
+}
