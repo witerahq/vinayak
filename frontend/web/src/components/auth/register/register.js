@@ -71,7 +71,6 @@ function Register() {
   });
 
 
-
   useEffect(() => {
 
     if (errorMessage?.length && errorMessage != 'null') {

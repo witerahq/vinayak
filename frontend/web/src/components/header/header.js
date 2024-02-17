@@ -87,7 +87,6 @@ function Header() {
       navigate("/register");
     }
   };
-
   const login = () => {
     // setSearchParams(`?${new URLSearchParams({ auth: 'login' })}`)
     if (window.innerWidth > 992)
