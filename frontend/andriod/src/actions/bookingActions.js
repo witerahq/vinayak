@@ -1,6 +1,7 @@
 import axios from '../service/apiService';
 
 // Action types
+export const FETCH_APPOINTMENT_DETAIL_SUCCESS = 'FETCH_APPOINTMENT_DETAIL_SUCCESS';
 export const FETCH_APPOINTMENTS_SUCCESS = 'FETCH_APPOINTMENTS_SUCCESS';
 export const CREATE_APPOINTMENT_SUCCESS = 'CREATE_APPOINTMENT_SUCCESS';
 export const UPDATE_APPOINTMENT_SUCCESS = 'UPDATE_APPOINTMENT_SUCCESS';
@@ -19,6 +20,11 @@ export const createAppointmentSuccess = (appointment) => ({
 export const updateAppointmentSuccess = (appointment) => ({
   type: UPDATE_APPOINTMENT_SUCCESS,
   appointment,
+});
+
+export const fetchAppointmentDetailSuccess = (appointmentDetail) => ({
+  type: FETCH_APPOINTMENT_DETAIL_SUCCESS,
+  appointmentDetail,
 });
 
 // Thunk action to fetch appointments
@@ -71,6 +77,20 @@ export const updateAppointment = (appointmentId, updatedData) => {
       dispatch(updateAppointmentSuccess(updatedAppointment));
     } catch (error) {
       console.error('Error updating appointment:', error);
+      // Handle the error or dispatch an error action
+    }
+  };
+};
+
+// Thunk action to fetch appointment details by ID
+export const fetchAppointmentDetail = (appointmentId) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`/api/appointments/${appointmentId}`);
+      const appointmentDetail = response.data;
+      dispatch(fetchAppointmentDetailSuccess(appointmentDetail));
+    } catch (error) {
+      console.error('Error fetching appointment detail:', error);
       // Handle the error or dispatch an error action
     }
   };

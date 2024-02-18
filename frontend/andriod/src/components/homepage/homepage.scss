@@ -92,9 +92,9 @@
           border-bottom: 0;
           border-left: 1px solid #171a1c;
         }
-        input{
-            outline: none;
-            border: 0px;
+        input {
+          outline: none;
+          border: 0px;
         }
       }
 
@@ -112,7 +112,7 @@
         height: 100%;
       }
 
-      .react-autosuggest__suggestion--highlighted{
+      .react-autosuggest__suggestion--highlighted {
         background: lightgray;
       }
       .react-autosuggest__container {
@@ -128,30 +128,31 @@
         }
         .react-autosuggest__suggestions-container {
           position: absolute;
-           z-index: 1000;
+          z-index: 1000;
           left: 0;
           background: white;
           right: 0;
           top: 60px;
           padding: 8px;
-          ul{
+          ul {
             list-style: none;
+          }
         }
-        }
-        .autocomplete{
-            &.title-case{
-                letter-spacing: 1px;margin-top: 2px;
-                &:hover{
-                    background: lightgray;
-                }
-                cursor: pointer;
-                em{
-                    font-weight: 700;
-                }
-                &::first-letter{
-                    text-transform: uppercase;
-                }
+        .autocomplete {
+          &.title-case {
+            letter-spacing: 1px;
+            margin-top: 2px;
+            &:hover {
+              background: lightgray;
             }
+            cursor: pointer;
+            em {
+              font-weight: 700;
+            }
+            &::first-letter {
+              text-transform: uppercase;
+            }
+          }
         }
       }
     }
@@ -495,6 +496,338 @@
   .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root.Mui-focused,
   .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root[data-shrink="true"] {
     display: none !important;
+  }
+
+  #easy-access {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    .access-cards {
+      display: flex;
+      .access-card {
+        margin-right: 16px;
+        .icon {
+          width: 80px;
+          height: 80px;
+          border-radius: 8px;
+          background-color: #f2f2f2;
+          display: flex;align-items: center;justify-content: center;
+          img{
+            width: 40px;
+          }
+        }
+        .text {
+          margin-top: 8px;
+          p {
+            margin: 0;
+            font-style: 12px;
+            font-weight: 600;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+
+  #search-carousel {
+    background: #f0f9ff;
+    padding-top: 32px;
+    padding-bottom: 32px;
+
+    .mobile-search {
+      display: flex;
+      margin-bottom: 24px;
+      input {
+        width: 100%;
+        border: 0px;
+        outline: none;
+        &:placeholder-shown {
+          text-overflow: ellipsis;
+        }
+        padding: 10px;
+      }
+      .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        background: #fff;
+        svg {
+          fill: #206bac;
+        }
+      }
+    }
+
+    .slide-image {
+      border-radius: 16px;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .swiper-pagination {
+      position: unset;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 8px;
+      .swiper-pagination-bullet-active {
+        border: 1px solid #206bac;
+        border-radius: 50%;
+        width: 14px;
+        height: 14px;
+        background: transparent;
+        padding: 2px;
+        position: relative;
+        &::before {
+          position: absolute;
+          content: "";
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 8px;
+          height: 8px;
+          background: #206bac;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  #health-program {
+    background: url("../../assets/health-plan-bg.svg") no-repeat;
+    background-position: top center;
+    background-size: contain;
+    padding-top: 48px;
+    padding-bottom: 48px;
+    .heading {
+      h3 {
+        font-size: 24px;
+        margin: 0;
+        text-align: center;
+        font-weight: 400;
+      }
+      p {
+        text-align: center;
+        font-size: 14px;
+        text-transform: uppercase;
+        color: #206bac;
+        margin: 0;
+        font-weight: 500;
+      }
+    }
+
+    .program-card {
+      background-image: linear-gradient(-15deg, #f0f9ff 30% 40%, #fff 0 50%);
+      box-shadow: 0 16px 28px 0 rgba(76, 76, 76, 0.1);
+      padding: 20px 10px;
+      border-radius: 24px;
+      margin-top: 24px;
+      h4 {
+        font-size: 18px;
+        text-align: center;
+      }
+      p {
+        text-align: center;
+        font-size: 14px;
+      }
+
+      .info-cards {
+        display: flex;
+
+        .info-card {
+          position: relative;
+          flex: 0 1 calc((100% / 2) - 8px);
+          &:first-child {
+            margin-right: 16px;
+          }
+          margin-top: 70px;
+          .image {
+            position: absolute;
+            left: 50%;
+            top: -50px;
+            transform: translateX(-50%);
+          }
+          img {
+            width: 160px;
+            height: 100px;
+          }
+          h5 {
+            font-size: 16px;
+            text-align: center;
+            color: #206bac;
+          }
+          border-radius: 8px;
+          background-color: #8bc0ef;
+          padding-top: 70px;
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+      }
+    }
+  }
+
+  #consult-instanly {
+    .consult-header {
+      h3 {
+        font-size: 20px;
+      }
+      p {
+        font-size: 12px;
+        font-weight: 300;
+        span {
+          font-weight: 500;
+        }
+      }
+
+      .view-all {
+        display: flex;
+        justify-content: space-between;
+        p {
+          font-size: 16px;
+          font-weight: 600;
+        }
+        button {
+          border: 0;
+          outline: none;
+          background: transparent;
+          cursor: pointer;
+          color: #206bac;
+          font-size: 16px;
+          font-weight: 600;
+        }
+      }
+    }
+    .consult-types {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 24px;
+      .consult-type {
+        padding: 10px;
+        height: 100px;
+        flex: 0 1 calc((100% - 32px) / 3);
+        max-width: calc((100% - 32px) / 3);
+
+        margin-right: 16px;
+        margin-bottom: 16px;
+        &:nth-child(3n) {
+          margin-right: 0;
+        }
+        position: relative;
+        box-shadow: rgba(0, 0, 0, 0.08) 0px 2.17px 34.6px 0px;
+        border-radius: 8px;
+        .consult-image {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          width: 60px;
+          height: 60px;
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .consult-text {
+          p {
+            font-size: 10px;
+            font-weight: 300;
+          }
+        }
+      }
+    }
+  }
+
+  #consult-symptoms {
+    margin-top: 24px;
+    .symptoms-header {
+      display: flex;
+      justify-content: space-between;
+      p {
+        font-size: 16px;
+        font-weight: 600;
+      }
+      button {
+        border: 0;
+        outline: none;
+        background: transparent;
+        cursor: pointer;
+        color: #206bac;
+        font-size: 16px;
+        font-weight: 600;
+      }
+      margin-bottom: 24px;
+    }
+
+    .consult-symptoms {
+      display: flex;
+      flex-wrap: wrap;
+      .consult-symptom {
+        flex: 0 1 calc((100% - 32px) / 3);
+        margin-right: 16px;
+        margin-bottom: 16px;
+        &:nth-child(3n){
+          margin-right: 0;
+        }
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .image {
+          width: 70px;
+          height: 70px;
+          background: white;
+          overflow: hidden;
+          border: solid 1px rgba(238, 238, 238, 1);
+          border-radius: 5px;
+          position: relative;
+          display: flex;align-items: center;justify-content: center;
+
+
+          &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            inset: 0;
+            background: #206bac;
+            mix-blend-mode: hue;
+          }
+        }
+        .text {
+          p {
+            font-size: 16px;
+            text-align: center;
+            font-weight: 400;
+            margin-top: 8px;
+          }
+        }
+      }
+    }
+  }
+
+  #faqs{
+    .heading{
+      margin-bottom: 24px;
+      h3{
+        font-size: 20px;
+        font-weight: 700;
+      }
+    }
+    .css-1elwnq4-MuiPaper-root-MuiAccordion-root{
+      box-shadow: none;
+    }
+    .css-1elwnq4-MuiPaper-root-MuiAccordion-root::before {
+      top: unset;
+      bottom: 0px;
+    }
+    .css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root{
+      padding-left: 0;padding-right: 0;
+    }
+    svg{
+      fill: #206bac;
+    }
   }
 }
 

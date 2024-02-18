@@ -92,13 +92,6 @@ function Checkout() {
       cartFromStore.timing._id
     );
 
-    console.log(
-      cartFromStore.availability._id,
-      timeSlotType,
-      timeSlotIndex,
-      "booked"
-    );
-
     dispatch(
       updateTimeslotStatus(
         cartFromStore.availability._id,
@@ -110,8 +103,10 @@ function Checkout() {
     dispatch(createAppointment(data));
     dispatch(createPayment(paymentData));
     dispatch(fetchAppointmentsPatient());
-
-    navigate("/bookings");
+    dispatch(fetchAppointmentsPatient());
+    setTimeout(()=>{
+      navigate("/bookings");
+    })
   };
 
   return (
@@ -279,7 +274,7 @@ function Checkout() {
               </span>
             </p>
             <button className="checkout" onClick={(e) => checkout()}>
-              Proceed to Checkout
+              Pay at Clinic
             </button>
           </div>
         </div>

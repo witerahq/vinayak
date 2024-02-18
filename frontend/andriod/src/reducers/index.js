@@ -11,6 +11,7 @@ import bookingReducer from './bookingReducer';
 import { paymentReducer } from './paymentReducer';
 import medicalRecordReducer from './medicalRecordsReducer';
 import fileUploadReducer from './fileUploadReducer';
+import medicalFileRecordReducers from './medicalRecordFIleReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
   booking:bookingReducer,
   payment:paymentReducer,
   medicalRecord: medicalRecordReducer,
-  file:fileUploadReducer
+  file:fileUploadReducer,
+  medicalRecordFile:medicalFileRecordReducers
   // Add other reducers here if needed
 });
 

@@ -1,8 +1,9 @@
 .Footer {
     margin-top: 80px;
-    display: none;
+
     .sub-footer {
-        background: #E3E8E8;
+        display: none;
+        background: #f2f2f2;
         padding-top:  80px;
 
         .content {
@@ -43,6 +44,7 @@
     }
 
     .footer-content {
+        display: none;
         padding-top: 80px;
         padding-bottom: 80px;
         background: #2E3438;
@@ -101,7 +103,7 @@
 
 @media screen and (max-width:992px) {
     .Footer{
-        margin-top: 20px;
+        margin-top: 0px;
         .sub-footer{
             padding-top: 20px;
             padding-bottom: 20px;

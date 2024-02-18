@@ -96,6 +96,22 @@
             }
         }
     }
+
+    .auth-content {
+        min-height: calc(100vh - 60px);
+        display: flex;justify-content: center;
+        background: rgba(241, 249, 255, 1) !important;
+        padding: 16px;
+        .image {
+          display: none !important;
+        }
+        .auth-form {
+            flex: unset;
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          background-color: #fff;
+          border-radius: 16px;
+        }
+      }
 }
 
 @media screen and (max-width:992px) {

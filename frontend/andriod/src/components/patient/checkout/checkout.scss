@@ -26,8 +26,9 @@
             .appointment-card {
                 margin-top: 24px;
 
+
                 img {
-                    max-height: 150px;
+                    width: 100px;
                 }
 
                 .booking-doc-details {
@@ -172,6 +173,7 @@
                                 line-height: 16px;
                                 text-decoration-line: underline;
                                 margin-bottom: 0;
+                                margin-top: 0;
                             }
                         }
 

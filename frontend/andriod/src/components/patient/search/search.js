@@ -26,6 +26,11 @@ import SearchDoctorsModal from "../../homepage/searchModal/searchModal";
 import dayjs from "dayjs";
 import Autosuggest from "react-autosuggest";
 import algoliasearch from "algoliasearch/lite";
+import Subheader from "../../sub-header/subheader";
+import noDoctor from "../../../assets/no-doc.webp";
+import LanguageIcon from "@mui/icons-material/Language";
+import WorkIcon from '@mui/icons-material/Work';
+import ApartmentIcon from '@mui/icons-material/Apartment';
 
 const searchClient = algoliasearch(
   "LGS1V09J5I",
@@ -69,12 +74,11 @@ function Search() {
   const specialityParam = searchParams.get("speciality");
   const symptomsParam = searchParams.get("symptoms");
   useEffect(() => {
-    console.log(date, specialityParam, symptomsParam);
     if (!searchFromStore) {
       dispatch(
         searchDoctors(
           date,
-          specialityParam.includes("{")
+          specialityParam?.includes("{")
             ? JSON.parse(specialityParam)
             : specialityParam,
           symptomsParam
@@ -220,7 +224,7 @@ function Search() {
         ></SearchDoctorsModal>
       ) : null}
       <div className="Search">
-        <div className="banner">
+        <div className="banner" style={{ display: "none" }}>
           <div className="container">
             <p className="heading">
               Book Your Appointment <br /> in few easy steps
@@ -282,11 +286,31 @@ function Search() {
                     </LocalizationProvider>
                   </div>
                   <div className="search">
-                    <button onClick={(e) => searchSubmit()} disabled={!symptoms}>Search</button>
+                    <button
+                      onClick={(e) => searchSubmit()}
+                      disabled={!symptoms}
+                    >
+                      Search
+                    </button>
                   </div>
                 </div>
               </div>
             ) : null}
+          </div>
+        </div>
+
+        <Subheader  route={"/"} text={"Doctors"}></Subheader>
+
+        <div className="mobile-search">
+          <input
+            type="text"
+            placeholder="Search Symptoms, Doctors, Specialist..."
+            onClick={(e) => {
+              setIsSearch(true);
+            }}
+          />
+          <div className="icon">
+            <SearchIcon></SearchIcon>
           </div>
         </div>
 
@@ -305,45 +329,14 @@ function Search() {
                     valueLabelDisplay="auto"
                   />
                 </Box>
-                {/* <hr />
-                                <label className='head'>Experience</label>
-                                <Box >
-                                    <Slider
-                                        aria-label="Custom marks"
-                                        defaultValue={20}
-                                        step={10}
-                                        valueLabelDisplay="auto"
-                                    />
-                                </Box>
-                                <hr />
-                                <label className='head'>Availability</label>
-                                <FormGroup>
-                                    <FormControlLabel control={<Checkbox defaultChecked />} label="Morning" />
-                                    <FormControlLabel control={<Checkbox defaultChecked />} label="Noon" />
-                                    <FormControlLabel control={<Checkbox defaultChecked />} label="Evening" />
-                                </FormGroup>
-                                <hr />
-                                <FormGroup>
-                                    <FormControlLabel control={<Checkbox defaultChecked />} label="Today" />
-                                    <FormControlLabel control={<Checkbox defaultChecked />} label="Tomorrow" />
-                                </FormGroup>
-                                <hr />
-                                <label className='head'>Rating</label>
-                                <Box >
-                                    <Slider
-                                        aria-label="Custom marks"
-                                        defaultValue={20}
-                                        step={10}
-                                        valueLabelDisplay="auto"
-                                    />
-                                </Box> */}
+              
               </div>
             </aside>
             <section id="search-result">
               <div className="heading">
                 <p>
                   Results found for {searchParams.get("symptoms")} on{" "}
-                  {moment(searchParams.get("date")).format("MMM Do YY")}
+                  {moment(new Date()).format("Do MMM YY")}
                 </p>
                 <p>{searchFromStore?.length} Results Found</p>
               </div>
@@ -351,13 +344,7 @@ function Search() {
                 {searchFromStore?.length ? (
                   searchFromStore?.map((item, index) => {
                     return (
-                      <div className="appointment-card">
-                        <div className="expand">
-                          <ExpandCircleDownIcon
-                            fontSize="medium"
-                            htmlColor="black"
-                          ></ExpandCircleDownIcon>
-                        </div>
+                      <div className="appointment-card" onClick={e=>{navigate('/doctor/'+item?._id)}}>
                         <div className="doc-image">
                           <img src={item?.image} alt="docIMage" />
                           <img src={item?.image} alt="docIMage1" />
@@ -365,187 +352,43 @@ function Search() {
                         <div className="booking-doc-details">
                           <div className="doc-detail">
                             <div className="profile">
-                              <p>Dr. {item?.fullName}</p>
-                              {item?.education ? <p>BDS, MDS</p> : null}
-                            </div>
-                            <div className="info">
-                              {item?.experience ? (
-                                <p>{item?.experience}+ Years of Experience</p>
-                              ) : null}
-                              <div className="tags">
-                                <div className="langs">
-                                  {item?.gender ? (
-                                    <div className="lang">
-                                      <p style={{ margin: 0 }}>
-                                        {item?.gender=='male'?'Male':'Female'}
-                                      </p>
-                                    </div>
-                                  ) : null}
-                                  <div className="lang">
-                                    <p style={{ margin: 0 }}>ENG</p>
-                                  </div>
-                                  <div className="lang">
-                                    <p style={{ margin: 0 }}>हिंदी</p>
-                                  </div>
-                                </div>
-                                <div className="rating">
-                                
-                                  <p style={{ margin: 0 }}>
-                                    4.5{" "}
-                                    <span>
-                                      <StarIcon fontSize="small"></StarIcon>
-                                    </span>
-                                  </p>
-
-                                </div>
+                              <p>{item?.fullName}</p>
+                              <p>{'General Physician'}</p>
+                              <div className="work">
+                              <WorkIcon fontSize="extrasmall"></WorkIcon>
+                              <p>8 years</p>
                               </div>
-                              <div className="more-details">
-                                {item.hospital ? (
-                                  <p className="hospital">{item.hospital}</p>
-                                ) : null}
-                                <p className="subhead">Available from:</p>
-                                {/* <p className="days">Monday - Saturday</p> */}
-                                <p
-                                  style={{
-                                    fontSize: "11px",
-                                    marginTop: "5px",
-                                    marginBottom: "5px",
-                                  }}
-                                  className="timing"
-                                >
-                                  Morning:{" "}
-                                  {
-                                    item.availability.timeSlots["morning"][0]
-                                      .startTime
-                                  }{" "}
-                                  to{" "}
-                                  {
-                                    item.availability.timeSlots["morning"][
-                                      item.availability.timeSlots["morning"]
-                                        .length - 1
-                                    ].endTime
-                                  }
-                                </p>
-                                <p
-                                  style={{
-                                    fontSize: "11px",
-                                    marginTop: "5px",
-                                    marginBottom: "5px",
-                                  }}
-                                  className="timing"
-                                >
-                                  Afternoon:{" "}
-                                  {
-                                    item.availability.timeSlots["afternoon"][0]
-                                      .startTime
-                                  }{" "}
-                                  to{" "}
-                                  {
-                                    item.availability.timeSlots["afternoon"][
-                                      item.availability.timeSlots["morning"]
-                                        .length - 1
-                                    ].endTime
-                                  }
-                                </p>
-                                <p
-                                  style={{
-                                    fontSize: "11px",
-                                    marginTop: "5px",
-                                    marginBottom: "5px",
-                                  }}
-                                  className="timing"
-                                >
-                                  Evening:{" "}
-                                  {
-                                    item.availability.timeSlots["evening"][0]
-                                      .startTime
-                                  }{" "}
-                                  to{" "}
-                                  {
-                                    item.availability.timeSlots["evening"][
-                                      item.availability.timeSlots["morning"]
-                                        .length - 1
-                                    ].endTime
-                                  }
-                                </p>
-                                {/* <p className="timing">2:00 PM to 7:00 PM</p> */}
-                                <p style={{ fontSize: "12px", opacity: 0.7 }}>
-                                  If the preferred time slots are not available,
-                                  please feel free to contact us:{" "}
-                                  {item.phoneNumber}
-                                </p>
+                              <div className="location">
+                              <ApartmentIcon fontSize="extrasmall"></ApartmentIcon>
+                              <p>VinayakM, Meerut</p>
                               </div>
                             </div>
                           </div>
-                          <div className="booking-detail">
-                            <div className="heading">
-                              <p style={{ fontWeight: 500 }}>
-                                Book Your Slot:{" "}
-                              </p>
+                          <div className="book-appointment">
+                            <div className="lang">
+                              <LanguageIcon fontSize="extrasmall"></LanguageIcon>
+                              <p>{item?.lang?item?.lang:'English, हिन्दी'}</p>
                             </div>
-                            <div className="timings">
-                              {checkTotalSlots(item) ? (
-                                Object.keys(item.availability.timeSlots).map(
-                                  (slot, i) => {
-                                    return item.availability.timeSlots[
-                                      slot
-                                    ].map((el, idx) => {
-                                      if (
-                                        new Date(
-                                          addHoursToDate(
-                                            item.availability.day,
-                                            el.startTime.split("-")[0]
-                                          )
-                                        ) >= new Date()
-                                      )
-                                        return (
-                                          <Chip
-                                            className={"timing " + el.status}
-                                            label={
-                                              el.startTime + " - " + el.endTime
-                                            }
-                                            onClick={(e) =>
-                                              bookAppointment(e, item, el)
-                                            }
-                                          ></Chip>
-                                        );
-                                    });
-                                  }
-                                )
-                              ) : (
-                                <p
-                                  style={{
-                                    marginTop: 0,
-                                    marginBottom: "12px",
-                                    fontSize: "12px",
-                                  }}
-                                >
-                                  No slot available.
-                                </p>
-                              )}
+                            <div className="price">
+                              <p>₹ {item?.priceAppointment}</p>
                             </div>
-                            <div className="book-button">
-                              <button
-                                onClick={(e) => {
-                                  book();
-                                }}
-                                disabled={
-                                  !checkTotalSlots(item) || !appointment.timing
-                                }
-                              >
-                                Book Appointment
-                              </button>
-                            </div>
+
+                          </div>
+                          <div className="book-appointment-btn">
+                            <button>Book Appointment</button>
                           </div>
                         </div>
                       </div>
                     );
                   })
                 ) : (
-                  <p className="no-result">
-                    There is no result found please try some alternate
-                    preference
-                  </p>
+                  <div className="no-result">
+                    <img src={noDoctor} alt="no doctor" />
+                    <p>
+                      There is no result found please try some alternate
+                      preference
+                    </p>
+                  </div>
                 )}
               </div>
             </section>

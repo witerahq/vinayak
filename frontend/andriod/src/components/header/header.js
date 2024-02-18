@@ -16,18 +16,43 @@ import PersonIcon from "@mui/icons-material/Person";
 import InsertInvitationIcon from "@mui/icons-material/InsertInvitation";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import { getCurrentUser } from "../../actions/userActions";
-import { Avatar, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Divider,
+  Drawer,
+  FormControl,
+  InputLabel,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ChatIcon from "@mui/icons-material/Chat";
 import {
   fetchAppointmentsDoctor,
   fetchAppointmentsPatient,
 } from "../../actions/bookingActions";
+import MenuIcon from "@mui/icons-material/Menu";
+import defaultUser from "../../assets/default-user.webp";
+import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import ApartmentIcon from "@mui/icons-material/Apartment";
+import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
+import PlaylistAddCircleIcon from "@mui/icons-material/PlaylistAddCircle";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import locationImage from "../../assets/location-pin.png";
 
 function Header() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const [decodedToken, setDecodedToken] = useState(null);
+  const [menuState, setMenuState] = useState(false);
 
   const auth = useSelector((state) => {
     if (state?.auth?.user?.token) {
@@ -76,6 +101,10 @@ function Header() {
     }
   };
 
+  const toggleMenu = (value) => {
+    setMenuState(value);
+  };
+
   useEffect(() => {
     if (auth.isAuthenticated && !user) {
       dispatch(getCurrentUser());
@@ -98,11 +127,177 @@ function Header() {
     dispatch(fetchAppointmentsDoctor());
   };
 
-  const [city, setCity] = React.useState('');
+  const [city, setCity] = React.useState("meerut");
 
   const handleChange = (event) => {
     setCity(event.target.value);
   };
+
+  const takeToProfile = (value) => {
+    if (value) navigate("/profile");
+    else navigate("/login");
+  };
+
+  const list = () => (
+    <Box
+      sx={{ width: 250 }}
+      role="presentation"
+      onClick={(e) => toggleMenu(false)}
+      onKeyDown={(e) => toggleMenu(false)}
+    >
+      <div
+        className="user"
+        onClick={(e) => takeToProfile(auth?.isAuthenticated)}
+      >
+        <div className="user-icon">
+          <Avatar
+            src={auth?.isAuthenticated ? user?.image : defaultUser}
+            sx={{ width: 50, height: 50 }}
+          ></Avatar>
+          {/* <Ava src={defaultUser} alt="default user" /> */}
+        </div>
+        <div className="user-info">
+          {auth?.isAuthenticated ? (
+            <div className="name">
+              <p>{user?.fullName}</p>
+            </div>
+          ) : (
+            <button>Log In / Sign Up</button>
+          )}
+          <p>For Personalized Healthcare</p>
+        </div>
+      </div>
+
+      <Divider />
+
+      <div className="menu-items">
+        {decodeUser?.role == "patient" ? (
+          <>
+            <div className="menu-item" onClick={(e) => navigate("/bookings")}>
+              <div className="icon">
+                {" "}
+                <ListAltIcon></ListAltIcon>
+              </div>
+              <div className="text">
+                <p>Bookings</p>
+              </div>
+            </div>
+            <div
+              className="menu-item"
+              onClick={(e) => navigate("/medical-records")}
+            >
+              <div className="icon">
+                {" "}
+                <PlaylistAddCircleIcon></PlaylistAddCircleIcon>
+              </div>
+              <div className="text">
+                <p>Medical Records</p>
+              </div>
+            </div>
+            <div
+              className="menu-item"
+              onClick={(e) => navigate("/appointments")}
+            >
+              <div className="icon">
+                {" "}
+                <CalendarTodayIcon></CalendarTodayIcon>
+              </div>
+              <div className="text">
+                <p>Calendar</p>
+              </div>
+            </div>
+            <div
+              className="menu-item"
+              onClick={(e) => navigate("/search?speciality=all")}
+            >
+              <div className="icon">
+                {" "}
+                <LocalHospitalIcon></LocalHospitalIcon>
+              </div>
+              <div className="text">
+                <p>Specialities</p>
+              </div>
+            </div>
+            <div
+              className="menu-item"
+              onClick={(e) => navigate("/search?city=meerut")}
+            >
+              <div className="icon">
+                <ApartmentIcon></ApartmentIcon>
+              </div>
+              <div className="text">
+                <p>Clinics</p>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+             <div className="menu-item" onClick={(e) => navigate("/dashboard")}>
+              <div className="icon">
+                {" "}
+                <ListAltIcon></ListAltIcon>
+              </div>
+              <div className="text">
+                <p>Dashboard</p>
+              </div>
+            </div>
+            <div
+              className="menu-item"
+              onClick={(e) => navigate("/dashboard/patients")}
+            >
+              <div className="icon">
+                <PlaylistAddCircleIcon></PlaylistAddCircleIcon>
+              </div>
+              <div className="text">
+                <p>Patients</p>
+              </div>
+            </div>
+            <div
+              className="menu-item"
+              onClick={(e) => navigate("/dashboard/appointments")}
+            >
+              <div className="icon">
+                <CalendarTodayIcon></CalendarTodayIcon>
+              </div>
+              <div className="text">
+                <p>Booking</p>
+              </div>
+            </div>
+            <div
+              className="menu-item"
+              onClick={(e) => navigate("/dashboard/prescriptions")}
+            >
+              <div className="icon">
+                {" "}
+                <LocalHospitalIcon></LocalHospitalIcon>
+              </div>
+              <div className="text">
+                <p>Prescriptions</p>
+              </div>
+            </div>
+            <div
+              className="menu-item"
+              onClick={(e) => navigate("/dashboard/payments")}
+            >
+              <div className="icon">
+                <ApartmentIcon></ApartmentIcon>
+              </div>
+              <div className="text">
+                <p>Payments</p>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* <div className="get-health-app">
+          <button>
+            <PhoneIphoneIcon></PhoneIphoneIcon>
+            <span>GET HEALTH APP</span>
+          </button>
+        </div> */}
+      </div>
+    </Box>
+  );
 
   return (
     <div className="Header">
@@ -113,13 +308,23 @@ function Header() {
             navigate("/");
           }}
         >
+          <MenuIcon
+            onClick={(e) => {
+              toggleMenu(true);
+            }}
+          ></MenuIcon>
           <img src={Logo} alt="logo" />
         </div>
+        <Drawer
+          anchor={"left"}
+          open={menuState}
+          onClose={(e) => toggleMenu(false)}
+        >
+          {list()}
+        </Drawer>
+        <div className="search"></div>
         {auth.isAuthenticated ? null : (
           <div className="buttons">
-            <button className="register" onClick={register}>
-              Register
-            </button>
             <button className="login" onClick={login}>
               Login
             </button>
@@ -128,7 +333,7 @@ function Header() {
 
         {auth.isAuthenticated && window.innerWidth < 992 ? (
           <>
-            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+            {/* <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
               <InputLabel id="demo-select-small-label">City</InputLabel>
               <Select
                 labelId="demo-select-small-label"
@@ -137,11 +342,16 @@ function Header() {
                 label="City"
                 onChange={handleChange}
               >
-                <MenuItem value={'meerut'}>Meerut</MenuItem>
+                <MenuItem value={"meerut"}>Meerut</MenuItem>
               </Select>
-            </FormControl>
+            </FormControl> */}
+            <div className="city">
+              <img src={locationImage} alt="" />
+              <p>Meerut</p>
+            </div>
           </>
         ) : null}
+        {}
         {auth.isAuthenticated && decodeUser?.role == "patient" ? (
           <div className="links">
             <NavLink

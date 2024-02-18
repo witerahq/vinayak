@@ -1,0 +1,101 @@
+.MedicalRecords {
+  min-height: calc(100vh - 101px);
+  .no-records {
+    min-height: calc(100vh - 101px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    img {
+      width: 40%;
+      margin-bottom: 40px;
+    }
+    p.head {
+      font-size: 20px;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 0;
+      color: #000;
+    }
+    p {
+      text-align: center;
+      max-width: 80%;
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+  .add-record {
+    width: 50px;
+    height: 50px;
+    background: #206bac;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 24px;
+    right: 14px;
+    svg {
+      fill: #fff;
+    }
+  }
+  .records {
+    .css-55vwbm-MuiTimeline-root {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    position: relative;
+    margin-top: 50px;
+    .document-card {
+       max-width: 100%;
+      padding: 10px;
+      padding-left: 20px;
+      padding-right: 0;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      .MuiPaper-elevation {
+        padding: 14px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        position: relative;
+      }
+      .icon {
+        width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+          width: 80%;
+        }
+        margin-right: 20px;
+      }
+      .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .doctor-icon {
+          position: absolute;
+          top: 0px;
+          right: 0px;
+          background-color: #206bac;
+          color: #fff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 2px;
+          padding: 4px;
+        }
+        h6 {
+          font-size: 14px;
+          font-weight: 700;
+          color: #206bac;
+          word-break: break-word;
+        }
+        .type {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}

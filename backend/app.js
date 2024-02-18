@@ -112,6 +112,7 @@ app.use('/api', require('./routes/paymentRoutes'));
 app.use('/api/medicalrecord', require('./routes/medicalRecordRoutes'));
 app.use('/api/appointments', require('./routes/appointmentRoutes'));
 app.use('/api/file', require('./routes/uploadFileRoutes'));
+app.use('/api/medicalRecordFiles',require('./routes/medicalFileRecordRoutes'))
 
 app.get('/api/import-excel', importExcelToMongo);
 // Update this line in your app.js or route configuration

@@ -21,6 +21,9 @@
             width: 200px;
             height: 200px;
             margin-bottom: 16px;
+            border: 2px solid #1F67A6;
+            padding: 2px;
+            border-radius: 50%;
             img{
                 margin: 0 auto;
                 border-radius: 50%;
@@ -45,6 +48,10 @@
     }
     .css-mhc70k-MuiGrid-root>.MuiGrid-item:nth-child(even){
         padding-left: 8px;
+    }
+
+    input{
+        background: rgba(241, 249, 255, 1);
     }
 }
 

@@ -6,7 +6,8 @@ const User = require('../models/User');
 // Function to search for doctors available on the selected date with a specific speciality
 exports.searchAvailableDoctors = async (req, res) => {
   try {
-    const { selectedDate, speciality, symptoms } = req.body;
+    const selectedDate = new Date()
+    const {  speciality, symptoms } = req.body;
 
     // Find doctors with the role 'doctor' and the specified speciality
     if(typeof speciality == 'string'){

@@ -43,6 +43,9 @@ import { fetchAppointmentsDoctor } from '../../../actions/bookingActions';
 import { getPayments } from '../../../actions/paymentActions';
 import AddSymptoms from '../addSymptoms/addSymptoms';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import BookingDetail from '../../patient/booking-detail/booking-detail';
+import MedicalRecords from '../../medical-records/medical-records';
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -177,77 +180,7 @@ export default function Dashboard() {
     return (
         <div className="Dashboard">
             <Box sx={{ display: 'flex', width: '100%' }}>
-                <CssBaseline />
-                <AppBar position="fixed" open={open}>
-                    <Toolbar className='toolbar-header'>
-                        <Typography nowrap display={'flex'} alignItems={'center'} component={'div'}>
-                            <IconButton
-                                aria-label="open drawer"
-                                onClick={handleDrawerOpen}
-                                edge="start"
-                                sx={{
-                                    marginRight: 5,
-                                    ...(open && { display: 'none' }),
-                                }}
-                            >
-                                <MenuIcon />
-                            </IconButton>
-                            <Typography variant="h6" noWrap component="div" style={{display:'flex',alignItems:'center'}}>
-                                <img src={Logo} alt="logo image" onClick={e=>navigate('/')} />
-                            </Typography>
-                        </Typography>
-                        <Typography noWrap component="div" >
-                            <NavLink to="profile" onClick={e=>{dispatch(getCurrentUser())}} activeClassName="active-link">
-                                {/* <img src={user.image} alt={user.fullName} /> */}
-                                <Avatar
-                                    alt={user?.fullName}
-                                    src={user.image}
-                                    sx={{ width: 48, height: 48 }}
-                                />
-                            </NavLink>
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-                <Drawer variant="permanent" open={open}
-
-                >
-                    <DrawerHeader>
-                        <IconButton onClick={handleDrawerClose}>
-                            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                        </IconButton>
-                    </DrawerHeader>
-                    <Divider />
-                    <List>
-                        {sideNav.map((item, index) => (
-                            <ListItem key={item.route} disablePadding sx={{ display: 'block' }}>
-                                <ListItemButton
-                                    sx={{
-                                        minHeight: 48,
-                                        justifyContent: open ? 'initial' : 'center',
-                                        px: 2.5,
-                                    }}
-                                    onClick={e => {
-                                        navigate(item.route)
-                                        callDispatch(item)
-                                    }}
-                                >
-                                    <ListItemIcon
-                                        sx={{
-                                            minWidth: 0,
-                                            mr: open ? 3 : 'auto',
-                                            justifyContent: 'center',
-                                        }}
-                                    >
-                                        {item.icon}
-                                    </ListItemIcon>
-                                    <ListItemText primary={item.name} sx={{ opacity: open ? 1 : 0 }} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
-                    </List>
-                </Drawer>
                 <Box component="main" className="dashboard-components" sx={{ flexGrow: 1, p: 3 }}>
-                    <DrawerHeader />
                     <Routes>
                         <Route path="/" element={<Insights />} />
                         <Route path="appointments" element={<Appointments />} />
@@ -255,11 +188,12 @@ export default function Dashboard() {
                         <Route path="prescriptions" element={<PatientCard />} />
                         <Route path="chat" element={<ChatRoom />} />
                         <Route path="patients" element={<Patients />} />
+                        <Route path="appointment/:id" element={<BookingDetail />} />
+                        <Route path="medical-records/:id" element={<MedicalRecords />} />
                         <Route path="payments" element={<Payments />} />
                         <Route path="record" element={<Records />} />
                         <Route path="addSymptoms" element={<AddSymptoms />} />
                         <Route path="record/:id" element={<Records />} />
-
                     </Routes>
                 </Box>
             </Box>

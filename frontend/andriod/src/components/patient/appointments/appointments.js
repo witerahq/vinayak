@@ -7,6 +7,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAppointmentsPatient } from '../../../actions/bookingActions';
+import Subheader from '../../sub-header/subheader';
 
 function Appointments() {
     const addHoursToDate = (date, time) => {
@@ -54,6 +55,8 @@ function Appointments() {
 
 
     return (
+        <>
+        <Subheader route={"/"} text={'Your appointments'}></Subheader>
         <div className="Appointment">
             <div className="container">
                 <FullCalendar
@@ -72,6 +75,7 @@ function Appointments() {
                 />
             </div>
         </div>
+        </>
     )
 
 }

@@ -23,6 +23,17 @@ export const updateUserDetailsRequest = () => ({ type: UPDATE_USER_DETAILS_REQUE
 export const updateUserDetailsSuccess = (user) => ({ type: UPDATE_USER_DETAILS_SUCCESS, payload: user });
 export const updateUserDetailsFailure = (error) => ({ type: UPDATE_USER_DETAILS_FAILURE, payload: error });
 
+// Action Types for fetching user by _id
+export const SEARCH_DOCTOR_REQUEST = 'SEARCH_DOCTOR_REQUEST';
+export const SEARCH_DOCTOR_SUCCESS = 'SEARCH_DOCTOR_SUCCESS';
+export const SEARCH_DOCTOR_FAILURE = 'SEARCH_DOCTOR_FAILURE';
+
+// Action Creators for searching user by _id
+export const searchDoctorRequest = () => ({ type: SEARCH_DOCTOR_REQUEST });
+export const searchDoctorSuccess = (doctor) => ({ type: SEARCH_DOCTOR_SUCCESS, payload: doctor });
+export const searchDoctorFailure = (error) => ({ type: SEARCH_DOCTOR_FAILURE, payload: error });
+
+// Action Creators for remoce user by _id
 export const removeUser = () => ({ type: REMOVE_CURRENT_USER })
 
 // Thunk Action
@@ -48,6 +59,18 @@ export const updateUserDetails = (updatedUserData) => async (dispatch) => {
         dispatch(updateUserDetailsFailure(error));
     }
 };
+
+export const searchDoctorById = (doctorId) => async (dispatch) => {
+    dispatch(searchDoctorRequest());
+    try {
+      const response = await instance.post('/api/user/search-doctor', { doctor_id: doctorId });
+      const doctor = response.data.doctor;
+      const availability = response.data.availability;
+      dispatch(searchDoctorSuccess({ doctor, availability }));
+    } catch (error) {
+      dispatch(searchDoctorFailure(error));
+    }
+  };
 
 export const removeUserDetails = ()  => async (dispatch) =>  {
     dispatch(removeUser())

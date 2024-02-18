@@ -1,0 +1,156 @@
+.doctor-profile {
+  .container {
+    .profile {
+      display: flex;
+      margin-top: 24px;
+      margin-bottom: 24px;
+      .image {
+        width: 70px;
+        height: 70px;
+        img {
+          width: 100%;
+        }
+        margin-right: 20px;
+      }
+      .details {
+        .name {
+          font-size: 16px;
+          font-weight: 600;
+          margin: 0;
+        }
+        p {
+          margin-bottom: 6px;
+        }
+      }
+    }
+    .MuiAccordionSummary-root {
+      background: rgba(241, 249, 255, 1);
+    }
+
+    .slots {
+      .slots-timing-header {
+        margin-top: 0;
+        &::first-letter {
+          text-transform: uppercase;
+        }
+        font-size: 13px;
+        margin-bottom: 16px;
+      }
+      .css-19kzrtu {
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 0;
+      }
+      .chip {
+        margin-right: 8px;
+        margin-bottom: 8px;
+        background: #fff;
+        border: 1px solid #206bac;
+        border-radius: 0;
+        color: #206bac;
+        
+        &.disabled{
+          background-color: #fff;
+          color: #bab9b9;
+          border: 1px solid #bab9b9;
+        }
+        &.selected {
+          background: #206bac;
+          color: #fff;
+        }
+      }
+    }
+
+    .more-details {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 24px;
+      margin-bottom: 24px;
+
+      h4 {
+        font-size: 16px;
+        font-weight: normal;
+        margin-bottom: 16px;
+      }
+
+      svg {
+        fill: #206bac;
+      }
+
+      .lang,
+      .mrn,
+      .education {
+        display: flex;
+        justify-content: start;
+        margin-bottom: 8px;
+        margin-top: 0;
+        svg {
+          margin-right: 6px;
+        }
+        p {
+          margin: 0;
+        }
+        align-items: center;
+      }
+
+      
+    }
+    .about-clinic {
+        h4 {
+          font-size: 16px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          span{
+            color: #206bac;
+            display: flex;
+            align-items: center;
+          }
+          margin-bottom: 16px;
+        }
+        svg{
+            fill: #206bac;
+            margin-right: 6px;
+        }
+        .address{
+            display: flex;
+            p{
+                margin: 0;
+            }
+        }
+        .map{
+            overflow: hidden;
+            border-radius: 8px;
+            margin-top: 16px;
+            img{
+                width: 100%;
+            }
+        }
+
+      }
+
+    .proceed{
+      button{
+        margin-top: 24px;
+        margin-bottom: 24px;
+        width: 100%;
+        background: #206bac;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+        padding:12px 16px; 
+        text-align: center;
+        border: 0;
+        outline: 0;
+        border-radius: 8px;
+        text-transform: uppercase;
+        &.disabled{
+          color: #fff;
+          background: #bab9b9;
+        }
+      }
+    }
+  }
+}

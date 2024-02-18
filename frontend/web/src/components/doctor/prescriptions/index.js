@@ -7,6 +7,7 @@ import './index.scss'
 import PrescriptionModal from './modal/prescription';
 import { deletePrescription, fetchPrescriptions } from '../../../actions/prescriptionActions';
 import { useDispatch, useSelector } from 'react-redux';
+import Subheader from '../../sub-header/subheader';
 
 const PatientCard = () => {
 
@@ -58,6 +59,8 @@ const PatientCard = () => {
     
 
     return (
+        <>
+       <Subheader text={'Prescriptions List'} route={"/dashboard"}></Subheader> 
         <div className="Prescription">
             <div className="container">
                 <div className="header">
@@ -119,6 +122,7 @@ const PatientCard = () => {
                 </div>
             </div>
         </div>
+        </>
     );
 }
 

@@ -1,27 +1,91 @@
 .Payments {
-    .header {
-        padding: 8px 0;
-        border-bottom:1px solid #C8CED0;
-        margin-top: 24px;
-        p{
-            color: #171A1C;
-            font-size: 19px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: 24px;
-        }
+    height: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    .container{
+        height: 100%;
+    }
+    
+    .booking-card{
+
         margin-bottom: 24px;
+        border-radius: 8px;
+        padding: 10px;
+        .header{
+            padding: 0;
+            span{
+                display: flex;align-items: center;
+                justify-content: space-between;
+            }
+            .date,.time{
+                display: flex;align-items: center;
+                svg{
+                    fill: #818589;
+                }
+                p{
+                    color:#818589;
+                    font-size: 12px;
+                }
+            }
+            button{
+                padding-left: 0;
+            }
+        }
+        .doctor-detail{
+            margin-top: 10px;margin-bottom: 10px; 
+            .MuiChip-filled{
+               color: #206BAC;
+               background: rgba(241, 249, 255, 1);
+                span::first-letter{
+                text-transform: uppercase;
+               }
+            }
+        }
+        .checkout-type{
+            .type{
+                &::first-letter{
+                    text-transform: uppercase;
+                }
+            }
+            button{
+                padding-left: 0;
+            }
+            svg{
+                fill: #818589;
+            }
+        }
+
+        .gender{
+            &::first-letter{
+                text-transform: uppercase;
+            }
+        }
+
+        .mode{
+            display: flex;align-items: center;
+            p{
+                padding-left: 6px;
+            }
+        }
+
     }
 
-    tbody {
-        tr {
-            &:nth-child(even) {
-                background: #c8ced071;
+    .no-appointments{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        .image{
+            width: 70%;
+            img{
+                width: 100%;
             }
-
-            &:nth-child(odd) {
-                background: #c8ced022;
-            }
+        }
+        p{
+            font-size: 18px;
+            color: gray;
         }
     }
 }

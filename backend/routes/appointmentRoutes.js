@@ -17,4 +17,8 @@ router.post('/', authenticateToken, appointmentController.createAppointment);
 // Update the status of an appointment
 router.post('/:appointmentId', authenticateToken, appointmentController.updateAppointmentStatus);
 
+
+router.get('/:id', authenticateToken, appointmentController.getAppointmentById);
+
+
 module.exports = router;

@@ -21,10 +21,46 @@ import { useDispatch } from "react-redux";
 import { searchDoctors } from "../../actions/searchActions";
 
 import SearchIcon from "@mui/icons-material/Search";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SearchDoctorsModal from "./searchModal/searchModal";
 import dayjs from "dayjs";
 import Autosuggest from "react-autosuggest";
 import algoliasearch from "algoliasearch/lite";
+// Import Swiper React components
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/scss";
+import "swiper/scss/navigation";
+import "swiper/scss/pagination";
+
+import SlideImage1 from "../../assets/search-carousel-1.webp";
+import SlideImage2 from "../../assets/search-carousel-2.jpeg";
+import SlideImage3 from "../../assets/search-carousel-3.jpeg";
+import SlideImage4 from "../../assets/search-carousel-4.png";
+import InfoCardImage1 from "../../assets/info-card-1.png";
+import InfoCardImage2 from "../../assets/info-card-2.png";
+import ConsultImage1 from "../../assets/consult-1.png";
+import ConsultImage2 from "../../assets/consult-2.png";
+import ConsultImage3 from "../../assets/consult-3.png";
+import ConsultImage4 from "../../assets/consult-4.png";
+import ConsultImage5 from "../../assets/consult-5.png";
+import ConsultImage6 from "../../assets/consult-6.png";
+import ConsultImage7 from "../../assets/consult-7.png";
+import ConsultImage8 from "../../assets/consult-8.png";
+import ConsultImage9 from "../../assets/consult-9.png";
+import ConsultImage10 from "../../assets/consult-10.png";
+import SymptomImage1 from "../../assets/symptoms-1.svg";
+import SymptomImage2 from "../../assets/symptoms-2.svg";
+import SymptomImage3 from "../../assets/symptoms-3.svg";
+import SymptomImage4 from "../../assets/symptoms-4.svg";
+import SymptomImage5 from "../../assets/symptoms-5.svg";
+import SymptomImage6 from "../../assets/symptoms-6.svg";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import SpecialistDoctorsModal from "../specialist/specialist";
+import doctorIcon from '../../assets/doctor-icon.svg';
+import hospitalIcon from '../../assets/hospital.svg';
 
 // Algolia setup
 const searchClient = algoliasearch(
@@ -45,49 +81,40 @@ function Homepage() {
   const [selectedDate, handleDateChange] = useState(new Date());
   const [speciality, setSpeciality] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const dispatch = useDispatch(); 
-   const [selectedSuggestion,setSelectedSuggestion] = useState({})
+  const dispatch = useDispatch();
+  const [selectedSuggestion, setSelectedSuggestion] = useState({});
   const onSuggestionSelected = (_, { suggestion }) => {
-    // Store the entire selected object in the symptoms state
-    // setSymptoms(suggestion);
-    console.log(suggestion)
-    setSelectedSuggestion(suggestion)
+    console.log(suggestion);
+    setSelectedSuggestion(suggestion);
   };
   const searchSubmit = () => {
-    dispatch(searchDoctors(selectedDate, selectedSuggestion,symptoms));
+    dispatch(searchDoctors(selectedDate, selectedSuggestion, symptoms));
     navigate({
       pathname: "/search",
       search: createSearchParams({
         date: selectedDate,
-        speciality:JSON.stringify(selectedSuggestion),
+        speciality: JSON.stringify(selectedSuggestion),
         symptoms,
       }).toString(),
     });
   };
 
-
-
-  const search = (value) => {
+  const search = (value,key) => {
     dispatch(searchDoctors(new Date(), value));
     navigate({
       pathname: "/search",
       search: createSearchParams({
-        date: new Date(),
-        speciality: value,
-        symptoms:value,
+        [key]:value
       }).toString(),
     });
   };
 
   const [isSearch, setIsSearch] = useState(false);
-
+  const [isSpecialist,setIsSpecialist] = useState(false);
 
   const getSuggestions = async (value) => {
     try {
       const result = await index.search(value);
-      console.log(result.hits.map((hit) =>{
-       return hit
-    }))
       setSuggestions(result.hits.map((hit) => hit)); // Replace 'name' with the field you want to display
     } catch (error) {
       console.error("Algolia search error:", error);
@@ -103,15 +130,21 @@ function Homepage() {
     setSuggestions([]);
   };
 
-  const renderSuggestion = (suggestions,e,v) => {
-    console.log(suggestions,e,v)
-    return (<div className="autocomplete title-case" dangerouslySetInnerHTML={{ __html: suggestions._highlightResult.Symptom.value }}></div>);
+  const renderSuggestion = (suggestions, e, v) => {
+    console.log(suggestions, e, v);
+    return (
+      <div
+        className="autocomplete title-case"
+        dangerouslySetInnerHTML={{
+          __html: suggestions._highlightResult.Symptom.value,
+        }}
+      ></div>
+    );
   };
 
   const onChange = (event, { newValue }) => {
     setSymptoms(newValue);
   };
-
 
   const handleSearch = () => {
     // You can process the values here, e.g., log them to the console
@@ -131,9 +164,9 @@ function Homepage() {
     });
   };
 
-  const getSuggestionValue = suggestion => {
-    return suggestion.Symptom
-   };
+  const getSuggestionValue = (suggestion) => {
+    return suggestion.Symptom;
+  };
 
   return (
     <>
@@ -147,13 +180,329 @@ function Homepage() {
         ) : null
       ) : null}
       {window.innerWidth < 992 ? (
+        <>
         <SearchDoctorsModal
           isOpen={isSearch}
           onClose={(e) => setIsSearch(false)}
         ></SearchDoctorsModal>
+        <SpecialistDoctorsModal 
+           isOpen={isSpecialist}
+          onClose={(e) => setIsSpecialist(false)}>
+
+        </SpecialistDoctorsModal>
+        </>
       ) : null}
       <div className="Homepage">
-        <div className="banner">
+        <section id="easy-access">
+          <div className="container">
+            <div className="access-cards">
+              <div className="access-card" onClick={e=>search('all','speciality')}>
+                <div className="icon">
+                  <img src={doctorIcon} alt="doctor" />
+                </div>
+                <div className="text">
+                  <p>
+                    Consult <br /> Doctors
+                  </p>
+                </div>
+              </div>
+              <div className="access-card" onClick={e=>search('all','city')}>
+                <div className="icon">
+                  <img src={hospitalIcon} alt="hospital" />
+                </div>
+                <div className="text">
+                  <p>Hospitals</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="search-carousel">
+          <div className="container">
+            <div className="mobile-search">
+              <input
+                type="text"
+                placeholder="Search Symptoms, Doctors, Specialist..."
+                onClick={e=>{setIsSearch(true)}}
+              />
+              <div className="icon">
+                <SearchIcon></SearchIcon>
+              </div>
+            </div>
+            <div className="search-carousel">
+              <Swiper
+                spaceBetween={10}
+                slidesPerView={1}
+                modules={[Navigation, Pagination, Scrollbar, A11y]}
+                onSlideChange={() => console.log("slide change")}
+                onSwiper={(swiper) => console.log(swiper)}
+                pagination={{ clickable: true }}
+                scrollbar={{ draggable: true }}
+              >
+                <SwiperSlide>
+                  <div className="slide-image">
+                    <img src={SlideImage3} alt="" />
+                  </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <div className="slide-image">
+                    <img src={SlideImage2} alt="" />
+                  </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <div className="slide-image">
+                    <img src={SlideImage4} alt="" />
+                  </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <div className="slide-image">
+                    <img src={SlideImage1} alt="" />
+                  </div>
+                </SwiperSlide>
+              </Swiper>
+            </div>
+          </div>
+        </section>
+
+        <section id="health-program">
+          <div className="container">
+            <div className="heading">
+              <h3>Discover our health program</h3>
+              <p>Comprehensive plans that care the way you want!</p>
+            </div>
+            <div className="program-card">
+              <h4>Insure your health with VinayakM</h4>
+              <p>
+                A master health plan with 2X Wellness + Insurance, all on easy
+                EMIs
+              </p>
+              <div className="info-cards">
+                <div className="info-card">
+                  <div className="image">
+                    <img src={InfoCardImage1} alt="" />
+                  </div>
+                  <div className="text">
+                    <h5>2X OPD Cover</h5>
+                    <p>
+                      Get outpatient benefits like doctor consultations, lab
+                      tests & more!
+                    </p>
+                  </div>
+                </div>
+                <div className="info-card">
+                  <div className="image">
+                    <img src={InfoCardImage2} alt="" />
+                  </div>
+                  <div className="text">
+                    <h5>Infinite Security</h5>
+                    <p>Unlimited cover restoration upon exhaustion</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="consult-instanly">
+          <div className="container">
+            <div className="consult-header">
+              <h3>Consult Instantly</h3>
+              <p>
+                Consult any top doctors online in <span>just 60 seconds</span>
+              </p>
+
+              <div className="view-all">
+                <p>Popular Specialities</p>
+                <button onClick={e=>{setIsSpecialist(true)}}>View All</button>
+              </div>
+            </div>
+
+            <div className="consult-types">
+              <div className="consult-type" onClick={e=>search('Psychiatrist','speciality')}>
+                <div className="consult-image">
+                  <img src={ConsultImage1} alt="" />
+                </div>
+                <div className="consult-text">
+                  <p>Psychiatrist</p>
+                </div>
+              </div>
+              <div className="consult-type" onClick={e=>search('Homeopath','speciality')}>
+                <div className="consult-image">
+                  <img src={ConsultImage2} alt="" />
+                </div>
+                <div className="consult-text">
+                  <p>Homeopath</p>
+                </div>
+              </div>
+              <div className="consult-type" onClick={e=>search('Ophthalmologist','speciality')}>
+                <div className="consult-image">
+                  <img src={ConsultImage3} alt="" />
+                </div>
+                <div className="consult-text">
+                  <p>Ophthalmologist</p>
+                </div>
+              </div>
+              <div className="consult-type" onClick={e=>search('Dentist','speciality')}>
+                <div className="consult-image">
+                  <img src={ConsultImage4} alt="" />
+                </div>
+                <div className="consult-text">
+                  <p>Dentist</p>
+                </div>
+              </div>
+              <div className="consult-type" onClick={e=>search('ENT','speciality')}>
+                <div className="consult-image">
+                  <img src={ConsultImage5} alt="" />
+                </div>
+                <div className="consult-text">
+                  <p>ENT</p>
+                </div>
+              </div>
+              <div className="consult-type" onClick={e=>search('Ayurveda','speciality')}>
+                <div className="consult-image">
+                  <img src={ConsultImage6} alt="" />
+                </div>
+                <div className="consult-text">
+                  <p>Ayurveda</p>
+                </div>
+              </div>
+              <div className="consult-type" onClick={e=>search('Paediatrician','speciality')}>
+                <div className="consult-image">
+                  <img src={ConsultImage7} alt="" />
+                </div>
+                <div className="consult-text">
+                  <p>Paediatrician</p>
+                </div>
+              </div>
+              <div className="consult-type" onClick={e=>search('Gynaecologist','speciality')}>
+                <div className="consult-image">
+                  <img src={ConsultImage8} alt="" />
+                </div>
+                <div className="consult-text">
+                  <p>Gynaecologist</p>
+                </div>
+              </div>
+              <div className="consult-type" onClick={e=>search('Dermatologist','speciality')}>
+                <div className="consult-image">
+                  <img src={ConsultImage9} alt="" />
+                </div>
+                <div className="consult-text">
+                  <p>Dermatologist</p>
+                </div>
+              </div>
+              <div className="consult-type" onClick={e=>search('Physician','speciality')}>
+                <div className="consult-image">
+                  <img src={ConsultImage10} alt="" />
+                </div>
+                <div className="consult-text">
+                  <p>General Physician</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="consult-symptoms">
+          <div className="container">
+            <div className="symptoms-header">
+              <p>Select Symptoms</p>
+              <button onClick={e=>{setIsSpecialist(true)}}>View All</button>
+            </div>
+            <div className="consult-symptoms">
+              <div className="consult-symptom" onClick={e=>search('Tooth Ache','symptoms')}>
+                <div className="image">
+                  <img src={SymptomImage1} alt="" />
+                </div>
+                <div className="text">
+                  <p>Tooth Ache</p>
+                </div>
+              </div>
+              <div className="consult-symptom" onClick={e=>search('Skin Infection','symptoms')}>
+                <div className="image">
+                  <img src={SymptomImage2} alt="" />
+                </div>
+                <div className="text">
+                  <p>Skin Infection</p>
+                </div>
+              </div>
+              <div className="consult-symptom" onClick={e=>search('Periods','symptoms')}>
+                <div className="image">
+                  <img src={SymptomImage3} alt="" />
+                </div>
+                <div className="text">
+                  <p>Periods</p>
+                </div>
+              </div>
+              <div className="consult-symptom" onClick={e=>search('Joint Pain','symptoms')}>
+                <div className="image">
+                  <img src={SymptomImage4} alt="" />
+                </div>
+                <div className="text">
+                  <p>Joint Pain</p>
+                </div>
+              </div>
+              <div className="consult-symptom" onClick={e=>search('Hairfall','symptoms')}>
+                <div className="image">
+                  <img src={SymptomImage5} alt="" />
+                </div>
+                <div className="text">
+                  <p>Hairfall</p>
+                </div>
+              </div>
+              <div className="consult-symptom" onClick={e=>search('Fever','symptoms')}>
+                <div className="image">
+                  <img src={SymptomImage6} alt="" />
+                </div>
+                <div className="text">
+                  <p>Fever</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="faqs">
+          <div className="container">
+            <div className="heading">
+              <h3>Frequently Asked Questions</h3>
+            </div>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+              >
+                What is My Health care Plan?
+              </AccordionSummary>
+              <AccordionDetails>
+                My Health Care Plan is a truly modular plan offers you the
+                flexibility to curate an individual bouquet of features that you
+                feel is best suited for you and your family.
+              </AccordionDetails>
+            </Accordion>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel2-content"
+                id="panel2-header"
+              >
+                My employer provides me with a health insurance. Do I still need
+                one?
+              </AccordionSummary>
+              <AccordionDetails>
+                The health insurance policy offered by the employer will have a
+                standardized sum set aside for each of the employees. While this
+                is not bad, it may not be enough. Safeguarding yourself with a
+                health insurance policy is the best way forward as it will take
+                into account your age, your dependents, your overall health
+                factors and offer you a much larger sum insured.
+              </AccordionDetails>
+            </Accordion>
+          </div>
+        </section>
+
+        <div className="banner" style={{ display: "none" }}>
           <div className="container">
             <p className="heading">
               Book Your Appointment <br /> in few easy steps
@@ -203,7 +552,12 @@ function Homepage() {
                     </LocalizationProvider>
                   </div>
                   <div className="search">
-                    <button onClick={(e) => searchSubmit()} disabled={!symptoms}>Search</button>
+                    <button
+                      onClick={(e) => searchSubmit()}
+                      disabled={!symptoms}
+                    >
+                      Search
+                    </button>
                   </div>
                 </div>
               </div>
@@ -224,7 +578,7 @@ function Homepage() {
           </div>
         </div>
 
-        <section id="why">
+        <section id="why" style={{ display: "none" }}>
           <div className="container">
             <p className="heading">Why Us?</p>
             <div className="why-content">
@@ -262,7 +616,7 @@ function Homepage() {
           </div>
         </section>
 
-        <section id="consult">
+        <section id="consult" style={{ display: "none" }}>
           <div className="container">
             <div className="heading">
               <p>Consult top doctors online for any health concern</p>
@@ -359,7 +713,7 @@ function Homepage() {
           </div>
         </section>
 
-        <section id="clinic">
+        <section id="clinic" style={{ display: "none" }}>
           <div className="container">
             <div className="heading">
               <p>Book an appointment for an in-clinic consultation</p>
@@ -395,7 +749,7 @@ function Homepage() {
           </div>
         </section>
 
-        <section id="testimonial">
+        <section id="testimonial" style={{ display: "none" }}>
           <div className="container">
             <div className="heading">
               <p>Listen from our users</p>
@@ -452,7 +806,7 @@ function Homepage() {
           </div>
         </section>
 
-        <section id="know">
+        <section id="know" style={{ display: "none" }}>
           <div className="container">
             <div className="heading">
               <p>Know more about us</p>

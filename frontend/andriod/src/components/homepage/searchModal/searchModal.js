@@ -24,6 +24,14 @@ import { searchDoctors } from "../../../actions/searchActions";
 import Autosuggest from "react-autosuggest";
 import algoliasearch from "algoliasearch/lite";
 import dayjs from "dayjs";
+import commonSymptoms1 from "../../../assets/search-symptom-1.png";
+import commonSymptoms2 from "../../../assets/search-symptom-2.png";
+import commonSymptoms3 from "../../../assets/search-symptom-3.png";
+import commonSymptoms4 from "../../../assets/search-symptom-4.png";
+import commonSymptoms5 from "../../../assets/search-symptom-5.png";
+import commonSymptoms6 from "../../../assets/search-symptom-6.png";
+import commonSymptoms7 from "../../../assets/search-symptom-7.png";
+import commonSymptoms8 from "../../../assets/search-symptom-8.png";
 
 // Algolia setup
 const searchClient = algoliasearch(
@@ -40,21 +48,31 @@ const SearchDoctorsModal = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [selectedSuggestion,setSelectedSuggestion] = useState({})
+  const [selectedSuggestion, setSelectedSuggestion] = useState({});
   const onSuggestionSelected = (_, { suggestion }) => {
-    // Store the entire selected object in the symptoms state
-    // setSymptoms(suggestion);
-    console.log(suggestion)
-    setSelectedSuggestion(suggestion)
+    console.log(suggestion);
+    setSelectedSuggestion(suggestion);
+  };
+
+  const search = (value, key) => {
+    dispatch(searchDoctors(new Date(), value));
+    navigate({
+      pathname: "/search",
+      search: createSearchParams({
+        [key]: value,
+      }).toString(),
+    });
   };
 
   const getSuggestions = async (value) => {
     try {
       const result = await index.search(value);
-      console.log(result.hits.map((hit) =>{
-       return hit
-    }))
-      setSuggestions(result.hits.map((hit) => hit)); // Replace 'name' with the field you want to display
+      console.log(
+        result.hits.map((hit) => {
+          return hit;
+        })
+      );
+      setSuggestions(result.hits.map((hit) => hit));
     } catch (error) {
       console.error("Algolia search error:", error);
       setSuggestions([]);
@@ -69,42 +87,42 @@ const SearchDoctorsModal = ({ isOpen, onClose }) => {
     setSuggestions([]);
   };
 
-  const renderSuggestion = (suggestions,e,v) => {
-    console.log(suggestions,e,v)
-    return (<div className="autocomplete title-case" dangerouslySetInnerHTML={{ __html: suggestions._highlightResult.Symptom.value }}></div>);
+  const renderSuggestion = (suggestions, e, v) => {
+    console.log(suggestions, e, v);
+    return (
+      <div
+        className="autocomplete title-case"
+        dangerouslySetInnerHTML={{
+          __html: suggestions._highlightResult.Symptom.value,
+        }}
+      ></div>
+    );
   };
 
   const onChange = (event, { newValue }) => {
     setSymptoms(newValue);
   };
 
-
   const handleSearch = () => {
-    // You can process the values here, e.g., log them to the console
     console.log("Symptoms:", symptoms);
     console.log("Selected Date:", selectedDate);
     console.log("Speciality:", speciality);
 
-    dispatch(searchDoctors(selectedDate, selectedSuggestion,symptoms));
+    dispatch(searchDoctors(selectedDate, selectedSuggestion, symptoms));
 
     navigate({
       pathname: "/search",
       search: createSearchParams({
-        date: selectedDate,
         speciality: JSON.stringify(selectedSuggestion),
         symptoms: symptoms,
       }).toString(),
     });
-    // Close the modal
     onClose();
   };
 
-  const getSuggestionValue = suggestion => {
-    return suggestion.Symptom
-   };
-
- 
-
+  const getSuggestionValue = (suggestion) => {
+    return suggestion.Symptom;
+  };
 
   return (
     <Modal open={isOpen} onClose={onClose} className="search-modal">
@@ -114,14 +132,8 @@ const SearchDoctorsModal = ({ isOpen, onClose }) => {
           justifyContent="space-between"
           alignItems="center"
           p={2}
+          className="search-wrapper"
         >
-          <Typography variant="h6">Search Doctors</Typography>
-          <IconButton onClick={onClose}>
-            <CloseIcon />
-          </IconButton>
-        </Box>
-
-        <div className="modal-content">
           <Autosuggest
             suggestions={suggestions}
             onSuggestionsFetchRequested={onSuggestionsFetchRequested}
@@ -129,67 +141,72 @@ const SearchDoctorsModal = ({ isOpen, onClose }) => {
             getSuggestionValue={getSuggestionValue}
             renderSuggestion={renderSuggestion}
             inputProps={{
-              placeholder: "Search symptoms...",
+              placeholder: "Search Symptoms, Doctors, Specialists...",
               value: symptoms,
               onChange: (e, { newValue }) => setSymptoms(newValue),
             }}
             onSuggestionSelected={onSuggestionSelected}
-            className={'autocomplete-wrapper'}
+            className={"autocomplete-wrapper"}
           />
+          <IconButton onClick={onClose}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
 
-          <LocalizationProvider
-            className="date-time"
-            dateAdapter={AdapterDayjs}
-          >
-            <DemoContainer components={["DatePicker"]}>
-              <DemoItem >
-                {/* <DateTimePicker
-                className="date-picker"
-                  disablePast
-                  views={["year", "month", "day"]}
-                  label="Set Date"
-                  defaultValue={dayjs(selectedDate)}
-                  onChange={(newValue) => handleDateChange(newValue)}
-                /> */}
-            <DateField  className="date-picker"
-                  disablePast
-                  views={["year", "month", "day"]}
-                  label="Set Date"
-                  defaultValue={dayjs(selectedDate)}
-                  onChange={(newValue) => handleDateChange(newValue)}/>
-
-              </DemoItem>
-            </DemoContainer>
-          </LocalizationProvider>
-
-          <FormControl
-            variant="outlined"
-            fullWidth
-            className="speciality"
-            style={{ display: "none" }}
-          >
-            <InputLabel id="speciality-label">Speciality</InputLabel>
-            <Select
-              labelId="speciality-label"
-              id="speciality"
-              value={speciality}
-              onChange={(e) => setSpeciality(e.target.value)}
-              label="Speciality"
-            >
-              <MenuItem value="">
-                <em>Choose Speciality</em>
-              </MenuItem>
-              <MenuItem value={"heart"}>Heart</MenuItem>
-              <MenuItem value={"brain"}>Brain</MenuItem>
-              <MenuItem value={"sanity"}>Sanity</MenuItem>
-              <MenuItem value={"ent"}>ENT</MenuItem>
-              <MenuItem value={"skin"}>Skin</MenuItem>
-              <MenuItem value={"stomach"}>Stomach</MenuItem>
-              <MenuItem value={"gyno"}>Gyno</MenuItem>
-              <MenuItem value={"dentist"}>Dentist</MenuItem>
-              <MenuItem value={"ortho"}>Ortho</MenuItem>
-            </Select>
-          </FormControl>
+        <div className="modal-content">
+          <div className="common-symptoms-header">
+            <p>Common Symptoms</p>
+          </div>
+          <div className="common-symptoms">
+            <div className="common-symptom" onClick={e=>{search('Stomach Ache','symptoms')}}>
+              <div className="image">
+                <img src={commonSymptoms1} alt="" />
+              </div>
+              <p>Stomach Ache</p>
+            </div>
+            <div className="common-symptom" onClick={e=>{search('Tooth Pain','symptoms')}}>
+              <div className="image">
+                <img src={commonSymptoms2} alt="" />
+              </div>
+              <p>Tooth Pain</p>
+            </div>
+            <div className="common-symptom" onClick={e=>{search('Joint Pain','symptoms')}}>
+              <div className="image">
+                <img src={commonSymptoms3} alt="" />
+              </div>
+              <p>Joint Pain</p>
+            </div>
+            <div className="common-symptom" onClick={e=>{search('Diabetes','symptoms')}}>
+              <div className="image">
+                <img src={commonSymptoms4} alt="" />
+              </div>
+              <p>Diabetes</p>
+            </div>
+            <div className="common-symptom" onClick={e=>{search('Hairfall','symptoms')}}>
+              <div className="image">
+                <img src={commonSymptoms5} alt="" />
+              </div>
+              <p>Hairfall</p>
+            </div>
+            <div className="common-symptom" onClick={e=>{search('Anxiety','symptoms')}}>
+              <div className="image">
+                <img src={commonSymptoms6} alt="" />
+              </div>
+              <p>Anxiety</p>
+            </div>
+            <div className="common-symptom" onClick={e=>{search('Acne','symptoms')}}>
+              <div className="image">
+                <img src={commonSymptoms7} alt="" />
+              </div>
+              <p>Acne</p>
+            </div>
+            <div className="common-symptom" onClick={e=>{search('Fever','symptoms')}}>
+              <div className="image">
+                <img src={commonSymptoms8} alt="" />
+              </div>
+              <p>Fever</p>
+            </div>
+          </div>
         </div>
 
         <div className="search-button">

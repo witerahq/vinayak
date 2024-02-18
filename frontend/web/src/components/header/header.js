@@ -171,59 +171,124 @@ function Header() {
       <Divider />
 
       <div className="menu-items">
-        <div className="menu-item" onClick={(e) => navigate("/bookings")}>
-          <div className="icon">
-            {" "}
-            <ListAltIcon></ListAltIcon>
-          </div>
-          <div className="text">
-            <p>Bookings</p>
-          </div>
-        </div>
-        <div
-          className="menu-item"
-          onClick={(e) => navigate("/medical-records")}
-        >
-          <div className="icon">
-            {" "}
-            <PlaylistAddCircleIcon></PlaylistAddCircleIcon>
-          </div>
-          <div className="text">
-            <p>Medical Records</p>
-          </div>
-        </div>
-        <div className="menu-item" onClick={(e) => navigate("/appointments")}>
-          <div className="icon">
-            {" "}
-            <CalendarTodayIcon></CalendarTodayIcon>
-          </div>
-          <div className="text">
-            <p>Calendar</p>
-          </div>
-        </div>
-        <div
-          className="menu-item"
-          onClick={(e) => navigate("/search?speciality=all")}
-        >
-          <div className="icon">
-            {" "}
-            <LocalHospitalIcon></LocalHospitalIcon>
-          </div>
-          <div className="text">
-            <p>Specialities</p>
-          </div>
-        </div>
-        <div
-          className="menu-item"
-          onClick={(e) => navigate("/search?city=meerut")}
-        >
-          <div className="icon">
-            <ApartmentIcon></ApartmentIcon>
-          </div>
-          <div className="text">
-            <p>Clinics</p>
-          </div>
-        </div>
+        {decodeUser?.role == "patient" ? (
+          <>
+            <div className="menu-item" onClick={(e) => navigate("/bookings")}>
+              <div className="icon">
+                {" "}
+                <ListAltIcon></ListAltIcon>
+              </div>
+              <div className="text">
+                <p>Bookings</p>
+              </div>
+            </div>
+            <div
+              className="menu-item"
+              onClick={(e) => navigate("/medical-records")}
+            >
+              <div className="icon">
+                {" "}
+                <PlaylistAddCircleIcon></PlaylistAddCircleIcon>
+              </div>
+              <div className="text">
+                <p>Medical Records</p>
+              </div>
+            </div>
+            <div
+              className="menu-item"
+              onClick={(e) => navigate("/appointments")}
+            >
+              <div className="icon">
+                {" "}
+                <CalendarTodayIcon></CalendarTodayIcon>
+              </div>
+              <div className="text">
+                <p>Calendar</p>
+              </div>
+            </div>
+            <div
+              className="menu-item"
+              onClick={(e) => navigate("/search?speciality=all")}
+            >
+              <div className="icon">
+                {" "}
+                <LocalHospitalIcon></LocalHospitalIcon>
+              </div>
+              <div className="text">
+                <p>Specialities</p>
+              </div>
+            </div>
+            <div
+              className="menu-item"
+              onClick={(e) => navigate("/search?city=meerut")}
+            >
+              <div className="icon">
+                <ApartmentIcon></ApartmentIcon>
+              </div>
+              <div className="text">
+                <p>Clinics</p>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+             <div className="menu-item" onClick={(e) => navigate("/dashboard")}>
+              <div className="icon">
+                {" "}
+                <ListAltIcon></ListAltIcon>
+              </div>
+              <div className="text">
+                <p>Dashboard</p>
+              </div>
+            </div>
+            <div
+              className="menu-item"
+              onClick={(e) => navigate("/dashboard/patients")}
+            >
+              <div className="icon">
+                <PlaylistAddCircleIcon></PlaylistAddCircleIcon>
+              </div>
+              <div className="text">
+                <p>Patients</p>
+              </div>
+            </div>
+            <div
+              className="menu-item"
+              onClick={(e) => navigate("/dashboard/appointments")}
+            >
+              <div className="icon">
+                <CalendarTodayIcon></CalendarTodayIcon>
+              </div>
+              <div className="text">
+                <p>Booking</p>
+              </div>
+            </div>
+            <div
+              className="menu-item"
+              onClick={(e) => navigate("/dashboard/prescriptions")}
+            >
+              <div className="icon">
+                {" "}
+                <LocalHospitalIcon></LocalHospitalIcon>
+              </div>
+              <div className="text">
+                <p>Prescriptions</p>
+              </div>
+            </div>
+            <div
+              className="menu-item"
+              onClick={(e) => navigate("/dashboard/payments")}
+            >
+              <div className="icon">
+                <ApartmentIcon></ApartmentIcon>
+              </div>
+              <div className="text">
+                <p>Payments</p>
+              </div>
+            </div>
+          </>
+        )}
+
         <div className="get-health-app">
           <button>
             <PhoneIphoneIcon></PhoneIphoneIcon>

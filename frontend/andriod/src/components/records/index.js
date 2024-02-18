@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 import { addMedicalRecord, editMedicalRecord, emptyPrescriptionDetails, getPrescriptionDetails } from '../../actions/medicalRecordsActions';
 import { emptyImage, uploadFilePrescription } from '../../actions/fileUploadActions';
+import { fetchAppointmentsDoctor } from '../../actions/bookingActions';
 
 const Records = () => {
 
@@ -78,13 +79,16 @@ const Records = () => {
         if (id) {
             data['medicalRecordId'] = id
             dispatch(editMedicalRecord(data))
-            navigate('/dashboard/patients')
             dispatch(emptyPrescriptionDetails())
         } else {
             dispatch(addMedicalRecord(data))
-            navigate('/dashboard/patients')
             dispatch(emptyPrescriptionDetails())
         }
+        
+        setTimeout(()=>{
+            dispatch(fetchAppointmentsDoctor())
+            navigate('/dashboard/patients')
+        })
     }
 
     useEffect(() => {

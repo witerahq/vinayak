@@ -1,6 +1,27 @@
 .Appointment{
-    margin-bottom: 80px;
-    margin-top: 80px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    .fc-header-toolbar.fc-toolbar{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+        .fc-toolbar-title{
+            font-size: 14px;
+            font-weight: 500;
+            color: #206BAC;
+        }
+        .fc-today-button{
+            display: none;
+        }
+        .fc-prev-button,.fc-next-button{
+            background: #206BAC;
+            border: 0px;
+        }
+    }
+    .fc-timegrid-col.fc-day-today{
+        background: rgba(241, 249, 255, 1);
+    }
 }
 
 @media screen and (max-width:992px) {

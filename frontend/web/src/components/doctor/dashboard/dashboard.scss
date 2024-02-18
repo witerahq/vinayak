@@ -17,6 +17,10 @@
     .toolbar-header{
         justify-content: space-between;
     }
+    .dashboard-components{
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
 }
 
 @media screen and (max-width:992px) {
@@ -31,8 +35,7 @@
             padding-right: 0;
             box-sizing: border-box;
             max-width: 100%;
-            overflow-x: hidden;
-            min-height: calc(100vh - 80px);
+            min-height: calc(100vh - 101px);
         }
     }
 }

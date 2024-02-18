@@ -1,78 +1,141 @@
 .search-modal {
-    .modal-container {
-        height: 100%;
-        background: #fff;
-        display: flex;
-        flex-direction: column;
-    }
+  top: 60px !important;
+  z-index: 30 !important;
+  .modal-container {
+    height: 100%;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+  }
 
-    .modal-content {
-        padding: 0 16px;
-        margin-bottom: 10px;
-    }
-
-    .symptoms,
-    .speciality,
-    .css-4jnixx-MuiStack-root {
-        margin-top: 16px;
-        padding-top: 0;
-    }
-
-    .date-picker{
-        margin-top: 8px;
-    }
-
-    .autocomplete{
-        &.title-case{
-            letter-spacing: 1px;margin-top: 2px;
-            &:hover{
-                background: lightgray;
-            }
+  .modal-content {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    .common-symptoms-header{
+        display: flex;align-items: center;justify-content: space-between;
+        margin-bottom: 16px;
+        p{
+            font-size: 14px;
+            margin: 0;
+            opacity: 0.8;
+            
+        }
+        button{
             cursor: pointer;
-            em{
-                font-weight: 700;
-            }
-            &::first-letter{
-                text-transform: uppercase;
-            }
+            color: #206bac;
+            background: transparent;
+            border: 0;
+            outline: none;
+            font-size: 12px;
         }
     }
-
-    #react-autosuggest__container{
-        position: absolute;
-    }
-
-    .react-autosuggest__container{
-        input{
-            width: 100%;
-            font-size: 16px;
-            padding:12px 16px;
-        }
-        ul{
-            list-style: none;
-        }
-    }
-
-
-    .search-button{
-        flex: auto;
-        padding-left: 16px;padding-right: 16px;
+    .common-symptoms{
         display: flex;
-        align-items: end;
-        padding-bottom: 24px;
-
-        button.search {
-            width: 100%;
-            border-radius: 100px;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: 24px;
-            cursor: pointer;
-            padding: 10px 24px;
-            background: #206BAC;
-            border: 1px solid #206BAC;
-            color: #FFF;
+        flex-wrap: wrap;
+        .common-symptom{
+            flex: 0 1 calc((100% - 36px) / 4);
+            margin-right: 12px;
+            margin-bottom: 12px;
+            &:nth-child(4n){
+                margin-right: 0;
+            }
+            display: flex;justify-content: start;align-items: center;
+            flex-direction: column;
+            p{
+                margin: 0;
+                margin-top: 4px;
+                font-size: 12px;
+                text-align: center;
+            }
+            .image{
+                width: 45px;height: 45px;
+                img{
+                    width: 100%;
+                }
+            }
         }
     }
+  }
+
+  .search-wrapper {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px 0px;
+    padding: 0;
+    border-radius: 5px;
+  }
+
+  .react-autosuggest__container {
+    width: 100%;
+    .react-autosuggest__input {
+      border: 0px;
+      padding: 10px;
+      outline: none;
+    }
+  }
+
+  .symptoms,
+  .speciality,
+  .css-4jnixx-MuiStack-root {
+    margin-top: 16px;
+    padding-top: 0;
+  }
+
+  .date-picker {
+    margin-top: 8px;
+  }
+
+  .autocomplete {
+    &.title-case {
+      letter-spacing: 1px;
+      margin-top: 2px;
+      &:hover {
+        background: lightgray;
+      }
+      cursor: pointer;
+      em {
+        font-weight: 700;
+      }
+      &::first-letter {
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  #react-autosuggest__container {
+    position: absolute;
+  }
+
+  .react-autosuggest__container {
+    input {
+      width: 100%;
+      font-size: 16px;
+      padding: 12px 16px;
+    }
+    ul {
+      list-style: none;
+    }
+  }
+
+  .search-button {
+    flex: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+    display: flex;
+    align-items: end;
+    padding-bottom: 24px;
+
+    button.search {
+      width: 100%;
+      border-radius: 100px;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 24px;
+      cursor: pointer;
+      padding: 10px 24px;
+      background: #206bac;
+      border: 1px solid #206bac;
+      color: #fff;
+    }
+  }
 }

@@ -28,7 +28,7 @@ export const register = (userData) => async (dispatch) => {
     dispatch(setSuccess('Registration successful!'));
     return response
   } catch (error) {
-    dispatch(setError(error?.response?.statusText));
+    dispatch(setError(error?.response?.data?.message));
   }
 };
 
@@ -42,7 +42,10 @@ export const login = (credentials) => async (dispatch) => {
     
     return response
   } catch (error) {
-    dispatch(setError(error.message));
+    console.log(error)
+    dispatch(setError(error?.response?.data?.message));
+   
+
 
   }
 };

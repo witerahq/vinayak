@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import './register.scss';
 import authImage from '../../../assets/authImage.svg'
-import { FormControl, FormControlLabel, InputLabel, MenuItem, OutlinedInput, Radio, RadioGroup, Select, TextField } from '@mui/material';
+import { CircularProgress, FormControl, FormControlLabel, InputLabel, MenuItem, OutlinedInput, Radio, RadioGroup, Select, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch } from "react-redux";
 import { register, setError, setSuccess } from "../../../actions/authActions";
@@ -11,7 +11,6 @@ import { useSelector, shallowEqual } from 'react-redux';
 import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
 import InputAdornment from '@mui/material/InputAdornment';
 import FlagIcon from '@mui/icons-material/Flag';
-import { Geolocation } from '@capacitor/geolocation';
 
 const countries = [
   { code: '+91', name: 'India', icon: <FlagIcon /> },
@@ -33,7 +32,7 @@ function Register() {
   const [formErrors, setFormErrors] = useState({
     fullName: false,
     email: false,
-    phoneNumber: false,
+    // phoneNumber: false,
     password: false,
     licenseNumber: false,
     speciality: false
@@ -71,10 +70,6 @@ function Register() {
     return state.auth.registeredUser
   });
 
-  const handleRegister = async (value) => {
-    let response = await dispatch(register(value));
-    setregisterClicked(!registerClicked)
-  };
 
   useEffect(() => {
 
@@ -114,7 +109,6 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const errors = {};
 
     if (!formData.fullName) {
@@ -122,9 +116,6 @@ function Register() {
     }
     if (!formData.email) {
       errors.email = true;
-    }
-    if (!formData.phoneNumber) {
-      errors.phoneNumber = true;
     }
     if (!formData.licenseNumber && formData.role === 'doctor') {
       errors.licenseNumber = true;
@@ -144,28 +135,40 @@ function Register() {
       return;
     }
 
-    const getLocation = async () => {
-      try {
-        const position = await Geolocation.getCurrentPosition();
-        const { latitude, longitude } = position.coords;
 
-        const updatedFormData = {
-          ...formData,
-          latitude,
-          longitude,
-        };
+    try{
 
-        console.log(updatedFormData)
+    } catch (error){
 
-        handleRegister(updatedFormData);
-      } catch (error) {
-        console.log(error.message)
+    }
 
-        handleRegister(formData);
-      }
-    };
-
-    getLocation()
+    // if ("geolocation" in navigator) {
+    //   navigator.geolocation.getCurrentPosition(
+    //     (position) => {
+    //       const { latitude, longitude } = position.coords;
+    
+    //       const updatedFormData = {
+    //         ...formData,
+    //         latitude,
+    //         longitude,
+    //       };
+    
+    //       // Call handleRegister with updatedFormData
+    //       handleRegister(updatedFormData);
+    //     },
+    //     (error) => {
+    //       console.error('Error getting location');
+    
+    //       // If there's an error, still call handleRegister (you might want to handle the error in handleRegister)
+    //       handleRegister(formData);
+    //     }
+    //   );
+    // } else {
+    //   console.error('Geolocation not available');
+    
+      // If geolocation is not available, still call handleRegister
+      handleRegister(formData);
+    // }
     
 
   };
@@ -258,7 +261,17 @@ function Register() {
     const handleCountryChange = (event) => {
       setCountry(event.target.value);
     };
+
   
+    const [loading, setLoading] = useState(false);
+
+    const handleRegister = async (value) => {
+
+      setLoading(true);
+      let response = await dispatch(register(value));
+      setregisterClicked(!registerClicked)
+      setLoading(false);
+    };
 
 
   return (
@@ -309,7 +322,6 @@ function Register() {
                 onChange={handleFieldChange}
               />
               <TextField
-                required
                 className='form-field'
                 fullWidth
                 name="phoneNumber"
@@ -394,7 +406,11 @@ function Register() {
                 value={formData.password}
                 onChange={handleFieldChange}
               />
-              <button onClick={e => handleSubmit(e)}>Register</button>
+              <button disabled={loading} onClick={e => handleSubmit(e)}>{loading ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : (
+              "Register"
+            )}</button>
               <a onClick={login}>Already have an account? <span>Login</span></a>
             </div>
           </div>

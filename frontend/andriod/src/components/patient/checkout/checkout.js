@@ -19,7 +19,7 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import moment from "moment";
-import { createAppointment } from "../../../actions/bookingActions";
+import { createAppointment, fetchAppointmentsPatient } from "../../../actions/bookingActions";
 import { v4 as uuidv4 } from "uuid";
 import { createPayment } from "../../../actions/paymentActions";
 import { updateTimeslotStatus } from "../../../actions/doctorAvailabilityActions";
@@ -38,7 +38,7 @@ function findKeyAndIndex(arr, paramId) {
 
 function Checkout() {
   const cartFromStore = useSelector((state) => {
-    console.log(state);
+    console.log(state,'checkout');
     return state.appointment.appointment;
   });
 
@@ -50,14 +50,9 @@ function Checkout() {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const editAppointment = () => {
+  const editAppointment = (id) => {
     navigate({
-      pathname: "/search",
-      search: createSearchParams({
-        date: searchParams.get("date"),
-        speciality: searchParams.get("speciality"),
-        symptoms: searchParams.get("symptoms"),
-      }).toString(),
+      pathname: "/doctor/"+id
     });
   };
 
@@ -77,7 +72,7 @@ function Checkout() {
       doctorId: cartFromStore.docDetail._id,
       mode: consultType,
       status: "scheduled",
-      date: searchParams.get("date"),
+      date: cartFromStore,
       time:
         cartFromStore.timing.startTime + " - " + cartFromStore.timing.endTime,
       patientName: patientInfo.name,
@@ -93,20 +88,13 @@ function Checkout() {
     };
 
     let { key: timeSlotType, index: timeSlotIndex } = findKeyAndIndex(
-      cartFromStore.docDetail.availability.timeSlots,
+      cartFromStore.availability.timeSlots,
       cartFromStore.timing._id
-    );
-
-    console.log(
-      cartFromStore.docDetail.availability._id,
-      timeSlotType,
-      timeSlotIndex,
-      "booked"
     );
 
     dispatch(
       updateTimeslotStatus(
-        cartFromStore.docDetail.availability._id,
+        cartFromStore.availability._id,
         timeSlotType,
         timeSlotIndex,
         "booked"
@@ -114,8 +102,11 @@ function Checkout() {
     );
     dispatch(createAppointment(data));
     dispatch(createPayment(paymentData));
-
-    navigate("/bookings");
+    dispatch(fetchAppointmentsPatient());
+    dispatch(fetchAppointmentsPatient());
+    setTimeout(()=>{
+      navigate("/bookings");
+    })
   };
 
   return (
@@ -154,13 +145,13 @@ function Checkout() {
             </RadioGroup>
             <div className="appointment-card">
               <div className="doc-image">
-                <img src={doc1Image} alt="doc Image" />
+                <img src={cartFromStore.docDetail?.image} alt="doc Image" />
               </div>
               <div className="booking-doc-details">
                 <div className="doc-detail">
                   <div className="profile">
                     <p>Dr. {cartFromStore.docDetail?.fullName}</p>
-                    {cartFromStore.docDetail?.education ? <p>BDS, MDS</p> : null}
+                    {cartFromStore.docDetail?.education ? <p>MBBS</p> : null}
                   </div>
                   <div className="info">
                     {}
@@ -196,16 +187,16 @@ function Checkout() {
                   </div>
                   <div className="dates">
                     <p>
-                      {moment(searchParams.get("date")).format("MMMM, Do YYYY")}
+                      {moment(cartFromStore.day).format("MMMM, Do YYYY")}
                     </p>
                     <p>
-                      {cartFromStore.timing.startTime +
+                      {cartFromStore?.timing?.startTime +
                         " - " +
-                        cartFromStore.timing.endTime}
+                        cartFromStore?.timing?.endTime}
                     </p>
                     <div className="edit">
                       <CalendarMonthIcon></CalendarMonthIcon>
-                      <p onClick={(e) => editAppointment()}>Edit</p>
+                      <p onClick={(e) => editAppointment(cartFromStore?.docDetail?._id)}>Edit</p>
                     </div>
                   </div>
                 </div>
@@ -283,7 +274,7 @@ function Checkout() {
               </span>
             </p>
             <button className="checkout" onClick={(e) => checkout()}>
-              Proceed to Checkout
+              Pay at Clinic
             </button>
           </div>
         </div>

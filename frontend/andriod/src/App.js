@@ -20,6 +20,10 @@ import ChatRoom from "./components/chatroom";
 import About from "./components/about/about";
 import Contact from "./components/contact-us/contact-us";
 import PrivacyPolicy from "./components/privacy/privacy";
+import DoctorProfile from "./components/patient/doctor-profile/doctor-profile";
+import BookingDetail from "./components/patient/booking-detail/booking-detail";
+import MedicalRecords from "./components/medical-records/medical-records";
+import AddMedicalRecord from "./components/medical-records/add-medical-record/add-medical-record";
 
 function ScrollToTop() {
   const location = useLocation();
@@ -97,6 +101,7 @@ function App() {
 
           <Route path="/" element={<Homepage />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/doctor/:id" element={<DoctorProfile/>} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
@@ -110,9 +115,11 @@ function App() {
             </>:null
           }
 
-
           <Route path="/appointments" element={<ProtectedRoute user={user?.role === 'patient'}><Appointments /></ProtectedRoute>} />
           <Route path="/bookings" element={<ProtectedRoute user={user?.role === 'patient'}><Bookings /></ProtectedRoute>} />
+          <Route path="/medical-records" element={<ProtectedRoute user={user?.role === 'patient'}><MedicalRecords /></ProtectedRoute>} />
+          <Route path="/add-medical-record" element={<ProtectedRoute user={user?.role === 'patient'}><AddMedicalRecord /></ProtectedRoute>} />
+          <Route path="/booking/:id" element={<ProtectedRoute user={user?.role === 'patient'}><BookingDetail /></ProtectedRoute>} />
           <Route path="/checkout" element={<ProtectedRoute user={user?.role === 'patient'}><Checkout /></ProtectedRoute>} />
           <Route path="/chat" element={<ProtectedRoute user={user?.role === 'doctor'||user?.role === 'patient'}><ChatRoom /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute user={user?.role === 'doctor'||user?.role === 'patient'}><Profile /></ProtectedRoute>} />
@@ -122,8 +129,8 @@ function App() {
         </Routes>
       
       {
-        !(user?.role === 'doctor' && window.location.pathname.includes('dashboard'))?
-        <Footer></Footer>:null
+        // !(user?.role === 'doctor' && window.location.pathname.includes('dashboard'))?
+        <Footer></Footer>
       }
       {/* </Router> */}
     </div>

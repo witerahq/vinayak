@@ -240,11 +240,13 @@
 
         .appointment-card {
           position: relative;
+          padding: 12px;
 
           .expand {
             position: absolute;
             top: 12px;
             right: 12px;
+            display: none;
           }
 
           flex: calc((100% - 48px) / 3);
@@ -252,7 +254,7 @@
           margin-bottom: 16px;
           margin-right: 16px;
           overflow: hidden;
-          border-radius: 16px;
+          border-radius: 8px;
           box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15),
             0px 1px 2px 0px rgba(0, 0, 0, 0.3);
 
@@ -265,34 +267,69 @@
 
           .booking-doc-details {
             display: flex;
-            background: #f4f6f6;
+            flex-direction: column;
 
-            .booking-detail {
-              display: none;
+            
+            .doc-detail .work,.doc-detail .location{
+              display: flex; 
+              p{
+                margin-left: 4px;
+              }
+              align-items: center;
+            }
+            .book-appointment{
+              display: flex;
+              padding-left: 10px;
+              align-items: center;
+              justify-content: space-between;
+              p{
+                margin: 0;
+              }
+              .lang{
+                display: flex;
+                align-items: center;
+                p{
+                  margin-left: 4px;
+                  font-size: 12px;
+                }
+              }
+
+            }
+            .book-appointment-btn{
+              margin-top: 12px;
+              display: flex;justify-content: end;
+              button{
+                color: #fff;
+                background: #206bac;
+                border: 0;
+                border-radius: 4px;
+                padding: 8px;
+              }
             }
           }
 
           .doc-detail {
-            padding: 12px;
+            padding: 0 12px;
 
             .profile {
-              margin-bottom: 32px;
+              margin-bottom: 12px;
 
               P {
                 color: #081b2b;
 
                 &:first-child {
-                  font-size: 16px;
+                  font-size: 14px;
                   font-style: normal;
-                  font-weight: 600;
-                  line-height: 24px;
-                  margin-bottom: 8px;
+                  font-weight: 500;
+                  margin-bottom: 4px;
+                  margin-top: 0;
                 }
 
-                font-size: 13px;
+                font-size: 11px;
                 font-style: normal;
                 font-weight: 400;
                 line-height: 16px;
+                margin: 0;
               }
             }
 
@@ -522,11 +559,48 @@
       }
     }
   }
-  p.no-result {
-    text-align: center;
+  .no-result {
+    display: flex;align-items: center;justify-content: center;
+    flex-direction: column;
+    img{
+      width: 200px;height: 200px;
+      margin-bottom: 24px;
+    }
+    p{
+
+      text-align: center;
+    }
   }
   .appointment-button {
     display: none;
+  }
+
+  .mobile-search {
+    margin-top: 24px;
+    display: flex;
+    margin-bottom: 24px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px 0px;
+    margin-left: 14px;
+    margin-right: 14px;
+    input {
+      width: 100%;
+      border: 0px;
+      outline: none;
+      &:placeholder-shown {
+        text-overflow: ellipsis;
+      }
+      padding: 10px;
+    }
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      background: #fff;
+      svg {
+        fill: #206bac;
+      }
+    }
   }
 }
 
@@ -628,7 +702,7 @@
       border-top-right-radius: 30px;
       overflow: hidden;
       margin-top: 0;
-      padding-top: 90px;
+      margin-top: 90px;
       background-color: #fff;
       transform: translateY(-30px);
 
@@ -659,11 +733,16 @@
           flex-direction: row;
 
           .doc-image {
-            flex: 35%;
+            // flex: 35%;
+            width: 60px;height: 60px;
+            border-radius: 4px;
+            overflow: hidden;
           }
 
           .booking-doc-details {
-            flex: 65%;
+            // flex: 65%;
+            width: 100%;
+
           }
 
           &.open {

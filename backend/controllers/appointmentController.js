@@ -38,6 +38,32 @@ exports.getAppointmentsByPatientId = async (req, res) => {
   }
 };
 
+exports.getAppointmentById = async (req, res) => {
+  try {
+    const appointmentId = req.params.id;
+
+    // Fetch appointment details by _id and populate full patient and doctor information
+    const appointment = await Appointment.findById(appointmentId)
+      .populate({
+        path: 'patientId',
+        select: '-password', // Exclude password field
+      })
+      .populate({
+        path: 'doctorId',
+        select: '-password', // Exclude password field
+      });
+
+    if (!appointment) {
+      return res.status(404).json({ message: 'Appointment not found' });
+    }
+
+    res.status(200).json(appointment);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
 // Get all appointments for a specific doctor
 exports.getAppointmentsByDoctorId = async (req, res) => {
   const { _id: doctorId } = req.user;
@@ -79,7 +105,7 @@ exports.createAppointment = async (req, res) => {
       patientId: req.user._id,
       doctorId,
       mode,
-      date,
+      date:date.day,
       time,
       status,
       medicalRecords,

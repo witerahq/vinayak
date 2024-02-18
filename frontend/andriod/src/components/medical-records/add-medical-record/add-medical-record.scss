@@ -1,0 +1,59 @@
+.AddMedicalRecord{
+    box-shadow: none !important;
+    .file-card{
+        border-radius: 10px;
+        .icon{
+            padding: 10px;
+            color: #206BAC;
+            background: rgba(241, 249, 255, 1);
+            border-radius: 4px;
+            display: flex;align-items: center;justify-content: center;
+        }
+        .text{
+            font-weight: 600;
+            color: #206BAC;
+            font-size: 14px;
+        }
+        .date{
+            font-size: 11px;
+        }
+
+        .view{
+            background: rgba(241, 249, 255, 1);
+            border: 0px;
+            color: #206BAC;
+            font-size: 10px;
+            border-radius: 12px;
+            padding: 4px;
+        }
+    }
+    .form-group{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        button{
+            svg{
+                margin-right: 8px;
+            }
+            font-size: 14px;
+            font-weight: 600;
+            color: #206BAC;
+            padding-left: 0;
+            &:hover,&:visited,&:active{
+                background-color: transparent;
+
+            }
+        }
+        input{
+            background: rgba(241, 249, 255, 1);
+        }
+    }
+    .save{
+        display: flex;
+        width: 100%;
+        border-radius: 50px;
+        color: white !important;
+        text-transform: capitalize;
+        background: #206BAC !important;
+    }
+}

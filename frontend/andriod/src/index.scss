@@ -46,22 +46,46 @@ body {
   display: none !important;
 }
 
-.App {
-  
+.App{
+  max-width: 500px;
+  margin: 0 auto;
 }
+
 
 button:disabled{
   opacity: 0.7;
   cursor: not-allowed !important;
 }
 
+.search-wrapper{
+  position: relative;
+}
+.react-autosuggest__suggestions-container{
+  position: absolute;
+  top: 48px;
+  z-index: 1000;
+  background: #ffffff;
+  left: 0;
+  right: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.react-autosuggest__container{
+  li{
+    padding-left: 10px;padding-right: 10px;
+  }
+}
+
 @media screen and (max-width:992px) {
   .App {
     &.authenticated {
-      .Footer {
-        margin-bottom: 60px;
-      }
     }
+
+    .css-1c35hjw-MuiPaper-root-MuiAccordion-root{
+      box-shadow: none;
+    }
+
+    
 
     &:not(.authenticated) {
       .Header{
@@ -70,15 +94,12 @@ button:disabled{
     }
     &.doctor.dashboard {
       .Header {
-        display: none;
+        // display: none;
       }
     }
   }
 
   .Footer {
-
-    .footer-content,
-    .copyright,
     .iOS {
       display: none;
     }
